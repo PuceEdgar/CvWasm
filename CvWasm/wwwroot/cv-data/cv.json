@@ -88,6 +88,33 @@
       ]
     }
   ],
-  "skills": [],
+  "skills": {
+    "hardSkills": {
+      "programming": [
+        "C#, SQL",
+        "Some experience with: Java, JavaScript (React, AngularJs), Python"
+      ],
+      "tools": "VS 2022, VS Code, SSMS, GitHub, Git Bash, JIRA, Postman, Confluence, QlikView",
+      "other": [
+        "JSON, XML, API, xUnit",
+        "Some experience with: AWS (Lambda, Cognito, DynamoDB)"
+      ],
+      "wayOfWorking": "Agile, Scrum, Kanban, Program Increment (SAFe)",
+      "languages": [
+        "Russian, Latvian (Native)",
+        "English (Fluent)",
+        "Korean (TOPIK 2)"
+      ]
+    },
+    "softSkills": [
+      "Great communication skills to build good relationship with customers",
+      "Flexible regarding working hours and location",
+      "Able to work under pressure and deliver results to deadlines",
+      "Detail oriented",
+      "Flexible and adaptable, able to work well individually and in a group",
+      "Open minded and willing to learn",
+      "Fast learner, loyal and reliable"
+    ]
+  },
   "education": {}
 }
