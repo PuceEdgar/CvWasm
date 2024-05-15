@@ -1,6 +1,27 @@
 ﻿<h3>Education</h3>
 
+<table>
+    <tbody>
+        <tr>
+            <th>University</th>
+            <td>@Data.UniversityName</td>
+        </tr>
+        <tr>
+            <th>Location</th>
+            <td>@Data.Location</td>
+        </tr>
+        <tr>
+            <th>Period Attended</th>
+            <td>@Data.DateInterval</td>
+        </tr>
+        <tr>
+            <th>Degree</th>
+            <td>@Data.Degree</td>
+        </tr>
+    </tbody>
+</table>
+
 @code {
     [Parameter]
-    public Education? Data { get; set; }
+    public EducationModel? Data { get; set; }
 }

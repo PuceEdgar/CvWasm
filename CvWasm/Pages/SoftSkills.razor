@@ -1,0 +1,19 @@
+﻿<h3>Soft Skills</h3>
+
+<table>
+    <tbody>
+        @foreach (var skill in Data.Skills)
+        {
+            <tr>
+                <td>
+                    @skill
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public SoftSkillsModel? Data { get; set; }
+}

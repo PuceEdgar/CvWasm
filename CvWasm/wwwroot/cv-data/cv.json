@@ -106,15 +106,17 @@
         "Korean (TOPIK 2)"
       ]
     },
-    "softSkills": [
-      "Great communication skills to build good relationship with customers",
-      "Flexible regarding working hours and location",
-      "Able to work under pressure and deliver results to deadlines",
-      "Detail oriented",
-      "Flexible and adaptable, able to work well individually and in a group",
-      "Open minded and willing to learn",
-      "Fast learner, loyal and reliable"
-    ]
+    "softSkills": {
+      "skills": [
+        "Great communication skills to build good relationship with customers",
+        "Flexible regarding working hours and location",
+        "Able to work under pressure and deliver results to deadlines",
+        "Detail oriented",
+        "Flexible and adaptable, able to work well individually and in a group",
+        "Open minded and willing to learn",
+        "Fast learner, loyal and reliable"
+      ]
+    }
   },
   "education": {
     "universityName": "Riga Technical University",

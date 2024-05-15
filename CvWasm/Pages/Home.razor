@@ -72,12 +72,18 @@ Welcome to your new app.
                 Name = "Work Experience",
                 Parameters = { [nameof(WorkExperience.Data)] = cv.Experience[currentExperienceIndex] }
             },
-            [nameof(Skills)] = new ComponentMetadata()
+            [nameof(HardSkills)] = new ComponentMetadata()
             {
-                Type = typeof(Skills),
-                Name = "Skills",
-                Parameters = { [nameof(Skills.Data)] = cv.Skills }
+                    Type = typeof(HardSkills),
+                Name = "Hard Skills",
+                    Parameters = { [nameof(HardSkills.Data)] = cv.Skills.HardSkills }
             },
+                [nameof(SoftSkills)] = new ComponentMetadata()
+                {
+                    Type = typeof(SoftSkills),
+                    Name = "Soft Skills",
+                    Parameters = { [nameof(SoftSkills.Data)] = cv.Skills.SoftSkills }
+                },
             [nameof(Education)] = new ComponentMetadata()
             {
                 Type = typeof(Education),
@@ -103,7 +109,8 @@ Welcome to your new app.
         {
             [AboutCommand] = nameof(About),
             [ExperienceCommand] = nameof(WorkExperience),
-            [SkillsCommand] = nameof(Skills),
+            [HardSkillsCommand] = nameof(HardSkills),
+            [SoftSkillsCommand] = nameof(SoftSkills),
             [EducationCommand] = nameof(Education),
             [HelpCommand] = nameof(Help),
             [HomeCommand] = nameof(Home)

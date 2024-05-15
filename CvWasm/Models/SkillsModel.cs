@@ -2,6 +2,6 @@
 
 public class SkillsModel
 {
-    public HardSkills HardSkills { get; set; }
-    public string[]? SoftSkills { get; set; }
+    public HardSkillsModel HardSkills { get; set; }
+    public SoftSkillsModel SoftSkills { get; set; }
 }

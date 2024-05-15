@@ -1,0 +1,47 @@
+﻿<h3>Hard Skills</h3>
+
+<table>
+    <tbody>
+        <tr>            
+            <th>Programming</th>
+            <td>
+                @foreach (string programming in Data.Programming)
+                {
+                    <p>@programming</p>
+                }
+            </td>
+        </tr>
+        <tr>
+            <th>Tools</th>
+            <td>@Data.Tools</td>
+        </tr>
+        <tr>
+            <th>Other</th>
+            <td>
+                @foreach (string other in Data.Other)
+                {
+                    <p>@other</p>
+                }
+            </td>
+        </tr>
+        <tr>
+            <th>Way Of Working</th>
+            <td>@Data.WayOfWorking</td>
+        </tr>
+        <tr>
+            <th>Languages</th>
+            <td>
+                @foreach (string language in Data.Languages)
+                {
+                    <p>@language</p>
+                }
+            </td>
+        </tr>
+
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public HardSkillsModel? Data { get; set; }
+}
