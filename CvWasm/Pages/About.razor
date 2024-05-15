@@ -1,0 +1,42 @@
+﻿<h3>About</h3>
+
+@* <p>Full Name: @Data.FullName</p>
+<p>DOB: @Data.DateOfBirth</p>
+<p>Nationality: @Data.Nationality</p>
+<p>Email: @Data.Email</p>
+<p>GitHub: <a href="@Data.GitHubLink">GitHub Link</a></p>
+<p>LinkedIn: <a href="@Data.LinkedInLink">LinkedIn Link</a></p> *@
+
+<table>
+    <tbody >
+        <tr>
+            <th>Full Name</th>
+            <td>@Data.FullName</td>
+        </tr>
+        <tr>
+            <th>DOB</th>
+            <td>@Data.DateOfBirth</td>
+        </tr>
+        <tr>
+            <th>Nationality</th>
+            <td>@Data.Nationality</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>@Data.Email</td>
+        </tr>
+        <tr>
+            <th>GitHub</th>
+            <td><a href="@Data.GitHubLink">GitHub Link</a></td>
+        </tr>
+        <tr>
+            <th>LinkedIn</th>
+            <td><a href="@Data.LinkedInLink">LinkedIn Link</a></td>
+        </tr>
+    </tbody>
+</table>
+
+@code {
+    [Parameter]
+    public AboutModel? Data { get; set; }
+}

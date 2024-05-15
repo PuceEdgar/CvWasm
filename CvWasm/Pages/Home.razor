@@ -1,0 +1,172 @@
+﻿@page "/"
+@inject IJSRuntime JSRuntime
+@inject HttpClient Http
+
+<PageTitle>Home</PageTitle>
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<input @ref="textInput" id="@inputId" @bind-value="@Command" @bind-value:event="oninput" @onkeydown="Enter" @onblur="FocusElement" />
+
+
+@if (selectedComponent is not null)
+{
+    <div class="myContent">
+        <DynamicComponent Type="selectedComponent.Type" Parameters="selectedComponent.Parameters"/>
+    </div>     
+    @if (selectedComponent.Type == typeof(WorkExperience))
+    {
+        <p>Experience @(currentExperienceIndex + 1) out of @cv.Experience.Length</p>
+    }
+}
+
+
+
+@code {
+    private string inputId = "inputField";
+    private string? Command { get; set; } = "";
+    private ElementReference textInput;
+    private CvModel cv { get; set; }
+    private Dictionary<string, ComponentMetadata> components;
+    private ComponentMetadata? selectedComponent;
+    private uint currentExperienceIndex = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        cv = await Http.GetFromJsonAsync<CvModel>("cv-data/cv.json") ?? new();
+        InitializeComponentsWithParameters(cv);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await FocusElement();
+        }
+    }
+
+    private async Task FocusElement()
+    {
+        //await JSRuntime.InvokeVoidAsync("focusElement", inputId);
+        await textInput.FocusAsync();
+    }
+
+    //TODO:
+    //implement back functionality. probably use list of navigated pages/commands and on arrow up or command back load previos command and maybe on arrow down/next show next if exists
+
+    private void InitializeComponentsWithParameters(CvModel cv)
+    {
+        components = new(StringComparer.OrdinalIgnoreCase)
+        {
+            [nameof(About)] = new ComponentMetadata()
+            {
+                Type = typeof(About),
+                Name = "About",
+                Parameters = {[nameof(About.Data)] = cv.About}
+            },
+            [nameof(WorkExperience)] = new ComponentMetadata()
+            {
+                Type = typeof(WorkExperience),
+                Name = "Work Experience",
+                Parameters = { [nameof(WorkExperience.Data)] = cv.Experience[currentExperienceIndex] }
+            },
+            [nameof(Skills)] = new ComponentMetadata()
+            {
+                Type = typeof(Skills),
+                Name = "Skills",
+                Parameters = { [nameof(Skills.Data)] = cv.Skills }
+            },
+            [nameof(Education)] = new ComponentMetadata()
+            {
+                Type = typeof(Education),
+                Name = "Education",
+                Parameters = { [nameof(Education.Data)] = cv.Education }
+            },
+            [nameof(Help)] = new ComponentMetadata()
+            {
+                Type = typeof(Help),
+                Name = "Help"
+            },
+            [nameof(Home)] = new ComponentMetadata()
+            {
+                Type = typeof(Home),
+                Name = "Home"
+            }
+        };
+    }
+
+    //private Type? selectedType;
+
+    private readonly Dictionary<string, string> ValidCommands = new()
+        {
+            [AboutCommand] = nameof(About),
+            [ExperienceCommand] = nameof(WorkExperience),
+            [SkillsCommand] = nameof(Skills),
+            [EducationCommand] = nameof(Education),
+            [HelpCommand] = nameof(Help),
+            [HomeCommand] = nameof(Home)
+        };
+
+    // private readonly Dictionary<string, Type> components = new()
+    //     {
+    //         ["about"] = typeof(About),
+    //         ["experience"] = typeof(WorkExperience),
+    //         ["skills"] = typeof(Skills),
+    //         ["education"] = typeof(Education),
+    //         ["error"] = typeof(Error),
+    //         ["help"] = typeof(Help)
+    //     };
+
+    private void Enter(KeyboardEventArgs e)
+    {
+        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && selectedComponent.Type == typeof(WorkExperience))
+        {
+            SelectCurrentWorkExperience(e.Code);
+        }
+
+        if ((e.Code == "Enter" || e.Code == "NumpadEnter"))
+        {
+            ShowSelectedComponent();
+            currentExperienceIndex = 0;
+        }
+        
+    }
+
+    private void SelectCurrentWorkExperience(string code)
+    {
+        if (code == "ArrowRight" && currentExperienceIndex < cv.Experience.Length - 1)
+        {
+            currentExperienceIndex++;
+        }
+        if (code == "ArrowLeft" && currentExperienceIndex > 0)
+        {
+            currentExperienceIndex--;
+        }
+
+        selectedComponent.Parameters[nameof(WorkExperience.Data)] = cv.Experience[currentExperienceIndex];
+
+    }
+
+    private void ShowSelectedComponent()
+    {
+        if (!string.IsNullOrWhiteSpace(Command) && ValidCommands.TryGetValue(Command, out string? action))
+        {
+            selectedComponent = components[action];
+        }
+        else
+        {
+            selectedComponent = new ComponentMetadata()
+                {
+                    Type = typeof(Error),
+                    Name = "Error",
+                    Parameters = { [nameof(Error.BadCommand)] = Command }
+                };
+        }
+
+        Command = string.Empty;
+    }
+}
+
+
