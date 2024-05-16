@@ -1,6 +1,6 @@
 ﻿namespace CvWasm.Models;
 
-public class EducationModel
+public record EducationModel
 {
     public string? UniversityName { get; set; }
     public string? Location { get; set; }

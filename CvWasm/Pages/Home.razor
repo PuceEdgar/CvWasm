@@ -8,7 +8,7 @@
 
 Welcome to your new app.
 
-<input @ref="textInput" id="@inputId" @bind-value="@Command" @bind-value:event="oninput" @onkeydown="Enter" @onblur="FocusElement" />
+<input @ref="textInput" @bind-value="@Command" @bind-value:event="oninput" @onkeydown="Enter" @onblur="FocusElement" />
 
 
 @if (selectedComponent is not null)
@@ -25,12 +25,11 @@ Welcome to your new app.
 
 
 @code {
-    private string inputId = "inputField";
-    private string? Command { get; set; } = "";
-    private ElementReference textInput;
-    private CvModel cv { get; set; }
-    private Dictionary<string, ComponentMetadata> components;
+    private string? Command;    
+    private CvModel? cv;
+    private Dictionary<string, ComponentMetadata>? components;
     private ComponentMetadata? selectedComponent;
+    private ElementReference textInput;
     private uint currentExperienceIndex = 0;
 
     protected override async Task OnInitializedAsync()
@@ -49,7 +48,6 @@ Welcome to your new app.
 
     private async Task FocusElement()
     {
-        //await JSRuntime.InvokeVoidAsync("focusElement", inputId);
         await textInput.FocusAsync();
     }
 
@@ -64,31 +62,31 @@ Welcome to your new app.
             {
                 Type = typeof(About),
                 Name = "About",
-                Parameters = {[nameof(About.Data)] = cv.About}
+                Parameters = {[nameof(About.Data)] = cv.About!}
             },
             [nameof(WorkExperience)] = new ComponentMetadata()
             {
                 Type = typeof(WorkExperience),
                 Name = "Work Experience",
-                Parameters = { [nameof(WorkExperience.Data)] = cv.Experience[currentExperienceIndex] }
+                Parameters = { [nameof(WorkExperience.Data)] = cv.Experience![currentExperienceIndex] }
             },
             [nameof(HardSkills)] = new ComponentMetadata()
             {
                     Type = typeof(HardSkills),
                 Name = "Hard Skills",
-                    Parameters = { [nameof(HardSkills.Data)] = cv.Skills.HardSkills }
+                    Parameters = { [nameof(HardSkills.Data)] = cv.Skills!.HardSkills! }
             },
                 [nameof(SoftSkills)] = new ComponentMetadata()
                 {
                     Type = typeof(SoftSkills),
                     Name = "Soft Skills",
-                    Parameters = { [nameof(SoftSkills.Data)] = cv.Skills.SoftSkills }
+                    Parameters = { [nameof(SoftSkills.Data)] = cv.Skills.SoftSkills! }
                 },
             [nameof(Education)] = new ComponentMetadata()
             {
                 Type = typeof(Education),
                 Name = "Education",
-                Parameters = { [nameof(Education.Data)] = cv.Education }
+                Parameters = { [nameof(Education.Data)] = cv.Education! }
             },
             [nameof(Help)] = new ComponentMetadata()
             {
@@ -103,8 +101,6 @@ Welcome to your new app.
         };
     }
 
-    //private Type? selectedType;
-
     private readonly Dictionary<string, string> ValidCommands = new()
         {
             [AboutCommand] = nameof(About),
@@ -115,16 +111,6 @@ Welcome to your new app.
             [HelpCommand] = nameof(Help),
             [HomeCommand] = nameof(Home)
         };
-
-    // private readonly Dictionary<string, Type> components = new()
-    //     {
-    //         ["about"] = typeof(About),
-    //         ["experience"] = typeof(WorkExperience),
-    //         ["skills"] = typeof(Skills),
-    //         ["education"] = typeof(Education),
-    //         ["error"] = typeof(Error),
-    //         ["help"] = typeof(Help)
-    //     };
 
     private void Enter(KeyboardEventArgs e)
     {
@@ -137,8 +123,7 @@ Welcome to your new app.
         {
             ShowSelectedComponent();
             currentExperienceIndex = 0;
-        }
-        
+        }        
     }
 
     private void SelectCurrentWorkExperience(string code)
@@ -153,7 +138,6 @@ Welcome to your new app.
         }
 
         selectedComponent.Parameters[nameof(WorkExperience.Data)] = cv.Experience[currentExperienceIndex];
-
     }
 
     private void ShowSelectedComponent()

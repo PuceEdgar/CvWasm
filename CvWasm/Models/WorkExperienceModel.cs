@@ -1,6 +1,6 @@
 ﻿namespace CvWasm.Models;
 
-public class WorkExperienceModel
+public record WorkExperienceModel
 {
     public string? TimePeriod { get; set; }
     public string? Company { get; set; }

@@ -1,6 +1,6 @@
 ﻿namespace CvWasm.Models;
 
-public class HardSkillsModel
+public record HardSkillsModel
 {
     public string[]? Programming { get; set; }
     public string? Tools { get; set; }

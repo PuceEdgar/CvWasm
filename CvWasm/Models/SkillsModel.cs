@@ -1,7 +1,7 @@
 ﻿namespace CvWasm.Models;
 
-public class SkillsModel
+public record SkillsModel
 {
-    public HardSkillsModel HardSkills { get; set; }
-    public SoftSkillsModel SoftSkills { get; set; }
+    public HardSkillsModel? HardSkills { get; set; }
+    public SoftSkillsModel? SoftSkills { get; set; }
 }
