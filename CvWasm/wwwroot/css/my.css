@@ -6,3 +6,16 @@
 .myContent {
     margin:10px;
 }
+
+body {
+    font-family: "Lucida Console", "Courier New", monospace;
+    color:white;
+    background-color:black;
+}
+
+input {
+    border-style: none;
+    color: white;
+    background-color: black;
+    outline:none;
+}

@@ -6,12 +6,8 @@
 
 <h1>Hello, world!</h1>
 
-Welcome to your new app.
 
-<input @ref="textInput" @bind-value="@Command" @bind-value:event="oninput" @onkeydown="Enter" @onblur="FocusElement" />
-
-
-@if (selectedComponent is not null)
+@* @if (selectedComponent is not null)
 {
     <div class="myContent">
         <DynamicComponent Type="selectedComponent.Type" Parameters="selectedComponent.Parameters"/>
@@ -20,17 +16,34 @@ Welcome to your new app.
     {
         <p>Experience @(currentExperienceIndex + 1) out of @cv.Experience.Length</p>
     }
+} *@
+
+@if (listOfComponents.Count > 0)
+{
+    @foreach (var component in listOfComponents)
+    {
+        <div class="myContent">
+            <DynamicComponent Type="component.Type" Parameters="component.Parameters" />
+        </div>
+       @*  @if (component.Type == typeof(WorkExperience))
+        {
+            <p>Experience @(currentExperienceIndex + 1) out of @cv.Experience.Length</p>
+        } *@
+    }
 }
 
+<label>Guest></label>
+<input @ref="textInput" @bind-value="@Command" @bind-value:event="oninput" @onkeydown="Enter" @onblur="FocusElement" />
 
 
 @code {
-    private string? Command;    
     private CvModel? cv;
     private Dictionary<string, ComponentMetadata>? components;
-    private ComponentMetadata? selectedComponent;
+    private ComponentMetadata? selectedComponent;    
     private ElementReference textInput;
-    private uint currentExperienceIndex = 0;
+    private string Command = string.Empty;
+    private int currentExperienceIndex = 0;
+    private List<ComponentMetadata> listOfComponents = [];
 
     protected override async Task OnInitializedAsync()
     {
@@ -44,6 +57,8 @@ Welcome to your new app.
         {
             await FocusElement();
         }
+
+        await JSRuntime.InvokeVoidAsync("scrollToInput");
     }
 
     private async Task FocusElement()
@@ -64,12 +79,12 @@ Welcome to your new app.
                 Name = "About",
                 Parameters = {[nameof(About.Data)] = cv.About!}
             },
-            [nameof(WorkExperience)] = new ComponentMetadata()
-            {
-                Type = typeof(WorkExperience),
-                Name = "Work Experience",
-                Parameters = { [nameof(WorkExperience.Data)] = cv.Experience![currentExperienceIndex] }
-            },
+            // [nameof(WorkExperience)] = new ComponentMetadata()
+            // {
+            //     Type = typeof(WorkExperience),
+            //     Name = "Work Experience",
+            //     Parameters = { [nameof(WorkExperience.Data)] = cv.Experience![currentExperienceIndex] }
+            // },
             [nameof(HardSkills)] = new ComponentMetadata()
             {
                     Type = typeof(HardSkills),
@@ -109,12 +124,12 @@ Welcome to your new app.
             [SoftSkillsCommand] = nameof(SoftSkills),
             [EducationCommand] = nameof(Education),
             [HelpCommand] = nameof(Help),
-            [HomeCommand] = nameof(Home)
+            [HomeCommand] = nameof(Home),
         };
 
-    private void Enter(KeyboardEventArgs e)
+    private async Task Enter(KeyboardEventArgs e)
     {
-        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && selectedComponent.Type == typeof(WorkExperience))
+        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && listOfComponents.Last().Type == typeof(WorkExperience))
         {
             SelectCurrentWorkExperience(e.Code);
         }
@@ -122,8 +137,8 @@ Welcome to your new app.
         if ((e.Code == "Enter" || e.Code == "NumpadEnter"))
         {
             ShowSelectedComponent();
-            currentExperienceIndex = 0;
-        }        
+        }
+        
     }
 
     private void SelectCurrentWorkExperience(string code)
@@ -136,27 +151,70 @@ Welcome to your new app.
         {
             currentExperienceIndex--;
         }
-
+        //listOfComponents.Last().Parameters[nameof(WorkExperience.Data)] = cv.Experience[currentExperienceIndex];
         selectedComponent.Parameters[nameof(WorkExperience.Data)] = cv.Experience[currentExperienceIndex];
+        selectedComponent.Parameters[nameof(WorkExperience.CurrentIndex)] = currentExperienceIndex;
     }
 
     private void ShowSelectedComponent()
     {
-        if (!string.IsNullOrWhiteSpace(Command) && ValidCommands.TryGetValue(Command, out string? action))
+        switch (Command)
         {
-            selectedComponent = components[action];
-        }
-        else
-        {
-            selectedComponent = new ComponentMetadata()
-                {
-                    Type = typeof(Error),
-                    Name = "Error",
-                    Parameters = { [nameof(Error.BadCommand)] = Command }
-                };
+            case ClearCommand:
+                ClearWindow();
+                break;
+            case AboutCommand:
+            case EducationCommand:
+            case HardSkillsCommand:
+            case SoftSkillsCommand:
+            case HelpCommand:
+                LoadComponent(ValidCommands[Command]);
+                break;
+            case ExperienceCommand:
+                LoadExperienceComponent();
+                break;
+            default:
+                LoadErrorComponent(Command);
+                break;
         }
 
         Command = string.Empty;
+    }
+
+    private void LoadExperienceComponent()
+    {
+        selectedComponent = new ComponentMetadata()
+            {
+                Type = typeof(WorkExperience),
+                Name = "Work Experience",
+                Parameters = { 
+                    [nameof(WorkExperience.Data)] = cv!.Experience![0],
+                [nameof(WorkExperience.TotalExperienceCount)] = cv.Experience.Count()
+                }
+            };
+        listOfComponents.Add(selectedComponent);
+    }
+
+    private void LoadComponent(string componentName)
+    {
+        selectedComponent = components[componentName];
+        listOfComponents.Add(selectedComponent);
+    }
+
+    private void LoadErrorComponent(string command)
+    {
+        selectedComponent = new ComponentMetadata()
+                {
+                    Type = typeof(Error),
+                    Name = "Error",
+                Parameters = { [nameof(Error.BadCommand)] = command }
+                };
+        listOfComponents.Add(selectedComponent);
+    }
+
+    private void ClearWindow()
+    {
+        listOfComponents = [];
     }
 }
 

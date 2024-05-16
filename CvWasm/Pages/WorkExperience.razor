@@ -1,13 +1,7 @@
 ﻿<h3>WorkExperience</h3>
 
-@* todo 
-    use index of workexperience array Data[i] to display in table. 
-    start with 0, on arrow -> increase +1 on arrow <- decrease -1
-    think what to do when array begining or end reached. maybe don't allow to move from last to 0 or from 0 to last.
-    or get first element or last element.
-*@
-
-
+<p>Experience @(CurrentIndex + 1) out of @TotalExperienceCount</p>
+<p>Use arrow key left or right to see other work experience</p>
     <table>
         <tbody>
             <tr>
@@ -27,7 +21,7 @@
             <td>@Data.Position</td>
             </tr>
             <tr>
-                <th>JobDescription</th>
+                <th>Job Description</th>
                 <td>
                 @foreach (string responsibility in Data.JobDescription)
                     {
@@ -39,10 +33,11 @@
         </tbody>
     </table>
 
-
-
-
 @code {
     [Parameter]
     public WorkExperienceModel Data { get; set; }
+    [Parameter]
+    public int CurrentIndex { get; set; }
+    [Parameter]
+    public int TotalExperienceCount { get; set; }
 }
