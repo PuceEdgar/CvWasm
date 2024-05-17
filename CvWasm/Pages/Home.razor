@@ -159,6 +159,12 @@
             case DownloadKorCvCommand:
                 await DownloadCv("kor");
                 break;
+            case ShowEnglishCommand:
+                await LoadCv("eng");
+                break;
+            case ShowKoreanCommand:
+                await LoadCv("kor");
+                break;
             default:
                 LoadErrorComponent();
                 break;
@@ -226,6 +232,12 @@
     {
         var base64 = await FileUtil.GetPdfCvBase64(Http, language);
         await JSRuntime.InvokeVoidAsync("downloadFile", $"cv_{language}.pdf", base64);
+    }
+
+    private async Task LoadCv(string language)
+    {
+        cv = await Http.GetFromJsonAsync<CvModel>($"cv-data/cv-{language}.json") ?? new();
+        InitializeComponentsWithParameters(cv);
     }
 }
 

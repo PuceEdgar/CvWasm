@@ -16,7 +16,7 @@ public static class Constants
     public const string DownloadEngCvCommand = "cv -d -eng";
     public const string DownloadKorCvCommand = "cv -d -kor";
     public const string ShowEnglishCommand = "lang -eng";
-    public const string ShowKoreanCommand = "lang -eng";
+    public const string ShowKoreanCommand = "lang -kor";
 
     public const string NameOfAbout = nameof(About);
     public const string NameOfExperience = nameof(WorkExperience);
