@@ -2,75 +2,73 @@
   "about": {
     "dateOfBirth": "1987-12-25",
     "email": "puce.edgar@gmail.com",
-    "fullName": "Edgars Puce",
+    "fullName": "Edgars Puce (푸체 에드가)",
     "gitHubLink": "https://github.com/PuceEdgar",
     "linkedInLink": "https://www.linkedin.com/in/edgars-puce/",
-    "nationality": "Latvian",
-    "personalStatement": "I am a passionate developer with 5 years of experience, who loves to write code and solve problems. Coding is fun because you can create something new from nothing and see results very quickly. Sometimes I struggle to solve issues, but  the more I try and fail, the more I can learn. And when I succeed, I feel proud of myself."
+    "nationality": "라트비아 (EU 국가)",
+    "personalStatement": "안녕하세요. 저는 5년차 개발자 입니다. 저는 코딩과 문제를 해결하는 것들을 좋아합니다. 무에서 유를 창조할 수 있고, 그 결과를 바로 볼 수 있다는 점에서 코딩은 매우 매력적입니다. 때때로 문제를 해결하기 위해 고군분투 해야하지만, 더 많이 시도하고 실패할수록 더 많이 배우고 성장할 수 있습니다. 그리고 마침내 성공하게 되면 매우 큰 보람을 느낍니다. 저는 한국에서 배우자비자(F6)로 거주 중 입니다. 언제든지 비자 문제 없이 취직이 가능합니다. 또한 한국에 정보통신업으로 사업자등록도 하였기 때문에 프리랜서 등으로 계약하여 일하는 데에도 문제가 전혀 없습니다."
   },
   "experience": [
     {
       "TimePeriod": "July 2021 ~ October 2023",
       "Company": "28Stone Consulting, Inc.",
-      "location": "Latvia/South Korea",
-      "position": "Developer",
+      "location": "Latvia (정직원) / Korea (프리랜서로 계약하여 라트비아 IT 팀 및 미국 현지 일본 은행 IT 팀과  원격근무) ",
+      "position": "개발자(대리~과장 급)",
       "jobDescription": [
-        "Worked on video recording and face recognition application for 6 months. Technologies used: Python, Electron.",
-        "Created custom views in WPF for vendor application for 6 months.",
-        "Worked on an internal project for company employee CV editing and generation application 1+ year. Technologies used: Angular, C#, AWS Lambda, AWS Cognito, AWS DynamoDB."
+        "비디오 녹화 및 얼굴 인식 앱 개발 :  6개월 / Python, Electron 사용",
+        "고객사 앱을 위한 custom views 개발 : 6개월 / WPF 사용",
+        "회사 내부 프로젝트 (직원 이력서 규격화 앱 등) : 1년 이상 / Angular, C#, AWS Lambda, AWS Cognito, AWS DynamoDB 등 사용"
       ]
     },
     {
       "TimePeriod": "April 2019 ~ June 2021",
       "Company": "SEB Global Services",
       "location": "Riga, Latvia",
-      "position": "Developer",
+      "position": "개발자(대리 급)",
       "jobDescription": [
-        "Developed AML related scenarios (SQL queries)",
-        "Developed and deployed to production reporting solution (Required by Swedish Financial Police)",
-        "Maintained and improved developed reporting solution based on requirements",
-        "Worked on UI part for developed reporting solution to make it available to other departments  within the bank (React)",
-        "Collaborate with other IT teams and product owners in Latvia and Sweden"
+        "시나리오 관련 AML 개발 : SQL 사용",
+        "스웨덴 금융법에 따른 각종 보고서 작성 앱 개발 및 퍼블리싱 : C#, SQL사용",
+        "보고서 작성 앱의 UI 개발 : React 사용",
+        "라트비아 및 스웨덴의 타 IT 부서 및  product owner들과의 협업"
       ]
     },
     {
       "TimePeriod": "March 2018 ~ March 2019",
       "Company": "SEB Global Services",
       "location": "Riga, Latvia",
-      "position": "Junior Developer",
+      "position": "개발자(신입)",
       "jobDescription": [
-        "Maintained and updated vendor systems",
-        "Maintained and developed QlikView application",
-        "Automated manual processes of product owners",
-        "Collaborate with other IT teams and product owners in Latvia and Sweden"
+        "벤더 시스템 유지/보수",
+        "QlikView 앱 유지/보수",
+        "Product owner들의 업무 자동화를 위한 앱 개발",
+        "라트비아 및 스웨덴의 타 IT 부서 및  product owner들과의 협업"
       ]
     },
     {
       "TimePeriod": "August 2015 ~ March 2017",
       "Company": "Tint a Car Korea Co., Ltd.,",
       "location": "Gyeonggi-do, South Korea",
-      "position": "Assistant Manager",
+      "position": "부매니저",
       "jobDescription": [
-        "Translating reports and documents from Korean to English",
-        "Communication with Head office in Australia",
-        "Meeting with international partners",
-        "Helping with marketing",
-        "Market research"
+        "각종 통,번역 업무",
+        "호주 본사와의 communication 및 각종 reports 제출",
+        "해외 파트너들과의 communication 및 meeting",
+        "마케팅 업무 보조",
+        "해외 시장 조사"
       ]
     },
     {
       "TimePeriod": "June 2012 – August 2014",
       "Company": "Centra Convenience Co., Ltd.",
       "location": "Dublin, Ireland",
-      "position": "Assistant Manager",
+      "position": "부매니저",
       "jobDescription": [
-        "Ordering products for the shop",
-        "Training new staff",
-        "Making reports for the Head Office (daily and weekly)",
-        "Finance management and cash flow",
-        "Meeting with sales representatives",
-        "Running the shop on my own when manager is absent",
-        "Staff management"
+        "제품 발주 / 재고 관리",
+        "직원 관리 / 신입 교육",
+        "본사에 daily, weekly reports 제출",
+        "재정 업무 / 현금 흐름 관리",
+        "영업 담당자들과의 meeting",
+        "매니저 역할 (매니저 부재 시)"
       ]
     },
     {
@@ -79,10 +77,9 @@
       "location": "Riga, Latvia",
       "position": "Billing Operations Specialist",
       "jobDescription": [
-        "Responsible for running and monitoring daily operations (first line support) of billing and surrounding systems",
-        "Ensure that processes are running smoothly and provide support to the local Billing offices in Tele2  countries in all Europe",
-        "Resolve requests on demand and issues",
-        "Communication with internal and external departments and Head Office in Sweden"
+        "Billing 관련 시스템 운영 및 모니터링 / 에러 발생 시 처리",
+        "유럽 내 현지 billig 사무소들(독일, 이탈리아, 폴란드, 스페인, 벨기에 등)의 문제 해결 및 지원",
+        "스웨덴 본사와의 communication 및 각종 reports 작성"
       ]
     }
   ],
@@ -99,20 +96,23 @@
       ],
       "wayOfWorking": "Agile, Scrum, Kanban, Program Increment (SAFe)",
       "languages": [
-        "Russian, Latvian (Native)",
-        "English (Fluent)",
-        "Korean (TOPIK 2)"
+        "라트비아어(모국어)",
+        "러시아어(매우 유창)",
+        "영어(유창)",
+        "한국어 (TOPIK 2)"
       ]
     },
     "softSkills": {
       "skills": [
-        "Great communication skills to build good relationship with customers",
-        "Flexible regarding working hours and location",
-        "Able to work under pressure and deliver results to deadlines",
-        "Detail oriented",
-        "Flexible and adaptable, able to work well individually and in a group",
-        "Open minded and willing to learn",
-        "Fast learner, loyal and reliable"
+        "팀 또는 고객사들과의 커뮤니케이션 능력",
+        "시, 공간 제약 없이 유연한 업무 가능 (원격 근무, 해외 팀 또는 업체들과의 업무, 해외 출장 등)",
+        "높은 집중력과 더블 체크(꼼꼼함)의 생활화로 실수를 최소화 함",
+        "효율적인 업무 관리 : 업무의 중요도 및 마감 기한에 따른 시간 분배 및 관리",
+        "성공적인 업무 수행과 개인의 생산성 향상을 위한 노력",
+        "유연한 상황 대처 능력과 스트레스 관리",
+        "업무 적응력 뛰어나고 긍정적 임",
+        "배우는 것을 좋아하고 오픈 마인드 임",
+        "성실하고 책임감 있음"
       ]
     }
   },

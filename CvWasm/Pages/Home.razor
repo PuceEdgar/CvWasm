@@ -34,7 +34,7 @@
     protected override async Task OnInitializedAsync()
     {
         cv = await Http.GetFromJsonAsync<CvModel>("cv-data/cv-eng.json") ?? new();
-        AsciiArt = await Http.GetStringAsync("cv-data/ascii-text-art.txt");
+        AsciiArt = await Http.GetStringAsync("cv-data/ascii-welcome.txt");
         InitializeComponentsWithParameters(cv);
     }
 
@@ -88,11 +88,6 @@
             {
                 Type = typeof(Help),
                 Name = "Help"
-            },
-            [nameof(Home)] = new ComponentMetadata()
-            {
-                Type = typeof(Home),
-                Name = "Home"
             }
         };
     }
@@ -104,8 +99,7 @@
             [HardSkillsCommand] = nameof(HardSkills),
             [SoftSkillsCommand] = nameof(SoftSkills),
             [EducationCommand] = nameof(Education),
-            [HelpCommand] = nameof(Help),
-            [HomeCommand] = nameof(Home),
+            [HelpCommand] = nameof(Help)
         };
 
     private async Task Enter(KeyboardEventArgs e)
@@ -160,7 +154,10 @@
                 OpenLinkInNewTab(cv.About.LinkedInLink);
                 break;
             case DownloadEngCvCommand:
-               await DownloadCv("eng");
+                await DownloadCv("eng");
+                break;
+            case DownloadKorCvCommand:
+                await DownloadCv("kor");
                 break;
             default:
                 LoadErrorComponent();
@@ -228,7 +225,7 @@
     private async Task DownloadCv(string language)
     {
         var base64 = await FileUtil.GetPdfCvBase64(Http, language);
-        await JSRuntime.InvokeVoidAsync("downloadFile", "cv_eng.pdf", base64);
+        await JSRuntime.InvokeVoidAsync("downloadFile", $"cv_{language}.pdf", base64);
     }
 }
 

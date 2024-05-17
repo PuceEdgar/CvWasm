@@ -15,7 +15,8 @@ public static class Constants
     public const string OpenLinkedInCommand = "open -l";
     public const string DownloadEngCvCommand = "cv -d -eng";
     public const string DownloadKorCvCommand = "cv -d -kor";
-    public const string HomeCommand = "home";
+    public const string ShowEnglishCommand = "lang -eng";
+    public const string ShowKoreanCommand = "lang -eng";
 
     public const string NameOfAbout = nameof(About);
     public const string NameOfExperience = nameof(WorkExperience);
@@ -23,5 +24,4 @@ public static class Constants
     public const string NameOfSoftSkills = nameof(SoftSkills);
     public const string NameOfEducation = nameof(Education);
     public const string NameOfHelp = nameof(Help);
-    public const string NameOfHome = nameof(Home);
 }
