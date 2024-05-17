@@ -4,7 +4,10 @@
 
 <PageTitle>Home</PageTitle>
 
-<h1>Hello, world!</h1>
+
+    <div class="ascii-art">@AsciiArt</div>
+
+
 
 
 @* @if (selectedComponent is not null)
@@ -22,13 +25,10 @@
 {
     @foreach (var component in listOfComponents)
     {
+        <p>Guest> @component.Command</p>
         <div class="myContent">
-            <DynamicComponent Type="component.Type" Parameters="component.Parameters" />
+            <DynamicComponent Type="component.MetaData.Type" Parameters="component.MetaData.Parameters" />
         </div>
-       @*  @if (component.Type == typeof(WorkExperience))
-        {
-            <p>Experience @(currentExperienceIndex + 1) out of @cv.Experience.Length</p>
-        } *@
     }
 }
 
@@ -43,11 +43,31 @@
     private ElementReference textInput;
     private string Command = string.Empty;
     private int currentExperienceIndex = 0;
-    private List<ComponentMetadata> listOfComponents = [];
+    private List<CommandAndData> listOfComponents = [];
+    private string AsciiArt;
+    //     private string AsciiArt = @"
+    //  __  __              ___       ___                       
+    // /\ \/\ \            /\_ \     /\_ \                      
+    // \ \ \_\ \      __   \//\ \    \//\ \      ___            
+    //  \ \  _  \   /'__`\   \ \ \     \ \ \    / __`\          
+    //   \ \ \ \ \ /\  __/    \_\ \_    \_\ \_ /\ \L\ \         
+    //    \ \_\ \_\\ \____\   /\____\   /\____\\ \____/         
+    //     \/_/\/_/ \/____/   \/____/   \/____/ \/___/          
+
+
+    //  __      __                    ___        __      __     
+    // /\ \  __/\ \                  /\_ \      /\ \    /\ \    
+    // \ \ \/\ \ \ \    ___    _ __  \//\ \     \_\ \   \ \ \   
+    //  \ \ \ \ \ \ \  / __`\ /\`'__\  \ \ \    /'_` \   \ \ \  
+    //   \ \ \_/ \_\ \/\ \L\ \\ \ \/    \_\ \_ /\ \L\ \   \ \_\ 
+    //    \ `\___x___/\ \____/ \ \_\    /\____\\ \___,_\   \/\_\
+    //     '\/__//__/  \/___/   \/_/    \/____/ \/__,_ /    \/_/
+    // ";
 
     protected override async Task OnInitializedAsync()
     {
-        cv = await Http.GetFromJsonAsync<CvModel>("cv-data/cv.json") ?? new();
+        cv = await Http.GetFromJsonAsync<CvModel>("cv-data/cv-eng.json") ?? new();
+        AsciiArt = await Http.GetStringAsync("cv-data/ascii-text-art.txt");
         InitializeComponentsWithParameters(cv);
     }
 
@@ -79,12 +99,6 @@
                 Name = "About",
                 Parameters = {[nameof(About.Data)] = cv.About!}
             },
-            // [nameof(WorkExperience)] = new ComponentMetadata()
-            // {
-            //     Type = typeof(WorkExperience),
-            //     Name = "Work Experience",
-            //     Parameters = { [nameof(WorkExperience.Data)] = cv.Experience![currentExperienceIndex] }
-            // },
             [nameof(HardSkills)] = new ComponentMetadata()
             {
                     Type = typeof(HardSkills),
@@ -129,7 +143,7 @@
 
     private async Task Enter(KeyboardEventArgs e)
     {
-        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && listOfComponents.Last().Type == typeof(WorkExperience))
+        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && listOfComponents.Last().MetaData.Type == typeof(WorkExperience))
         {
             SelectCurrentWorkExperience(e.Code);
         }
@@ -138,7 +152,7 @@
         {
             ShowSelectedComponent();
         }
-        
+
     }
 
     private void SelectCurrentWorkExperience(string code)
@@ -156,7 +170,7 @@
         selectedComponent.Parameters[nameof(WorkExperience.CurrentIndex)] = currentExperienceIndex;
     }
 
-    private void ShowSelectedComponent()
+    private async Task ShowSelectedComponent()
     {
         switch (Command)
         {
@@ -173,8 +187,17 @@
             case ExperienceCommand:
                 LoadExperienceComponent();
                 break;
+            case OpenGitHubCommand:
+                OpenLinkInNewTab(cv.About.GitHubLink);
+                break;
+            case OpenLinkedInCommand:
+                OpenLinkInNewTab(cv.About.LinkedInLink);
+                break;
+            case DownloadEngCvCommand:
+               await DownloadCv("eng");
+                break;
             default:
-                LoadErrorComponent(Command);
+                LoadErrorComponent();
                 break;
         }
 
@@ -192,29 +215,54 @@
                 [nameof(WorkExperience.TotalExperienceCount)] = cv.Experience.Count()
                 }
             };
-        listOfComponents.Add(selectedComponent);
+
+
+        listOfComponents.Add(new()
+        {
+            Command = Command,
+            MetaData = selectedComponent
+        });
     }
 
     private void LoadComponent(string componentName)
     {
         selectedComponent = components[componentName];
-        listOfComponents.Add(selectedComponent);
+        listOfComponents.Add(new()
+            {
+                Command = Command,
+                MetaData = selectedComponent
+            });
     }
 
-    private void LoadErrorComponent(string command)
+    private void LoadErrorComponent()
     {
         selectedComponent = new ComponentMetadata()
                 {
                     Type = typeof(Error),
                     Name = "Error",
-                Parameters = { [nameof(Error.BadCommand)] = command }
+                Parameters = { [nameof(Error.BadCommand)] = Command }
                 };
-        listOfComponents.Add(selectedComponent);
+        listOfComponents.Add(new()
+            {
+                Command = Command,
+                MetaData = selectedComponent
+            });
     }
 
     private void ClearWindow()
     {
         listOfComponents = [];
+    }
+
+    private void OpenLinkInNewTab(string url)
+    {
+        JSRuntime.InvokeVoidAsync("open", url, "_blank");
+    }
+
+    private async Task DownloadCv(string language)
+    {
+        var base64 = await FileUtil.GetPdfCvBase64(Http, language);
+        await JSRuntime.InvokeVoidAsync("downloadFile", "cv_eng.pdf", base64);
     }
 }
 

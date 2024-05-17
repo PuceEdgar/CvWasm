@@ -11,8 +11,9 @@ public static class Constants
     public const string EducationCommand = "education";
     public const string HelpCommand = "help";
     public const string ClearCommand = "clear";
-    public const string OpenGitHubCommand = "github -o";
-    public const string OpenLinkedInCommand = "linkedin -o";
+    public const string OpenGitHubCommand = "open -g";
+    public const string OpenLinkedInCommand = "open -l";
+    public const string DownloadEngCvCommand = "cv -d -eng";
     public const string NavigationCommand = "navigation";
     public const string HomeCommand = "home";
 
@@ -25,5 +26,5 @@ public static class Constants
     public const string NameOfHome = nameof(Home);
     //public const string NameOfNavigation = nameof(About);
 
-    public static readonly string[] ArrayOfCommands = [AboutCommand, ExperienceCommand, HardSkillsCommand, SoftSkillsCommand, EducationCommand, HelpCommand, ClearCommand, OpenGitHubCommand, OpenLinkedInCommand, NavigationCommand, HomeCommand];
+    //public static readonly string[] ArrayOfCommands = [AboutCommand, ExperienceCommand, HardSkillsCommand, SoftSkillsCommand, EducationCommand, HelpCommand, ClearCommand, OpenGitHubCommand, OpenLinkedInCommand, NavigationCommand, HomeCommand];
 }
