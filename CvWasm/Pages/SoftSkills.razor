@@ -2,7 +2,7 @@
 
 <table>
     <tbody>
-        @foreach (var skill in Data.Skills)
+        @foreach (var skill in Data!.Skills!)
         {
             <tr>
                 <td>
@@ -12,8 +12,3 @@
         }
     </tbody>
 </table>
-
-@code {
-    [Parameter]
-    public SoftSkillsModel? Data { get; set; }
-}
