@@ -10,6 +10,8 @@
     <p>Please type 'help' to see supported commands and their description.</p>
 </div>
 
+
+
 @if (listOfComponents.Count > 0)
 {
     @foreach (var component in listOfComponents)
@@ -20,6 +22,18 @@
         </div>
     }
 }
+@* @if (commandHistory.Count > 0)
+{
+    @foreach (var command in commandHistory)
+    {
+        if (!command.Value)
+        {
+            <p>Guest> @command.Key</p>
+        }
+        
+    }
+
+} *@
 
 <label>Guest></label>
 <input @ref="textInput" @bind-value="@Command" @bind-value:event="oninput" @onkeydown="Enter" @onblur="FocusElement" />
@@ -33,6 +47,7 @@
     private string Command = string.Empty;
     private int currentExperienceIndex = 0;
     private List<CommandAndData> listOfComponents = [];
+    private Dictionary<string, bool> commandHistory = [];
     private string? AsciiArt;
 
     protected override async Task OnInitializedAsync()
@@ -58,7 +73,8 @@
     }
 
     //TODO:
-    //implement back functionality. probably use list of navigated pages/commands and on arrow up or command back load previos command and maybe on arrow down/next show next if exists
+    //1. implement back functionality. probably use list of navigated pages/commands and on arrow up or command back load previos command and maybe on arrow down/next show next if exists
+    //2. change from input field to form? so that 'Enter' method is not called on each input change. Or change when 'Enter' is called
 
     private void InitializeComponentsWithParameters(CvModel cv)
     {
@@ -96,7 +112,7 @@
         };
     }
 
-    private readonly Dictionary<string, string> ValidCommands = new()
+    private readonly Dictionary<string, string> ValidComponentCommands = new()
         {
             [AboutCommand] = nameof(About),
             [ExperienceCommand] = nameof(WorkExperience),
@@ -115,7 +131,7 @@
 
         if ((e.Code == "Enter" || e.Code == "NumpadEnter"))
         {
-            await ShowSelectedComponent();
+            await ExecuteCommand();
         }
 
     }
@@ -134,7 +150,7 @@
         selectedComponent.Parameters[nameof(WorkExperience.CurrentIndex)] = currentExperienceIndex;
     }
 
-    private async Task ShowSelectedComponent()
+    private async Task ExecuteCommand()
     {
         switch (Command)
         {
@@ -146,7 +162,7 @@
             case HardSkillsCommand:
             case SoftSkillsCommand:
             case HelpCommand:
-                LoadComponent(ValidCommands[Command]);
+                LoadComponent(ValidComponentCommands[Command]);
                 break;
             case ExperienceCommand:
                 LoadExperienceComponent();
@@ -174,6 +190,8 @@
                 break;
         }
 
+        bool isComponentCommand = ValidComponentCommands.ContainsKey(Command) || Command.Equals(ExperienceCommand, StringComparison.InvariantCultureIgnoreCase);
+        commandHistory.Add(Command, isComponentCommand);
         Command = string.Empty;
     }
 
@@ -227,21 +245,69 @@
         listOfComponents = [];
     }
 
-    private void OpenLinkInNewTab(string url)
+    private async Task OpenLinkInNewTab(string url)
     {
-        JSRuntime.InvokeVoidAsync("open", url, "_blank");
+        var result = "Result: ";
+        try
+        {
+            await JSRuntime.InvokeVoidAsync("open", url, "_blank");
+            result += "Success";
+        }
+        catch (Exception ex)
+        {
+            result += "Failed";
+        }
+
+        LoadGeneralComponent(result);
     }
 
     private async Task DownloadCv(string language)
     {
-        var base64 = await FileUtil.GetPdfCvBase64(Http, language);
-        await JSRuntime.InvokeVoidAsync("downloadFile", $"cv_{language}.pdf", base64);
+        var result = "Result: ";
+        try
+        {
+            var base64 = await FileUtil.GetPdfCvBase64(Http, language);
+            await JSRuntime.InvokeVoidAsync("downloadFile", $"cv_{language}.pdf", base64);
+            result += "Success";
+        }
+        catch (Exception)
+        {
+            result += "Failed";
+        }
+
+        LoadGeneralComponent(result);
     }
 
     private async Task LoadCv(string language)
     {
-        cv = await Http.GetFromJsonAsync<CvModel>($"cv-data/cv-{language}.json") ?? new();
-        InitializeComponentsWithParameters(cv);
+        var result = "Result: ";
+        try
+        {
+            cv = await Http.GetFromJsonAsync<CvModel>($"cv-data/cv-{language}.json") ?? new();
+            InitializeComponentsWithParameters(cv);
+            result += "Success";
+        }
+        catch (Exception)
+        {
+            result += "Failed";
+        }
+
+        LoadGeneralComponent(result);
+    }
+
+    private void LoadGeneralComponent(string message)
+    {
+        selectedComponent = new ComponentMetadata()
+            {
+                Type = typeof(General),
+                Name = "General",
+                Parameters = { [nameof(General.Data)] = message }
+            };
+        listOfComponents.Add(new()
+            {
+                Command = Command,
+                MetaData = selectedComponent
+            });
     }
 }
 
