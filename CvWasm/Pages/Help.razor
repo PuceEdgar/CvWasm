@@ -1,12 +1,15 @@
 ﻿<h3>Help</h3>
 
-@foreach (KeyValuePair<string, string> command in AvailableCommands)
+@foreach (KeyValuePair<string, string> command in (IsEnglishVersion ? EnglishCommandDescription : KoreanCommandDescription))
 {
     <p>@command.Key - @command.Value</p>
 }
 
 @code {
-    private readonly Dictionary<string, string> AvailableCommands = new()
+    [Parameter]
+    public bool IsEnglishVersion { get; set; }
+
+    private static readonly Dictionary<string, string> EnglishCommandDescription = new()
     {
             [AboutCommand] = "Shows about page",
             [ExperienceCommand] = "Shows work experience page",
@@ -23,19 +26,20 @@
             [ShowKoreanCommand] = "View content in Korean"
     };
 
-    //TODO:
-    //need to show help in korean language
-    //     [AboutCommand] = "About",
-    //     [ExperienceCommand] = "경력사항",
-    //     [HardSkillsCommand] = "Hard skills",
-    //     [SoftSkillsCommand] = "Soft skills",
-    //     [EducationCommand] = "학력사항",
-    //     [HelpCommand] = "도움말",
-    //     [ClearCommand] = "모두 지우기",
-    //     [OpenGitHubCommand] = "Github 바로가기",
-    //     [OpenLinkedInCommand] = "LinkedIn 바로가기",
-    //     [DownloadEngCvCommand] = "영어 버전으로 보기",
-    //     [DownloadKorCvCommand] = "한국어 버전으로 보기",
-    //     [ShowEnglishCommand] = "영어",
-    //     [ShowKoreanCommand] = "한국어"
+    private static readonly Dictionary<string, string> KoreanCommandDescription = new()
+        {
+            [AboutCommand] = "About",
+            [ExperienceCommand] = "경력사항",
+            [HardSkillsCommand] = "Hard skills",
+            [SoftSkillsCommand] = "Soft skills",
+            [EducationCommand] = "학력사항",
+            [HelpCommand] = "도움말",
+            [ClearCommand] = "모두 지우기",
+            [OpenGitHubCommand] = "Github 바로가기",
+            [OpenLinkedInCommand] = "LinkedIn 바로가기",
+            [DownloadEngCvCommand] = "영어 버전으로 보기",
+            [DownloadKorCvCommand] = "한국어 버전으로 보기",
+            [ShowEnglishCommand] = "영어",
+            [ShowKoreanCommand] = "한국어"
+    };
 }

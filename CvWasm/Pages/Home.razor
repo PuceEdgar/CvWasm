@@ -37,6 +37,7 @@
     private int currentExperienceIndex = 0;
     private List<CommandAndData> listOfComponents = [];
     private string? AsciiArt;
+    private bool isEngVersion = true;
 
     protected override async Task OnInitializedAsync()
     {
@@ -95,7 +96,8 @@
             [nameof(Help)] = new ComponentMetadata()
             {
                 Type = typeof(Help),
-                Name = "Help"
+                Name = "Help",
+                Parameters = {[nameof(Help.IsEnglishVersion)] = isEngVersion}
             }
         };
     }
@@ -162,16 +164,16 @@
                 await OpenLinkInNewTab(cv.About.LinkedInLink);
                 break;
             case DownloadEngCvCommand:
-                await DownloadCv("eng");
+                await DownloadCv(Languages.eng);
                 break;
             case DownloadKorCvCommand:
-                await DownloadCv("kor");
+                await DownloadCv(Languages.kor);
                 break;
             case ShowEnglishCommand:
-                await LoadCv("eng");
+                await LoadCv(Languages.eng);
                 break;
             case ShowKoreanCommand:
-                await LoadCv("kor");
+                await LoadCv(Languages.kor);
                 break;
             default:
                 LoadErrorComponent();
@@ -247,12 +249,12 @@
         LoadGeneralComponent(result);
     }
 
-    private async Task DownloadCv(string language)
+    private async Task DownloadCv(Languages language)
     {
         var result = "Result: ";
         try
         {
-            var base64 = await FileUtil.GetPdfCvBase64(Http, language);
+            var base64 = await FileUtil.GetPdfCvBase64(Http, language.ToString());
             await JSRuntime.InvokeVoidAsync("downloadFile", $"cv_{language}.pdf", base64);
             result += "Success";
         }
@@ -264,14 +266,16 @@
         LoadGeneralComponent(result);
     }
 
-    private async Task LoadCv(string language)
+    private async Task LoadCv(Languages language)
     {
         var result = "Result: ";
         try
         {
-            cv = await Http.GetFromJsonAsync<CvModel>($"cv-data/cv-{language}.json") ?? new();
+            cv = await Http.GetFromJsonAsync<CvModel>($"cv-data/cv-{language.ToString()}.json") ?? new();
+            isEngVersion = language == Languages.eng;
             InitializeComponentsWithParameters(cv);
             result += "Success";
+            
         }
         catch (Exception)
         {
