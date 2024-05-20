@@ -13,9 +13,9 @@
 
 
 
-@if (listOfComponents.Count > 0)
+@if (ListOfComponents.Count > 0)
 {
-    @foreach (var component in listOfComponents)
+    @foreach (var component in ListOfComponents)
     {
         <p>Guest> @component.Command</p>
         <div class="myContent">
@@ -26,4 +26,4 @@
 
 
 <label>Guest></label>
-<input @ref="textInput" @bind-value="@Command" @bind-value:event="oninput" @onkeydown="Enter" @onblur="FocusElement" />
+<input @ref="TextInput" @bind-value="@Command" @bind-value:event="oninput" @onkeydown="Enter" @onblur="FocusElement" />

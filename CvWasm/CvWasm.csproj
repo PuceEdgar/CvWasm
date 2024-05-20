@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Update="wwwroot\cv-data\ascii-welcome.txt">
+    <Content Update="wwwroot\file-data\ascii-welcome.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Update="wwwroot\cv-data\cv-eng.json">

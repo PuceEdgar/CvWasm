@@ -7,21 +7,23 @@ using System.Net.Http.Json;
 namespace CvWasm.Pages;
 public partial class Home
 {
-    private CvModel? cv;
-    private Dictionary<string, ComponentMetadata>? components;
-    private ComponentMetadata? selectedComponent;
-    private ElementReference textInput;
+    private CvModel? Cv;
+    private Dictionary<string, ComponentMetadata>? Components;
+    private ComponentMetadata? SelectedComponent;
+    private ElementReference TextInput;
     private string Command = string.Empty;
-    private int currentExperienceIndex = 0;
-    private List<CommandAndData> listOfComponents = [];
+    private int CurrentExperienceIndex = 0;
+    private List<CommandAndData> ListOfComponents = [];
     private string? AsciiArt;
-    private bool isEngVersion = true;
+    private string CurrentSelectedLanguage = Languages.eng.ToString();
+    private Dictionary<string, string[]> CommandDescription = [];
 
     protected override async Task OnInitializedAsync()
     {
-        cv = await Http.GetFromJsonAsync<CvModel>("cv-data/cv-eng.json") ?? new();
-        AsciiArt = await Http.GetStringAsync("cv-data/ascii-welcome.txt");
-        InitializeComponentsWithParameters(cv);
+        Cv = await Http.GetFromJsonAsync<CvModel>("cv-data/cv-eng.json") ?? new();
+        AsciiArt = await Http.GetStringAsync("file-data/ascii-welcome.txt");
+        CommandDescription = await Http.GetFromJsonAsync<Dictionary<string, string[]>>("file-data/CommandDescription.json");
+        InitializeComponentsWithParameters(Cv);
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -36,7 +38,7 @@ public partial class Home
 
     private async Task FocusElement()
     {
-        await textInput.FocusAsync();
+        await TextInput.FocusAsync();
     }
 
     //TODO:
@@ -45,7 +47,7 @@ public partial class Home
 
     private void InitializeComponentsWithParameters(CvModel cv)
     {
-        components = new(StringComparer.OrdinalIgnoreCase)
+        Components = new(StringComparer.OrdinalIgnoreCase)
         {
             [nameof(About)] = new ComponentMetadata()
             {
@@ -75,7 +77,7 @@ public partial class Home
             {
                 Type = typeof(Help),
                 Name = "Help",
-                Parameters = { [nameof(Help.IsEnglishVersion)] = isEngVersion }
+                Parameters = { [nameof(Help.DisplayLanguage)] = CurrentSelectedLanguage, [nameof(Help.CommandDescriptions)] = CommandDescription }
             }
         };
     }
@@ -92,7 +94,7 @@ public partial class Home
 
     private async Task Enter(KeyboardEventArgs e)
     {
-        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && listOfComponents.Last().MetaData.Type == typeof(WorkExperience))
+        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && ListOfComponents.Last().MetaData.Type == typeof(WorkExperience))
         {
             SelectCurrentWorkExperience(e.Code);
         }
@@ -106,16 +108,16 @@ public partial class Home
 
     private void SelectCurrentWorkExperience(string code)
     {
-        if (code == "ArrowRight" && currentExperienceIndex < cv.Experience.Length - 1)
+        if (code == "ArrowRight" && CurrentExperienceIndex < Cv.Experience.Length - 1)
         {
-            currentExperienceIndex++;
+            CurrentExperienceIndex++;
         }
-        if (code == "ArrowLeft" && currentExperienceIndex > 0)
+        if (code == "ArrowLeft" && CurrentExperienceIndex > 0)
         {
-            currentExperienceIndex--;
+            CurrentExperienceIndex--;
         }
-        selectedComponent.Parameters[nameof(WorkExperience.Data)] = cv.Experience[currentExperienceIndex];
-        selectedComponent.Parameters[nameof(WorkExperience.CurrentIndex)] = currentExperienceIndex;
+        SelectedComponent.Parameters[nameof(WorkExperience.Data)] = Cv.Experience[CurrentExperienceIndex];
+        SelectedComponent.Parameters[nameof(WorkExperience.CurrentIndex)] = CurrentExperienceIndex;
     }
 
     private async Task ExecuteCommand()
@@ -136,10 +138,10 @@ public partial class Home
                 LoadExperienceComponent();
                 break;
             case OpenGitHubCommand:
-                await OpenLinkInNewTab(cv.About.GitHubLink);
+                await OpenLinkInNewTab(Cv.About.GitHubLink);
                 break;
             case OpenLinkedInCommand:
-                await OpenLinkInNewTab(cv.About.LinkedInLink);
+                await OpenLinkInNewTab(Cv.About.LinkedInLink);
                 break;
             case DownloadEngCvCommand:
                 await DownloadCv(Languages.eng);
@@ -163,52 +165,52 @@ public partial class Home
 
     private void LoadExperienceComponent()
     {
-        selectedComponent = new ComponentMetadata()
+        SelectedComponent = new ComponentMetadata()
         {
             Type = typeof(WorkExperience),
             Name = "Work Experience",
             Parameters = {
-                [nameof(WorkExperience.Data)] = cv!.Experience![0],
-            [nameof(WorkExperience.TotalExperienceCount)] = cv.Experience.Count()
+                [nameof(WorkExperience.Data)] = Cv!.Experience![0],
+            [nameof(WorkExperience.TotalExperienceCount)] = Cv.Experience.Count()
             }
         };
 
 
-        listOfComponents.Add(new()
+        ListOfComponents.Add(new()
         {
             Command = Command,
-            MetaData = selectedComponent
+            MetaData = SelectedComponent
         });
     }
 
     private void LoadComponent(string componentName)
     {
-        selectedComponent = components![componentName];
-        listOfComponents.Add(new()
+        SelectedComponent = Components![componentName];
+        ListOfComponents.Add(new()
         {
             Command = Command,
-            MetaData = selectedComponent
+            MetaData = SelectedComponent
         });
     }
 
     private void LoadErrorComponent()
     {
-        selectedComponent = new ComponentMetadata()
+        SelectedComponent = new ComponentMetadata()
         {
             Type = typeof(Error),
             Name = "Error",
             Parameters = { [nameof(Error.BadCommand)] = Command }
         };
-        listOfComponents.Add(new()
+        ListOfComponents.Add(new()
         {
             Command = Command,
-            MetaData = selectedComponent
+            MetaData = SelectedComponent
         });
     }
 
     private void ClearWindow()
     {
-        listOfComponents = [];
+        ListOfComponents = [];
     }
 
     private async Task OpenLinkInNewTab(string url)
@@ -249,9 +251,9 @@ public partial class Home
         var result = "Result: ";
         try
         {
-            cv = await Http.GetFromJsonAsync<CvModel>($"cv-data/cv-{language.ToString()}.json") ?? new();
-            isEngVersion = language == Languages.eng;
-            InitializeComponentsWithParameters(cv);
+            Cv = await Http.GetFromJsonAsync<CvModel>($"cv-data/cv-{language}.json") ?? new();
+            CurrentSelectedLanguage = language.ToString();
+            InitializeComponentsWithParameters(Cv);
             result += "Success";
 
         }
@@ -265,16 +267,16 @@ public partial class Home
 
     private void LoadGeneralComponent(string message)
     {
-        selectedComponent = new ComponentMetadata()
+        SelectedComponent = new ComponentMetadata()
         {
             Type = typeof(General),
             Name = "General",
             Parameters = { [nameof(General.Data)] = message }
         };
-        listOfComponents.Add(new()
+        ListOfComponents.Add(new()
         {
             Command = Command,
-            MetaData = selectedComponent
+            MetaData = SelectedComponent
         });
     }
 }
