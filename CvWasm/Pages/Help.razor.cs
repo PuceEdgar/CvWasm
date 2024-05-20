@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using System.Text;
 
 namespace CvWasm.Pages;
 public partial class Help
@@ -26,7 +27,7 @@ public partial class Help
     private static readonly Dictionary<string, string> KoreanCommandDescription = new()
     {
         [AboutCommand] = "About",
-        [ExperienceCommand] = "경력사항",
+        [ExperienceCommand] = Encoding.UTF8.GetString("경력사항"u8),
         [HardSkillsCommand] = "Hard skills",
         [SoftSkillsCommand] = "Soft skills",
         [EducationCommand] = "학력사항",
