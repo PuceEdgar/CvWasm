@@ -22,18 +22,7 @@
         </div>
     }
 }
-@* @if (commandHistory.Count > 0)
-{
-    @foreach (var command in commandHistory)
-    {
-        if (!command.Value)
-        {
-            <p>Guest> @command.Key</p>
-        }
-        
-    }
 
-} *@
 
 <label>Guest></label>
 <input @ref="textInput" @bind-value="@Command" @bind-value:event="oninput" @onkeydown="Enter" @onblur="FocusElement" />
@@ -47,7 +36,6 @@
     private string Command = string.Empty;
     private int currentExperienceIndex = 0;
     private List<CommandAndData> listOfComponents = [];
-    private Dictionary<string, bool> commandHistory = [];
     private string? AsciiArt;
 
     protected override async Task OnInitializedAsync()
@@ -168,10 +156,10 @@
                 LoadExperienceComponent();
                 break;
             case OpenGitHubCommand:
-                OpenLinkInNewTab(cv.About.GitHubLink);
+                await OpenLinkInNewTab(cv.About.GitHubLink);
                 break;
             case OpenLinkedInCommand:
-                OpenLinkInNewTab(cv.About.LinkedInLink);
+                await OpenLinkInNewTab(cv.About.LinkedInLink);
                 break;
             case DownloadEngCvCommand:
                 await DownloadCv("eng");
@@ -190,8 +178,6 @@
                 break;
         }
 
-        bool isComponentCommand = ValidComponentCommands.ContainsKey(Command) || Command.Equals(ExperienceCommand, StringComparison.InvariantCultureIgnoreCase);
-        commandHistory.Add(Command, isComponentCommand);
         Command = string.Empty;
     }
 
