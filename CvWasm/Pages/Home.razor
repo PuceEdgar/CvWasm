@@ -4,6 +4,7 @@
 
 <PageTitle>Home</PageTitle>
 
+@* TODO: need to translate this to korean *@
 <div class="ascii-art">@AsciiArt</div>
 <div>
     <p>Hello and welcome to my CV website. This is a console type of website so you will need to use supported commands to navigate around.</p>
@@ -205,7 +206,7 @@
 
     private void LoadComponent(string componentName)
     {
-        selectedComponent = components[componentName];
+        selectedComponent = components![componentName];
         listOfComponents.Add(new()
             {
                 Command = Command,
@@ -241,7 +242,7 @@
             await JSRuntime.InvokeVoidAsync("open", url, "_blank");
             result += "Success";
         }
-        catch (Exception ex)
+        catch (Exception)
         {
             result += "Failed";
         }
