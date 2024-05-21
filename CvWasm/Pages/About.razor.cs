@@ -5,5 +5,5 @@ namespace CvWasm.Pages;
 public partial class About
 {
     [Parameter]
-    public AboutModel? Data { get; set; }
+    public AboutModel? AboutDetails { get; set; }
 }

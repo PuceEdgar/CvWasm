@@ -5,5 +5,5 @@ namespace CvWasm.Pages;
 public partial class Education
 {
     [Parameter]
-    public EducationModel? Data { get; set; }
+    public EducationModel? EducationDetails { get; set; }
 }

@@ -53,13 +53,13 @@ public partial class Home
             {
                 Type = typeof(About),
                 Name = "About",
-                Parameters = { [nameof(About.Data)] = cv.About! }
+                Parameters = { [nameof(About.AboutDetails)] = cv.About! }
             },
             [nameof(HardSkills)] = new ComponentMetadata()
             {
                 Type = typeof(HardSkills),
                 Name = "Hard Skills",
-                Parameters = { [nameof(HardSkills.Data)] = cv.Skills!.HardSkills! }
+                Parameters = { [nameof(HardSkills.HardSkillsDetails)] = cv.Skills!.HardSkills! }
             },
             [nameof(SoftSkills)] = new ComponentMetadata()
             {
@@ -71,7 +71,7 @@ public partial class Home
             {
                 Type = typeof(Education),
                 Name = "Education",
-                Parameters = { [nameof(Education.Data)] = cv.Education! }
+                Parameters = { [nameof(Education.EducationDetails)] = cv.Education! }
             },
             [nameof(Help)] = new ComponentMetadata()
             {
@@ -94,7 +94,8 @@ public partial class Home
 
     private async Task Enter(KeyboardEventArgs e)
     {
-        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && ListOfComponents.Last().MetaData.Type == typeof(WorkExperience))
+        int componentCount = ListOfComponents.Count;
+        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && componentCount > 0 && ListOfComponents[componentCount-1].MetaData!.Type == typeof(WorkExperience))
         {
             SelectCurrentWorkExperience(e.Code);
         }
@@ -106,13 +107,13 @@ public partial class Home
 
     }
 
-    private void SelectCurrentWorkExperience(string code)
+    private void SelectCurrentWorkExperience(string keyboardCode)
     {
-        if (code == "ArrowRight" && CurrentExperienceIndex < Cv.Experience.Length - 1)
+        if (keyboardCode == "ArrowRight" && CurrentExperienceIndex < Cv.Experience.Length - 1)
         {
             CurrentExperienceIndex++;
         }
-        if (code == "ArrowLeft" && CurrentExperienceIndex > 0)
+        if (keyboardCode == "ArrowLeft" && CurrentExperienceIndex > 0)
         {
             CurrentExperienceIndex--;
         }
@@ -171,7 +172,7 @@ public partial class Home
             Name = "Work Experience",
             Parameters = {
                 [nameof(WorkExperience.Data)] = Cv!.Experience![0],
-            [nameof(WorkExperience.TotalExperienceCount)] = Cv.Experience.Count()
+            [nameof(WorkExperience.TotalExperienceCount)] = Cv.Experience.Length
             }
         };
 
@@ -215,54 +216,54 @@ public partial class Home
 
     private async Task OpenLinkInNewTab(string url)
     {
-        var result = "Result: ";
+        var commandResult = "Result: ";
         try
         {
             await JSRuntime.InvokeVoidAsync("open", url, "_blank");
-            result += "Success";
+            commandResult += "Success";
         }
         catch (Exception)
         {
-            result += "Failed";
+            commandResult += "Failed";
         }
 
-        LoadGeneralComponent(result);
+        LoadGeneralComponent(commandResult);
     }
 
     private async Task DownloadCv(Languages language)
     {
-        var result = "Result: ";
+        var commandResult = "Result: ";
         try
         {
-            var base64 = await FileUtil.GetPdfCvBase64(Http, language.ToString());
+            var base64 = await FileManager.GetBase64FromPdfCv(Http, language.ToString());
             await JSRuntime.InvokeVoidAsync("downloadFile", $"cv_{language}.pdf", base64);
-            result += "Success";
+            commandResult += "Success";
         }
         catch (Exception)
         {
-            result += "Failed";
+            commandResult += "Failed";
         }
 
-        LoadGeneralComponent(result);
+        LoadGeneralComponent(commandResult);
     }
 
     private async Task LoadCv(Languages language)
     {
-        var result = "Result: ";
+        var commandResult = "Result: ";
         try
         {
             Cv = await Http.GetFromJsonAsync<CvModel>($"cv-data/cv-{language}.json") ?? new();
             CurrentSelectedLanguage = language.ToString();
             InitializeComponentsWithParameters(Cv);
-            result += "Success";
+            commandResult += "Success";
 
         }
         catch (Exception)
         {
-            result += "Failed";
+            commandResult += "Failed";
         }
 
-        LoadGeneralComponent(result);
+        LoadGeneralComponent(commandResult);
     }
 
     private void LoadGeneralComponent(string message)

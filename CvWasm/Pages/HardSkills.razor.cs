@@ -5,5 +5,5 @@ namespace CvWasm.Pages;
 public partial class HardSkills
 {
     [Parameter]
-    public HardSkillsModel? Data { get; set; }
+    public HardSkillsModel? HardSkillsDetails { get; set; }
 }
