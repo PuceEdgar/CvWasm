@@ -11,11 +11,16 @@
     <p>Please type 'help' to see supported commands and their description.</p>
 </div>
 
+<div>
+    <p>제 CV 웹사이트에 오신 것을 환영합니다! 여 곳은 console 타입 웹사이트 입니다. 둘러보기 위해서는 명령을 내려야 합니다.</p>
+    <p>어떤 명령을 내려야 하는지 설명을 보기 위해서는 'help'라고 써주세요.</p>
+</div>
 
 
-@if (ListOfComponents.Count > 0)
+
+@if (LoadedComponents.Count > 0)
 {
-    @foreach (var component in ListOfComponents)
+    @foreach (var component in LoadedComponents)
     {
         <p>Guest> @component.Command</p>
         <div class="myContent">

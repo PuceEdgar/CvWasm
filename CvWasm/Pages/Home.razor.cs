@@ -11,16 +11,18 @@ public partial class Home
     private Dictionary<string, ComponentMetadata>? Components;
     private ComponentMetadata? SelectedComponent;
     private ElementReference TextInput;
-    private string Command = string.Empty;
-    private int CurrentExperienceIndex = 0;
-    private List<CommandAndData> ListOfComponents = [];
+    private string? Command;
     private string? AsciiArt;
+    private int CurrentExperienceIndex = 0;    
     private string CurrentSelectedLanguage = Languages.eng.ToString();
     private Dictionary<string, string[]> CommandDescription = [];
+    private List<CommandAndData> LoadedComponents = [];
 
+    //TODO: add try catch in case file reading fails. unit tests/integration tests
+    //move file names to constants
     protected override async Task OnInitializedAsync()
     {
-        Cv = await Http.GetFromJsonAsync<CvModel>("cv-data/cv-eng.json") ?? new();
+        Cv = await Http.GetFromJsonAsync<CvModel>("cv-data/cv-eng.json");
         AsciiArt = await Http.GetStringAsync("file-data/ascii-welcome.txt");
         CommandDescription = await Http.GetFromJsonAsync<Dictionary<string, string[]>>("file-data/CommandDescription.json");
         InitializeComponentsWithParameters(Cv);
@@ -94,8 +96,8 @@ public partial class Home
 
     private async Task Enter(KeyboardEventArgs e)
     {
-        int componentCount = ListOfComponents.Count;
-        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && componentCount > 0 && ListOfComponents[componentCount-1].MetaData!.Type == typeof(WorkExperience))
+        int componentCount = LoadedComponents.Count;
+        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && componentCount > 0 && LoadedComponents[componentCount-1].MetaData!.Type == typeof(WorkExperience))
         {
             SelectCurrentWorkExperience(e.Code);
         }
@@ -176,8 +178,7 @@ public partial class Home
             }
         };
 
-
-        ListOfComponents.Add(new()
+        LoadedComponents.Add(new()
         {
             Command = Command,
             MetaData = SelectedComponent
@@ -187,7 +188,7 @@ public partial class Home
     private void LoadComponent(string componentName)
     {
         SelectedComponent = Components![componentName];
-        ListOfComponents.Add(new()
+        LoadedComponents.Add(new()
         {
             Command = Command,
             MetaData = SelectedComponent
@@ -202,7 +203,7 @@ public partial class Home
             Name = "Error",
             Parameters = { [nameof(Error.BadCommand)] = Command }
         };
-        ListOfComponents.Add(new()
+        LoadedComponents.Add(new()
         {
             Command = Command,
             MetaData = SelectedComponent
@@ -211,7 +212,7 @@ public partial class Home
 
     private void ClearWindow()
     {
-        ListOfComponents = [];
+        LoadedComponents = [];
     }
 
     private async Task OpenLinkInNewTab(string url)
@@ -274,7 +275,7 @@ public partial class Home
             Name = "General",
             Parameters = { [nameof(General.Data)] = message }
         };
-        ListOfComponents.Add(new()
+        LoadedComponents.Add(new()
         {
             Command = Command,
             MetaData = SelectedComponent

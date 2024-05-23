@@ -40,3 +40,44 @@
 
     </tbody>
 </table>
+
+<table>
+    <tbody>
+        <tr>
+            <th>사용 프로그래밍</th>
+            <td>
+                @foreach (string programming in HardSkillsDetails.Programming)
+                {
+                    <p>@programming</p>
+                }
+            </td>
+        </tr>
+        <tr>
+            <th>사용 도구</th>
+            <td>@HardSkillsDetails.Tools</td>
+        </tr>
+        <tr>
+            <th>기타</th>
+            <td>
+                @foreach (string other in HardSkillsDetails.Other)
+                {
+                    <p>@other</p>
+                }
+            </td>
+        </tr>
+        <tr>
+            <th>작업 환경</th>
+            <td>@HardSkillsDetails.WayOfWorking</td>
+        </tr>
+        <tr>
+            <th>언어</th>
+            <td>
+                @foreach (string language in HardSkillsDetails.Languages)
+                {
+                    <p>@language</p>
+                }
+            </td>
+        </tr>
+
+    </tbody>
+</table>

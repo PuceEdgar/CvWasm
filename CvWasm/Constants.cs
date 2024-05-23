@@ -24,4 +24,12 @@ public static class Constants
     public const string NameOfSoftSkills = nameof(SoftSkills);
     public const string NameOfEducation = nameof(Education);
     public const string NameOfHelp = nameof(Help);
+
+
+    public const string EnglishCvJsonPath = "cv-data/cv-eng.json";
+    public const string KoreanCvJsonPath = "cv-data/cv-kor.json";
+    public const string EnglishCvPdfPath = "";
+    public const string KoreanCvPdfPath = "";
+    public const string CommandDescriptionPath = "file-data/CommandDescription.json";
+    public const string AsciiArtPath = "file-data/ascii-welcome.txt";
 }
