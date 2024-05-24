@@ -15,6 +15,12 @@ public class EnglishHeaders : IHeaders
     const string _periodAttended = "Period Attended";
     const string _degree = "Degree";
 
+    const string _programming = "Programming";
+    const string _tools = "Tools";
+    const string _other = "Other";
+    const string _wayOfWorking = "Way Of Working";
+    const string _languages = "Languages";
+
     public string FullName => _fullName;
 
     public string DateOfBirth => _dateOfBirth;
@@ -36,4 +42,14 @@ public class EnglishHeaders : IHeaders
     public string PeriodAttended => _periodAttended;
 
     public string Degree => _degree;
+
+    public string Programming => _programming;
+
+    public string Tools => _tools;
+
+    public string Other => _other;
+
+    public string WayOfWorking => _wayOfWorking;
+
+    public string Languages => _languages;
 }

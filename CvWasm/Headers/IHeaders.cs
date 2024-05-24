@@ -16,4 +16,11 @@ public interface IHeaders
     string Location { get; }
     string PeriodAttended { get; }
     string Degree { get; }
+
+    //Hard skills
+    string Programming { get; }
+    string Tools { get; }
+    string Other { get; }
+    string WayOfWorking { get; }
+    string Languages { get; }
 }

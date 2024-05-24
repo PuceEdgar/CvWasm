@@ -15,6 +15,12 @@ public class KoreanHeaders : IHeaders
     const string _periodAttended = "재학 기간";
     const string _degree = "학위";
 
+    const string _programming = "사용 프로그래밍";
+    const string _tools = "사용 도구";
+    const string _other = "기타";
+    const string _wayOfWorking = "작업 환경";
+    const string _languages = "언어";
+
     public string FullName => _fullName;
 
     public string DateOfBirth => _dateOfBirth;
@@ -36,4 +42,14 @@ public class KoreanHeaders : IHeaders
     public string PeriodAttended => _periodAttended;
 
     public string Degree => _degree;
+
+    public string Programming => _programming;
+
+    public string Tools => _tools;
+
+    public string Other => _other;
+
+    public string WayOfWorking => _wayOfWorking;
+
+    public string Languages => _languages;
 }

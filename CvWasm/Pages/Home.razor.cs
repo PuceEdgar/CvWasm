@@ -80,7 +80,7 @@ public partial class Home
             {
                 Type = typeof(HardSkills),
                 Name = "Hard Skills",
-                Parameters = { [nameof(HardSkills.HardSkillsDetails)] = Cv.Skills!.HardSkills! }
+                Parameters = { [nameof(HardSkills.HardSkillsDetails)] = GetHardSkillsPageDataFromCv() }
             },
             [nameof(SoftSkills)] = new ComponentMetadata()
             {
@@ -132,6 +132,21 @@ public partial class Home
         };
 
         return educationPageData;
+    }
+
+    private HardSkillsPageData GetHardSkillsPageDataFromCv() 
+    {
+        IHeaders headers = CurrentSelectedLanguage == Languages.eng ? EnglishHeaders : KoreanHeaders;
+        HardSkillsPageData hardSkillsPageData = new()
+        {
+            Programming = new(headers.Programming, Cv.Skills.HardSkills.Programming),
+            Tools = new(headers.Tools, Cv.Skills.HardSkills.Tools),
+            Other = new(headers.Other, Cv.Skills.HardSkills.Other),
+            WayOfWorking = new(headers.WayOfWorking, Cv.Skills.HardSkills.WayOfWorking),
+            Languages = new(headers.Languages, Cv.Skills.HardSkills.Languages)
+        };
+
+        return hardSkillsPageData;
     }
 
 
