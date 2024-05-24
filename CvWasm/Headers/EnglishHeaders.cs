@@ -21,6 +21,12 @@ public class EnglishHeaders : IHeaders
     const string _wayOfWorking = "Way Of Working";
     const string _languages = "Languages";
 
+    const string _timePeriod = "Time Period";
+    const string _company = "Company";
+    const string _workLocation = "Location";
+    const string _position = "Position";
+    const string _jobDescription = "Job Description";
+
     public string FullName => _fullName;
 
     public string DateOfBirth => _dateOfBirth;
@@ -52,4 +58,14 @@ public class EnglishHeaders : IHeaders
     public string WayOfWorking => _wayOfWorking;
 
     public string Languages => _languages;
+
+    public string TimePeriod => _timePeriod;
+
+    public string Company => _company;
+
+    public string WorkLocation => _workLocation;
+
+    public string Position => _position;
+
+    public string JobDescription => _jobDescription;
 }

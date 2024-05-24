@@ -24,4 +24,11 @@ public interface IHeaders
     string Other { get; }
     string WayOfWorking { get; }
     string Languages { get; }
+
+    //Work experience
+     string TimePeriod { get; }
+     string Company { get; }
+     string WorkLocation { get; }
+     string Position { get; }
+     string JobDescription { get; }
 }

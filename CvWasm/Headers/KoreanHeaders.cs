@@ -21,6 +21,12 @@ public class KoreanHeaders : IHeaders
     const string _wayOfWorking = "작업 환경";
     const string _languages = "언어";
 
+    const string _timePeriod = "재직 기간";
+    const string _company = "회사";
+    const string _workLocation = "위치";
+    const string _position = "직급";
+    const string _jobDescription = "업무";
+
     public string FullName => _fullName;
 
     public string DateOfBirth => _dateOfBirth;
@@ -52,4 +58,14 @@ public class KoreanHeaders : IHeaders
     public string WayOfWorking => _wayOfWorking;
 
     public string Languages => _languages;
+
+    public string TimePeriod => _timePeriod;
+
+    public string Company => _company;
+
+    public string WorkLocation => _workLocation;
+
+    public string Position => _position;
+
+    public string JobDescription => _jobDescription;
 }

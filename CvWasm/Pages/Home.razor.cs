@@ -149,6 +149,21 @@ public partial class Home
         return hardSkillsPageData;
     }
 
+    private WorkExperiencePageData GetWorkExperiencePageDataFromCv(int experienceIndex) 
+    {
+        IHeaders headers = CurrentSelectedLanguage == Languages.eng ? EnglishHeaders : KoreanHeaders;
+        var selectedExperience = Cv.Experience[experienceIndex];
+        WorkExperiencePageData workExperiencePageData = new()
+        {
+            TimePeriod = new(headers.TimePeriod, selectedExperience.TimePeriod),
+            Company = new(headers.Company, selectedExperience.Company),
+            Location = new(headers.Location, selectedExperience.Location),
+            Position = new(headers.Position, selectedExperience.Position),
+            JobDescription = new(headers.JobDescription, selectedExperience.JobDescription)
+        };
+
+        return workExperiencePageData;
+    }
 
     private async Task KeyboardButtonPressed(KeyboardEventArgs e)
     {
@@ -177,7 +192,7 @@ public partial class Home
         {
             CurrentExperienceIndex--;
         }
-        SelectedComponent.Parameters[nameof(WorkExperience.Data)] = Cv.Experience[CurrentExperienceIndex];
+        SelectedComponent.Parameters[nameof(WorkExperience.ExperienceDetails)] = GetWorkExperiencePageDataFromCv(CurrentExperienceIndex);
         SelectedComponent.Parameters[nameof(WorkExperience.CurrentIndex)] = CurrentExperienceIndex;
     }
 
@@ -233,8 +248,9 @@ public partial class Home
             Type = typeof(WorkExperience),
             Name = "Work Experience",
             Parameters = {
-                [nameof(WorkExperience.Data)] = Cv!.Experience![CurrentExperienceIndex],
-                [nameof(WorkExperience.TotalExperienceCount)] = Cv.Experience.Length
+                [nameof(WorkExperience.ExperienceDetails)] = GetWorkExperiencePageDataFromCv(CurrentExperienceIndex),
+                [nameof(WorkExperience.TotalExperienceCount)] = Cv.Experience.Length,
+                [nameof(WorkExperience.CurrentSelectedLanguage)] = CurrentSelectedLanguage
             }
         };
 
