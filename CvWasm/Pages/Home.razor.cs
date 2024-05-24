@@ -10,8 +10,6 @@ namespace CvWasm.Pages;
 
 public partial class Home
 {
-    private string Code;
-    private string Key;
     private CvModel? Cv;
     private Dictionary<string, ComponentMetadata>? Components;
     private ComponentMetadata? SelectedComponent;
@@ -100,7 +98,7 @@ public partial class Home
             {
                 Type = typeof(Help),
                 Name = "Help",
-                Parameters = { [nameof(Help.DisplayLanguage)] = CurrentSelectedLanguage, [nameof(Help.CommandDescriptions)] = CommandDescription }
+                Parameters = { [nameof(Help.DisplayLanguage)] = CurrentSelectedLanguage.ToString(), [nameof(Help.CommandDescriptions)] = CommandDescription }
             }
         };
     }
@@ -154,15 +152,15 @@ public partial class Home
 
     private async Task KeyboardButtonPressed(KeyboardEventArgs e)
     {
-        Code = e.Code;
-        Key = e.Key;
         int componentCount = LoadedComponents.Count;
         if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && componentCount > 0 && LoadedComponents[componentCount-1].MetaData!.Type == typeof(WorkExperience))
         {
             SelectCurrentWorkExperience(e.Code);
         }
 
-        if (e.Code == "Enter" || e.Code == "NumpadEnter" || e.Key == "Enter")
+        if (e.Code.Equals("Enter", StringComparison.InvariantCultureIgnoreCase)  
+            || e.Code.Equals("NumpadEnter", StringComparison.InvariantCultureIgnoreCase) 
+                || e.Key.Equals("Enter", StringComparison.InvariantCultureIgnoreCase))
         {
             await ExecuteCommand();
         }
@@ -185,7 +183,8 @@ public partial class Home
 
     private async Task ExecuteCommand()
     {
-        switch (Command)
+        string lowerCaseCommand = Command.ToLower();
+        switch (lowerCaseCommand)
         {
             case ClearCommand:
                 ClearWindow();
@@ -195,7 +194,7 @@ public partial class Home
             case HardSkillsCommand:
             case SoftSkillsCommand:
             case HelpCommand:
-                LoadComponent(ValidComponentCommands[Command]);
+                LoadComponent(ValidComponentCommands[lowerCaseCommand]);
                 break;
             case ExperienceCommand:
                 LoadExperienceComponent();
