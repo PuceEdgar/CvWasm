@@ -162,7 +162,7 @@ public partial class Home
             SelectCurrentWorkExperience(e.Code);
         }
 
-        if (e.Code == "Enter" || e.Code == "NumpadEnter" )
+        if (e.Code == "Enter" || e.Code == "NumpadEnter" || e.Key == "Enter")
         {
             await ExecuteCommand();
         }
