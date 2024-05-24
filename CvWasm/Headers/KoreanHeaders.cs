@@ -2,27 +2,38 @@
 
 public class KoreanHeaders : IHeaders
 {
-    //const string _fullName = "이름";    
-    //const string _dateOfBirth = "생년월일";
-    //const string _nationality = "국적";
-    //const string _email = "이메일";
-    //const string _gitHubLink = "GitHubLink";
-    //const string _linkedInLink = "LinkedInLink";
-    //const string _personalStatement = "Personal Statement";
+    const string _fullName = "이름";
+    const string _dateOfBirth = "생년월일";
+    const string _nationality = "국적";
+    const string _email = "이메일";
+    const string _gitHubLink = "GitHubLink";
+    const string _linkedInLink = "LinkedInLink";
+    const string _personalStatement = "Personal Statement";
 
-    public string FullName => "이름";
+    const string _universityName = "대학교";
+    const string _location = "위치";
+    const string _periodAttended = "재학 기간";
+    const string _degree = "학위";
 
-    public string DateOfBirth => "생년월일";
+    public string FullName => _fullName;
 
-    public string Nationality => "국적";
+    public string DateOfBirth => _dateOfBirth;
 
-    public string Email => "이메일";
+    public string Nationality => _nationality;
 
-    public string GitHubLink => "GitHubLink";
+    public string Email => _email;
 
-    public string LinkedInLink => "LinkedInLink";
+    public string GitHubLink => _gitHubLink;
 
-    public string PersonalStatement => "Personal Statement";
+    public string LinkedInLink => _linkedInLink;
 
-    //public static string FullName => "이름";
+    public string PersonalStatement => _personalStatement;
+
+    public string UniversityName => _universityName;
+
+    public string Location => _location;
+
+    public string PeriodAttended => _periodAttended;
+
+    public string Degree => _degree;
 }

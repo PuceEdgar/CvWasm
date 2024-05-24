@@ -1,9 +1,9 @@
-using CvWasm.Models;
+using CvWasm.DTO;
 using Microsoft.AspNetCore.Components;
 
 namespace CvWasm.Pages;
 public partial class Education
 {
     [Parameter]
-    public EducationModel? EducationDetails { get; set; }
+    public EducationPageData? EducationDetails { get; set; }
 }

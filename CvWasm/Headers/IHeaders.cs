@@ -2,6 +2,7 @@
 
 public interface IHeaders
 {
+    //About
     string FullName { get; }
     string DateOfBirth { get; }
     string Nationality { get; }
@@ -9,4 +10,10 @@ public interface IHeaders
     string GitHubLink { get; }
     string LinkedInLink { get; }
     string PersonalStatement { get; }
+
+    //Education
+    string UniversityName { get; }
+    string Location { get; }
+    string PeriodAttended { get; }
+    string Degree { get; }
 }

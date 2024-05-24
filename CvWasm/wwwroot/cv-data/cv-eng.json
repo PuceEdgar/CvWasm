@@ -119,7 +119,7 @@
   "education": {
     "universityName": "Riga Technical University",
     "location": "Latvia",
-    "dateInterval": "2006 - 2010",
+    "periodAttended": "2006 - 2010",
     "degree": "Bachelor degree in Telecommunications"
   }
 }

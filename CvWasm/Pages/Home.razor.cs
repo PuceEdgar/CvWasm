@@ -92,7 +92,7 @@ public partial class Home
             {
                 Type = typeof(Education),
                 Name = "Education",
-                Parameters = { [nameof(Education.EducationDetails)] = Cv.Education! }
+                Parameters = { [nameof(Education.EducationDetails)] = GetEducationPageDataFromCv() }
             },
             [nameof(Help)] = new ComponentMetadata()
             {
@@ -118,6 +118,20 @@ public partial class Home
         };
 
         return aboutPageData;
+    }
+
+    private EducationPageData GetEducationPageDataFromCv() 
+    {
+        IHeaders headers = CurrentSelectedLanguage == Languages.eng ? EnglishHeaders : KoreanHeaders;
+        EducationPageData educationPageData = new()
+        {
+            UniversityName = new(headers.UniversityName, Cv.Education.UniversityName),
+            Location = new(headers.Location, Cv.Education.Location),
+            PeriodAttended = new(headers.PeriodAttended,  Cv.Education.PeriodAttended),
+            Degree = new(headers.Degree, Cv.Education.Degree),
+        };
+
+        return educationPageData;
     }
 
 

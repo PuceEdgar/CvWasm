@@ -1,5 +1,4 @@
 using CvWasm.DTO;
-using CvWasm.Models;
 using Microsoft.AspNetCore.Components;
 
 namespace CvWasm.Pages;
