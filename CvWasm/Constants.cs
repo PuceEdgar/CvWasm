@@ -1,6 +1,4 @@
-﻿using CvWasm.Pages;
-
-namespace CvWasm;
+﻿namespace CvWasm;
 
 public static class Constants
 {
@@ -18,18 +16,10 @@ public static class Constants
     public const string ShowEnglishCommand = "lang -eng";
     public const string ShowKoreanCommand = "lang -kor";
 
-    public const string NameOfAbout = nameof(About);
-    public const string NameOfExperience = nameof(WorkExperience);
-    public const string NameOfHardSkills = nameof(HardSkills);
-    public const string NameOfSoftSkills = nameof(SoftSkills);
-    public const string NameOfEducation = nameof(Education);
-    public const string NameOfHelp = nameof(Help);
-
-
     public const string EnglishCvJsonPath = "cv-data/cv-eng.json";
     public const string KoreanCvJsonPath = "cv-data/cv-kor.json";
-    public const string EnglishCvPdfPath = "";
-    public const string KoreanCvPdfPath = "";
+    public const string EnglishCvPdfPath = "cv-data/Edgars_Puce_eng.pdf";
+    public const string KoreanCvPdfPath = "cv-data/Edgars_Puce_kor.pdf";
     public const string CommandDescriptionPath = "file-data/CommandDescription.json";
     public const string AsciiArtPath = "file-data/ascii-welcome.txt";
 }

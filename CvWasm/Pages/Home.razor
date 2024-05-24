@@ -4,19 +4,21 @@
 
 <PageTitle>Home</PageTitle>
 
-@* TODO: need to translate this to korean *@
 <div class="ascii-art">@AsciiArt</div>
-<div>
-    <p>Hello and welcome to my CV website. This is a console type of website so you will need to use supported commands to navigate around.</p>
-    <p>Please type 'help' to see supported commands and their description.</p>
-</div>
 
-<div>
-    <p>제 CV 웹사이트에 오신 것을 환영합니다! 여 곳은 console 타입 웹사이트 입니다. 둘러보기 위해서는 명령을 내려야 합니다.</p>
-    <p>어떤 명령을 내려야 하는지 설명을 보기 위해서는 'help'라고 써주세요.</p>
-</div>
-
-
+@if (CurrentSelectedLanguage == Languages.eng)
+{
+    <div>
+        <p>Hello and welcome to my CV website. This is a console type of website so you will need to use supported commands to navigate around.</p>
+        <p>Please type 'help' to see supported commands and their description.</p>
+    </div>
+} else
+{
+    <div>
+        <p>제 CV 웹사이트에 오신 것을 환영합니다! 여 곳은 console 타입 웹사이트 입니다. 둘러보기 위해서는 명령을 내려야 합니다.</p>
+        <p>어떤 명령을 내려야 하는지 설명을 보기 위해서는 'help'라고 써주세요.</p>
+    </div>
+}
 
 @if (LoadedComponents.Count > 0)
 {
@@ -29,6 +31,5 @@
     }
 }
 
-
 <label>Guest></label>
-<input @ref="TextInput" @bind-value="@Command" @bind-value:event="oninput" @onkeydown="Enter" @onblur="FocusElement" />
+<input @ref="TextInput" @bind-value="@Command" @bind-value:event="oninput" @onkeydown="KeyboardButtonPressed" @onblur="FocusElement" />
