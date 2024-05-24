@@ -10,6 +10,8 @@ namespace CvWasm.Pages;
 
 public partial class Home
 {
+    private string Code;
+    private string Key;
     private CvModel? Cv;
     private Dictionary<string, ComponentMetadata>? Components;
     private ComponentMetadata? SelectedComponent;
@@ -152,13 +154,15 @@ public partial class Home
 
     private async Task KeyboardButtonPressed(KeyboardEventArgs e)
     {
+        Code = e.Code;
+        Key = e.Key;
         int componentCount = LoadedComponents.Count;
         if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && componentCount > 0 && LoadedComponents[componentCount-1].MetaData!.Type == typeof(WorkExperience))
         {
             SelectCurrentWorkExperience(e.Code);
         }
 
-        if ((e.Code == "Enter" || e.Code == "NumpadEnter"))
+        if (e.Code == "Enter" || e.Code == "NumpadEnter" )
         {
             await ExecuteCommand();
         }

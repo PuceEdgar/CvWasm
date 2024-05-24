@@ -2,6 +2,7 @@
 
 public interface IHeaders
 {
+    //TODO: should i split this into smaller interfaces?
     //About
     string FullName { get; }
     string DateOfBirth { get; }
