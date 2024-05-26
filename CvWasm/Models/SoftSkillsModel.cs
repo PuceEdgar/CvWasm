@@ -1,6 +1,3 @@
 ﻿namespace CvWasm.Models;
 
-public record SoftSkillsModel
-{
-    public string[]? Skills { get; set; }
-}
+public record SoftSkillsModel(string[]? Skills);

@@ -342,7 +342,7 @@ public partial class Home
         var commandResult = "Result: ";
         try
         {
-            Cv = await Http.GetFromJsonAsync<CvModel>($"cv-data/cv-{language}.json") ?? new();
+            Cv = await Http.GetFromJsonAsync<CvModel>($"cv-data/cv-{language}.json");
             CurrentSelectedLanguage = language;
             InitializeComponentsWithParameters();
             commandResult += "Success";
