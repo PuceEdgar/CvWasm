@@ -1,3 +1,7 @@
-﻿namespace CvWasm.Models;
+﻿using System.Text.Json.Serialization;
 
-public record SoftSkillsModel(string[]? Skills);
+namespace CvWasm.Models;
+
+public record SoftSkillsModel(
+    [property: JsonPropertyName("skills")] string[]? Skills
+    );
