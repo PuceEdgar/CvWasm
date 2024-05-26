@@ -10,8 +10,8 @@
   },
   "experience": [
     {
-      "TimePeriod": "July 2021 ~ October 2023",
-      "Company": "28Stone Consulting, Inc.",
+      "timePeriod": "July 2021 ~ October 2023",
+      "company": "28Stone Consulting, Inc.",
       "location": "Latvia/South Korea",
       "position": "Developer",
       "jobDescription": [
@@ -34,8 +34,8 @@
       ]
     },
     {
-      "TimePeriod": "March 2018 ~ March 2019",
-      "Company": "SEB Global Services",
+      "timePeriod": "March 2018 ~ March 2019",
+      "company": "SEB Global Services",
       "location": "Riga, Latvia",
       "position": "Junior Developer",
       "jobDescription": [
@@ -46,8 +46,8 @@
       ]
     },
     {
-      "TimePeriod": "August 2015 ~ March 2017",
-      "Company": "Tint a Car Korea Co., Ltd.,",
+      "timePeriod": "August 2015 ~ March 2017",
+      "company": "Tint a Car Korea Co., Ltd.,",
       "location": "Gyeonggi-do, South Korea",
       "position": "Assistant Manager",
       "jobDescription": [
@@ -59,8 +59,8 @@
       ]
     },
     {
-      "TimePeriod": "June 2012 ~ August 2014",
-      "Company": "Centra Convenience Co., Ltd.",
+      "timePeriod": "June 2012 ~ August 2014",
+      "company": "Centra Convenience Co., Ltd.",
       "location": "Dublin, Ireland",
       "position": "Assistant Manager",
       "jobDescription": [
@@ -74,8 +74,8 @@
       ]
     },
     {
-      "TimePeriod": "February 2008 ~ February 2011",
-      "Company": "Tele2 Shared Service Center",
+      "timePeriod": "February 2008 ~ February 2011",
+      "company": "Tele2 Shared Service Center",
       "location": "Riga, Latvia",
       "position": "Billing Operations Specialist",
       "jobDescription": [
