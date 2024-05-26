@@ -26,7 +26,10 @@
     {
         <p>Guest> @component.Command</p>
         <div class="myContent">
-            <DynamicComponent Type="component.MetaData.Type" Parameters="component.MetaData.Parameters" />
+            <CascadingValue Value="CurrentSelectedLanguage">
+                <DynamicComponent Type="component.MetaData.Type" Parameters="component.MetaData.Parameters" />
+            </CascadingValue>
+            
         </div>
     }
 }

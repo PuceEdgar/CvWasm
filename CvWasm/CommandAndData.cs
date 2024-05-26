@@ -1,6 +1,6 @@
 ﻿namespace CvWasm;
 
-public class CommandAndData
+public record CommandAndData
 {
     public string? Command { get; set; }
     public ComponentMetadata? MetaData { get; set; }

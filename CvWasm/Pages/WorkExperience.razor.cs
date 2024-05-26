@@ -10,6 +10,6 @@ public partial class WorkExperience
     public int CurrentIndex { get; set; }
     [Parameter]
     public int TotalExperienceCount { get; set; }
-    [Parameter]
+    [CascadingParameter]
     public Languages CurrentSelectedLanguage { get; set; }
 }

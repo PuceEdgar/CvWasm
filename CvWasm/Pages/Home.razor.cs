@@ -249,8 +249,7 @@ public partial class Home
             Name = "Work Experience",
             Parameters = {
                 [nameof(WorkExperience.ExperienceDetails)] = GetWorkExperiencePageDataFromCv(CurrentExperienceIndex),
-                [nameof(WorkExperience.TotalExperienceCount)] = Cv.Experience.Length,
-                [nameof(WorkExperience.CurrentSelectedLanguage)] = CurrentSelectedLanguage
+                [nameof(WorkExperience.TotalExperienceCount)] = Cv.Experience.Length
             }
         };
 
