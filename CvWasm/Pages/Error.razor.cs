@@ -5,6 +5,6 @@ public partial class Error
 {
     [Parameter]
     public string? BadCommand { get; set; }
-    [CascadingParameter]
+    [Parameter]
     public Languages CurrentSelectedLanguage { get; set; }
 }

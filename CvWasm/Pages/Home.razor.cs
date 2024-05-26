@@ -98,7 +98,7 @@ public partial class Home
             {
                 Type = typeof(Help),
                 Name = "Help",
-                Parameters = { [nameof(Help.DisplayLanguage)] = CurrentSelectedLanguage.ToString(), [nameof(Help.CommandDescriptions)] = CommandDescription }
+                Parameters = { [nameof(Help.CurrentSelectedLanguage)] = CurrentSelectedLanguage.ToString(), [nameof(Help.CommandDescriptions)] = CommandDescription }
             }
         };
     }
@@ -249,7 +249,8 @@ public partial class Home
             Name = "Work Experience",
             Parameters = {
                 [nameof(WorkExperience.ExperienceDetails)] = GetWorkExperiencePageDataFromCv(CurrentExperienceIndex),
-                [nameof(WorkExperience.TotalExperienceCount)] = Cv.Experience.Length
+                [nameof(WorkExperience.TotalExperienceCount)] = Cv.Experience.Length,
+                [nameof(WorkExperience.CurrentSelectedLanguage)] = CurrentSelectedLanguage
             }
         };
 
@@ -291,7 +292,10 @@ public partial class Home
         {
             Type = typeof(Error),
             Name = "Error",
-            Parameters = { [nameof(Error.BadCommand)] = Command }
+            Parameters = { 
+                [nameof(Error.BadCommand)] = Command,
+                [nameof(Error.CurrentSelectedLanguage)] = CurrentSelectedLanguage
+            }
         };
         LoadedComponents.Add(new()
         {
