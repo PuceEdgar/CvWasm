@@ -1,4 +1,4 @@
-﻿namespace CvWasm;
+﻿namespace CvWasm.Managers;
 
 public class ErrorManager : IErrorManager
 {
@@ -16,7 +16,7 @@ public class ErrorManager : IErrorManager
     {
         if (currentLanguage == Languages.eng)
         {
-           return $"""<p> Command: <span style="font-weight:bold;"> '{command}' </span> is not recognized.Please use <span style="font-weight:bold;"> '{HelpCommand}' </span> for possible commands.</p>""";
+            return $"""<p> Command: <span style="font-weight:bold;"> '{command}' </span> is not recognized.Please use <span style="font-weight:bold;"> '{HelpCommand}' </span> for possible commands.</p>""";
         }
         else
         {

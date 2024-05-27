@@ -1,13 +1,18 @@
 using CvWasm;
+using CvWasm.Managers;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using System.Collections.Generic;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
+builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 builder.Services.AddSingleton<IFileManager, FileManager>();
 builder.Services.AddSingleton<IErrorManager, ErrorManager>();
+builder.Services.AddSingleton<IComponentManager, ComponentManager>();
+builder.Services.AddSingleton<IComponentList, ComponentList>();
+
 
 await builder.Build().RunAsync();

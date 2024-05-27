@@ -1,8 +1,11 @@
 ﻿@page "/"
+@using CvWasm.Managers
 @inject IJSRuntime JSRuntime
 @inject HttpClient Http
 @inject IFileManager FileManager
 @inject IErrorManager ErrorManager
+@inject IComponentManager ComponentManager
+@inject IComponentList ComponentList
 
 <PageTitle>Home</PageTitle>
 
@@ -22,15 +25,13 @@
     </div>
 }
 
-@if (LoadedComponents.Count > 0)
+@if (ComponentList.LoadedComponents.Count > 0)
 {
-    @foreach (var component in LoadedComponents)
+    @foreach (var component in ComponentList.LoadedComponents)
     {
         <p>Guest> @component.Command</p>
         <div class="myContent">
-            
-                <DynamicComponent Type="component.MetaData.Type" Parameters="component.MetaData.Parameters" />
-            
+                <DynamicComponent @ref="ChildComponent" Type="component.MetaData.Type" Parameters="component.MetaData.Parameters" />                
         </div>
     }
 }
