@@ -298,7 +298,6 @@ public partial class Home
             Name = "Error",
             Parameters = { 
                 [nameof(Error.ErrorMessage)] = ErrorManager.GenerateBadCommandErrorMessage(Command, CurrentSelectedLanguage),
-                [nameof(Error.CurrentSelectedLanguage)] = CurrentSelectedLanguage
             }
         };
         LoadedComponents.Add(new()
@@ -381,7 +380,6 @@ public partial class Home
                 Name = "Error",
                 Parameters = {
                 [nameof(Error.ErrorMessage)] = ErrorManager.FailedToLoadCvMessage,
-                [nameof(Error.CurrentSelectedLanguage)] = CurrentSelectedLanguage
             }
             };
             LoadedComponents.Add(new()
@@ -405,8 +403,7 @@ public partial class Home
                 Type = typeof(Error),
                 Name = "Error",
                 Parameters = {
-                [nameof(Error.ErrorMessage)] = ErrorManager.GenerateBadCommandErrorMessage,
-                [nameof(Error.CurrentSelectedLanguage)] = CurrentSelectedLanguage
+                [nameof(Error.ErrorMessage)] = ErrorManager.FailedToLoadCommandDescriptionMessage,
             }
             };
             LoadedComponents.Add(new()
@@ -431,7 +428,6 @@ public partial class Home
                 Name = "Error",
                 Parameters = {
                 [nameof(Error.ErrorMessage)] = ErrorManager.FailedToLoadAsciiArtMessage,
-                [nameof(Error.CurrentSelectedLanguage)] = CurrentSelectedLanguage
             }
             };
             LoadedComponents.Add(new()
