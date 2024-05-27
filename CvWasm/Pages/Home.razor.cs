@@ -237,7 +237,7 @@ public partial class Home
                 await LoadCv(Languages.kor);
                 break;
             default:
-                LoadErrorComponent();
+                LoadErrorComponentWithMessage(ErrorManager.GenerateBadCommandErrorMessage(Command, CurrentSelectedLanguage));
                 break;
         }
 
@@ -282,23 +282,6 @@ public partial class Home
             Type = typeof(CommandResult),
             Name = "Command Result",
             Parameters = { [nameof(CommandResult.Result)] = message }
-        };
-        LoadedComponents.Add(new()
-        {
-            Command = Command,
-            MetaData = SelectedComponent
-        });
-    }
-
-    private void LoadErrorComponent()
-    {
-        SelectedComponent = new ComponentMetadata()
-        {
-            Type = typeof(Error),
-            Name = "Error",
-            Parameters = { 
-                [nameof(Error.ErrorMessage)] = ErrorManager.GenerateBadCommandErrorMessage(Command, CurrentSelectedLanguage),
-            }
         };
         LoadedComponents.Add(new()
         {
@@ -369,26 +352,13 @@ public partial class Home
     {
         try
         {
-            //Cv = await Http.GetFromJsonAsync<CvModel>($"cv-data/c-{CurrentSelectedLanguage}.json");
-            Cv = await FileManager.LoadDataFromJson<CvModel>(Http, $"cv-data/c-{CurrentSelectedLanguage}.json");
+            Cv = await FileManager.LoadDataFromJson<CvModel>(Http, $"cv-data/cv-{CurrentSelectedLanguage}.json");
         }
         catch (Exception)
         {
-            SelectedComponent = new ComponentMetadata()
-            {
-                Type = typeof(Error),
-                Name = "Error",
-                Parameters = {
-                [nameof(Error.ErrorMessage)] = ErrorManager.FailedToLoadCvMessage,
-            }
-            };
-            LoadedComponents.Add(new()
-            {
-                Command = Command,
-                MetaData = SelectedComponent
-            });
+            LoadErrorComponentWithMessage(ErrorManager.FailedToLoadCvMessage);
         }
-    }
+    }    
 
     private async Task LoadCommandDescriptionFromJson()
     {
@@ -398,19 +368,7 @@ public partial class Home
         }
         catch (Exception)
         {
-            SelectedComponent = new ComponentMetadata()
-            {
-                Type = typeof(Error),
-                Name = "Error",
-                Parameters = {
-                [nameof(Error.ErrorMessage)] = ErrorManager.FailedToLoadCommandDescriptionMessage,
-            }
-            };
-            LoadedComponents.Add(new()
-            {
-                Command = Command,
-                MetaData = SelectedComponent
-            });
+            LoadErrorComponentWithMessage(ErrorManager.FailedToLoadCommandDescriptionMessage);
         }
     }
 
@@ -422,19 +380,24 @@ public partial class Home
         }
         catch (Exception)
         {
-            SelectedComponent = new ComponentMetadata()
-            {
-                Type = typeof(Error),
-                Name = "Error",
-                Parameters = {
-                [nameof(Error.ErrorMessage)] = ErrorManager.FailedToLoadAsciiArtMessage,
-            }
-            };
-            LoadedComponents.Add(new()
-            {
-                Command = Command,
-                MetaData = SelectedComponent
-            });
+            LoadErrorComponentWithMessage(ErrorManager.FailedToLoadAsciiArtMessage);
         }
+    }
+
+    private void LoadErrorComponentWithMessage(string errorMessage)
+    {
+        SelectedComponent = new ComponentMetadata()
+        {
+            Type = typeof(Error),
+            Name = "Error",
+            Parameters = {
+                [nameof(Error.ErrorMessage)] = errorMessage,
+            }
+        };
+        LoadedComponents.Add(new()
+        {
+            Command = Command,
+            MetaData = SelectedComponent
+        });
     }
 }
