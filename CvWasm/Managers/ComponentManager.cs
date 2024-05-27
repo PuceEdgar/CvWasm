@@ -90,6 +90,7 @@ public class ComponentManager : ComponentBase, IComponentManager
                 Name = "Work Experience",
                 Parameters = {
                 [nameof(WorkExperience.ListOfExperienceDetails)] = GetWorkExperiencePageDataFromCv(cv, language),
+                [nameof(WorkExperience.CurrentSelectedLanguage)] = language
             }
             },
             [nameof(Help)] = new ComponentMetadata()
