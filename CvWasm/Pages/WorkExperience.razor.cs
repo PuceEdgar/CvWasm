@@ -17,7 +17,7 @@ public partial class WorkExperience : ComponentBase
 
     public void SelectCurrentWorkExperience(string keyboardCode)
     {
-        if (keyboardCode == "ArrowRight" && CurrentIndex < TotalExperienceCount)
+        if (keyboardCode == "ArrowRight" && CurrentIndex < TotalExperienceCount - 1)
         {
             CurrentIndex++;
         }
