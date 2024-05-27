@@ -37,14 +37,19 @@ public partial class Home
     protected override async Task OnInitializedAsync()
     {
         await LoadDataFromStaticFiles();
-        InitializeComponentsWithParameters();
+
+        if (Cv is not null) 
+        {
+            InitializeComponentsWithParameters();
+        }
+        
     }
 
     private async Task LoadDataFromStaticFiles()
     {
-        Cv = await Http.GetFromJsonAsync<CvModel>($"cv-data/cv-eng.json");
-        AsciiArt = await Http.GetStringAsync("file-data/ascii-welcome.txt");
-        CommandDescription = await Http.GetFromJsonAsync<Dictionary<string, string[]>>("file-data/CommandDescription.json");        
+        await LoadCvDataFromJson();
+        await LoadAsciiArtFromFile();
+        await LoadCommandDescriptionFromJson();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -271,13 +276,13 @@ public partial class Home
         });
     }
     
-    private void LoadGeneralComponent(string message)
+    private void LoadCommandResultComponent(string message)
     {
         SelectedComponent = new ComponentMetadata()
         {
-            Type = typeof(General),
-            Name = "General",
-            Parameters = { [nameof(General.Data)] = message }
+            Type = typeof(CommandResult),
+            Name = "Command Result",
+            Parameters = { [nameof(CommandResult.Result)] = message }
         };
         LoadedComponents.Add(new()
         {
@@ -317,7 +322,7 @@ public partial class Home
             commandResult += "Failed";
         }
 
-        LoadGeneralComponent(commandResult);
+        LoadCommandResultComponent(commandResult);
     }
 
     private async Task DownloadCv(Languages language)
@@ -334,7 +339,7 @@ public partial class Home
             commandResult += "Failed";
         }
 
-        LoadGeneralComponent(commandResult);
+        LoadCommandResultComponent(commandResult);
     }
 
     private async Task LoadCv(Languages language)
@@ -353,11 +358,88 @@ public partial class Home
             commandResult += "Failed";
         }
 
-        LoadGeneralComponent(commandResult);
+        LoadCommandResultComponent(commandResult);
     }
 
     private void ClearWindow()
     {
         LoadedComponents = [];
+    }
+
+
+    private async Task LoadCvDataFromJson()
+    {
+        try
+        {
+            //Cv = await Http.GetFromJsonAsync<CvModel>($"cv-data/c-{CurrentSelectedLanguage}.json");
+            Cv = await FileManager.LoadDataFromJson<CvModel>(Http, $"cv-data/cv-{CurrentSelectedLanguage}.json");
+        }
+        catch (Exception)
+        {
+            SelectedComponent = new ComponentMetadata()
+            {
+                Type = typeof(Error),
+                Name = "Error",
+                Parameters = {
+                [nameof(Error.ErrorMessage)] = "Sorry, failed to load cv data!",
+                [nameof(Error.CurrentSelectedLanguage)] = CurrentSelectedLanguage
+            }
+            };
+            LoadedComponents.Add(new()
+            {
+                Command = Command,
+                MetaData = SelectedComponent
+            });
+        }
+    }
+
+    private async Task LoadCommandDescriptionFromJson()
+    {
+        try
+        {
+            CommandDescription = await FileManager.LoadDataFromJson<Dictionary<string, string[]>>(Http, CommandDescriptionPath);
+        }
+        catch (Exception)
+        {
+            SelectedComponent = new ComponentMetadata()
+            {
+                Type = typeof(Error),
+                Name = "Error",
+                Parameters = {
+                [nameof(Error.ErrorMessage)] = "Sorry, failed to load command description data!",
+                [nameof(Error.CurrentSelectedLanguage)] = CurrentSelectedLanguage
+            }
+            };
+            LoadedComponents.Add(new()
+            {
+                Command = Command,
+                MetaData = SelectedComponent
+            });
+        }
+    }
+
+    private async Task LoadAsciiArtFromFile()
+    {
+        try
+        {
+            AsciiArt = await FileManager.LoadDataAsString(Http, AsciiArtPath);
+        }
+        catch (Exception)
+        {
+            SelectedComponent = new ComponentMetadata()
+            {
+                Type = typeof(Error),
+                Name = "Error",
+                Parameters = {
+                [nameof(Error.ErrorMessage)] = "Sorry, failed to load ascii art from file!",
+                [nameof(Error.CurrentSelectedLanguage)] = CurrentSelectedLanguage
+            }
+            };
+            LoadedComponents.Add(new()
+            {
+                Command = Command,
+                MetaData = SelectedComponent
+            });
+        }
     }
 }

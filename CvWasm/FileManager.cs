@@ -1,10 +1,22 @@
-﻿namespace CvWasm;
+﻿using System.Net.Http.Json;
 
-public static class FileManager
+namespace CvWasm;
+
+public class FileManager : IFileManager
 {
-    public static async Task<string> GetBase64FromPdfCv(HttpClient Http, string language)
+    public async Task<string> GetBase64FromPdfCv(HttpClient http, string language)
     {
-        var pdfAsByteArray = await Http.GetByteArrayAsync($"cv-data/Edgars_Puce_{language}.pdf");
+        var pdfAsByteArray = await http.GetByteArrayAsync($"cv-data/Edgars_Puce_{language}.pdf");
         return Convert.ToBase64String(pdfAsByteArray);
+    }
+
+    public async Task<T> LoadDataFromJson<T>(HttpClient http, string pathToJson)
+    {
+        return await http.GetFromJsonAsync<T>(pathToJson);
+    }
+
+    public async Task<string> LoadDataAsString(HttpClient http, string pathToFile)
+    {
+        return await http.GetStringAsync(pathToFile);
     }
 }
