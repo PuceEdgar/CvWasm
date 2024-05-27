@@ -1,6 +1,18 @@
-﻿<h3>Help</h3>
+﻿@using CvWasm.Managers
+@inject HttpClient Http
+@inject IFileManager FileManager
+@inject IComponentManager ComponentManager
+@inject IErrorManager ErrorManager
 
-@foreach (string command in CommandDescriptions![DisplayLanguage!]!)
+<h3>Help</h3>
+
+@if (CommandDescriptions.Count > 0)
 {
-    <p>@command</p>
+    <div>
+        @foreach (string command in CommandDescriptions![CurrentSelectedLanguage!]!)
+        {
+            <p>@command</p>
+        }
+    </div>
+    
 }

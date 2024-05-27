@@ -1,11 +1,31 @@
 using Microsoft.AspNetCore.Components;
 
 namespace CvWasm.Pages;
+
 public partial class Help
 {
     [Parameter]
-    public string? DisplayLanguage { get; set; }
+    public string? CurrentSelectedLanguage { get; set; }
 
-    [Parameter]
-    public Dictionary<string, string[]>? CommandDescriptions { get; set; }
+    private Dictionary<string, string[]> CommandDescriptions = [];
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadCommandDescriptionFromJson();
+    }
+
+    private async Task LoadCommandDescriptionFromJson()
+    {
+        if (CommandDescriptions.Count == 0)
+        {
+            try
+            {
+               CommandDescriptions = await FileManager.LoadDataFromJson<Dictionary<string, string[]>>(CommandDescriptionPath);
+            }
+            catch (Exception)
+            {
+              ComponentManager.AddErrorComponentWithMessage(ErrorManager.FailedToLoadCommandDescriptionMessage, "load command descriptions");
+            }
+        }        
+    }
 }

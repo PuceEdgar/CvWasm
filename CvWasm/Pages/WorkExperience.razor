@@ -1,30 +1,37 @@
 ﻿<h3>WorkExperience</h3>
 
-@* TODO: need to translate this to korean *@
-<h5>Experience @(CurrentIndex + 1) out of @TotalExperienceCount</h5>
-<h5>Use arrow key left or right to see other work experience</h5>
+@if (CurrentSelectedLanguage == Languages.eng)
+{
+    <h5>Experience @(CurrentIndex + 1) out of @TotalExperienceCount</h5>
+    <h5>Use arrow key left or right to see other work experience</h5>
+} else
+{
+    <h5>@TotalExperienceCount 가지 중 @(CurrentIndex + 1)번째 경력 </h5>
+    <h5>다른 경력을 보기 위해서는 왼쪽, 오른쪽 방향키를 사용해 주세요.</h5>
+}
+
     <table>
         <tbody>
             <tr>
-                <th>Time Period</th>
-            <td>@Data!.TimePeriod</td>
+            <th>@ExperienceDetails.TimePeriod.Key</th>
+            <td>@ExperienceDetails!.TimePeriod.Value</td>
             </tr>
             <tr>
-                <th>Company</th>
-            <td>@Data!.Company</td>
+            <th>@ExperienceDetails.Company.Key</th>
+            <td>@ExperienceDetails!.Company.Value</td>
             </tr>
             <tr>
-                <th>Location</th>
-            <td>@Data!.Location</td>
+            <th>@ExperienceDetails.Location.Key</th>
+            <td>@ExperienceDetails!.Location.Value</td>
             </tr>
             <tr>
-                <th>Position</th>
-            <td>@Data!.Position</td>
+            <th>@ExperienceDetails.Position.Key</th>
+            <td>@ExperienceDetails!.Position.Value</td>
             </tr>
             <tr>
-                <th>Job Description</th>
+            <th>@ExperienceDetails.JobDescription.Key</th>
                 <td>
-                @foreach (string responsibility in Data!.JobDescription!)
+                @foreach (string responsibility in ExperienceDetails!.JobDescription!.Value)
                     {
                         <p>@responsibility</p>
                     }

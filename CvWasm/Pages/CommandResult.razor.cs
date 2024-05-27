@@ -1,8 +1,9 @@
 using Microsoft.AspNetCore.Components;
 
 namespace CvWasm.Pages;
-public partial class General
+
+public partial class CommandResult
 {
     [Parameter]
-    public string? Data { get; set; }
+    public string? Result { get; set; }
 }

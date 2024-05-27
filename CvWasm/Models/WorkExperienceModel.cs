@@ -1,10 +1,11 @@
-﻿namespace CvWasm.Models;
+﻿using System.Text.Json.Serialization;
 
-public record WorkExperienceModel
-{
-    public string? TimePeriod { get; set; }
-    public string? Company { get; set; }
-    public string? Location { get; set; }
-    public string? Position { get; set; }
-    public string[]? JobDescription { get; set; } = [];
-}
+namespace CvWasm.Models;
+
+public record WorkExperienceModel(
+    [property: JsonPropertyName("timePeriod")] string? TimePeriod,
+    [property: JsonPropertyName("company")] string? Company,
+    [property: JsonPropertyName("location")] string? Location,
+    [property: JsonPropertyName("position")] string? Position,
+    [property: JsonPropertyName("jobDescription")] string[]? JobDescription
+    );

@@ -1,12 +1,13 @@
-﻿namespace CvWasm.Models;
+﻿using System.Text.Json.Serialization;
 
-public record AboutModel
-{
-    public string? FullName { get; set; }
-    public DateOnly DateOfBirth { get; set; }
-    public string? Nationality { get; set; }
-    public string? Email { get; set; }
-    public string? GitHubLink { get; set; }
-    public string? LinkedInLink { get; set; }
-    public string? PersonalStatement { get; set; }
-}
+namespace CvWasm.Models;
+
+public record AboutModel(
+   [property: JsonPropertyName("fullName")] string? FullName,
+   [property: JsonPropertyName("dateOfBirth")] string? DateOfBirth,
+   [property: JsonPropertyName("nationality")] string? Nationality,
+   [property: JsonPropertyName("email")] string? Email,
+   [property: JsonPropertyName("gitHubLink")] string? GitHubLink,
+   [property: JsonPropertyName("linkedInLink")] string? LinkedInLink,
+   [property: JsonPropertyName("personalStatement")] string? PersonalStatement
+    );

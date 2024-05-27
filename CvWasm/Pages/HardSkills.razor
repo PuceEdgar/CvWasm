@@ -3,35 +3,35 @@
 <table>
     <tbody>
         <tr>            
-            <th>Programming</th>
+            <th>@HardSkillsDetails.Programming.Key</th>
             <td>
-                @foreach (string programming in HardSkillsDetails.Programming)
+                @foreach (string programming in HardSkillsDetails.Programming.Value)
                 {
                     <p>@programming</p>
                 }
             </td>
         </tr>
         <tr>
-            <th>Tools</th>
-            <td>@HardSkillsDetails.Tools</td>
+            <th>@HardSkillsDetails.Tools.Key</th>
+            <td>@HardSkillsDetails.Tools.Value</td>
         </tr>
         <tr>
-            <th>Other</th>
+            <th>@HardSkillsDetails.Other.Key</th>
             <td>
-                @foreach (string other in HardSkillsDetails.Other)
+                @foreach (string other in HardSkillsDetails.Other.Value)
                 {
                     <p>@other</p>
                 }
             </td>
         </tr>
         <tr>
-            <th>Way Of Working</th>
-            <td>@HardSkillsDetails.WayOfWorking</td>
+            <th>@HardSkillsDetails.WayOfWorking.Key</th>
+            <td>@HardSkillsDetails.WayOfWorking.Value</td>
         </tr>
         <tr>
-            <th>Languages</th>
+            <th>@HardSkillsDetails.Languages.Key</th>
             <td>
-                @foreach (string language in HardSkillsDetails.Languages)
+                @foreach (string language in HardSkillsDetails.Languages.Value)
                 {
                     <p>@language</p>
                 }

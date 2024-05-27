@@ -1,10 +1,11 @@
-﻿namespace CvWasm.Models;
+﻿using System.Text.Json.Serialization;
 
-public record HardSkillsModel
-{
-    public string[]? Programming { get; set; }
-    public string? Tools { get; set; }
-    public string[]? Other { get; set; }
-    public string? WayOfWorking { get; set; }
-    public string[]? Languages { get; set; }
-}
+namespace CvWasm.Models;
+
+public record HardSkillsModel(
+   [property: JsonPropertyName("programming")] string[]? Programming,
+   [property: JsonPropertyName("tools")] string? Tools,
+   [property: JsonPropertyName("other")] string[]? Other,
+   [property: JsonPropertyName("wayOfWorking")] string? WayOfWorking,
+   [property: JsonPropertyName("languages")] string[]? Languages
+    );
