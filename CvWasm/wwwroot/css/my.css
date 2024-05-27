@@ -27,4 +27,10 @@ input {
     font-weight: bold;   
     padding: 20px 80px;
 }
+#inputDiv {
+    display: flex;
+}
 
+#inputField {
+    width: 100%;
+}
