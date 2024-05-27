@@ -1,11 +1,3 @@
 ﻿<h3>Error</h3>
 
-@if (CurrentSelectedLanguage == Languages.eng)
-{
-    <p>Command: <span style="font-weight:bold;">'@BadCommand'</span> is not recognized. Please use <span style="font-weight:bold;">'@HelpCommand'</span> for possible commands.</p>
-} else
-{
-    <p>명령: <span style="font-weight:bold;">'@BadCommand'</span> 이 존재하지 않습니다. 유효한 명령을 내리기 위해서는 <span style="font-weight:bold;">'@HelpCommand'</span> 를 사용해 주세요.</p>
-}
-
-<p>@ErrorMessage</p>
+@((MarkupString)ErrorMessage)

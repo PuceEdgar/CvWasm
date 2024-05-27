@@ -41,8 +41,7 @@ public partial class Home
         if (Cv is not null) 
         {
             InitializeComponentsWithParameters();
-        }
-        
+        }        
     }
 
     private async Task LoadDataFromStaticFiles()
@@ -298,7 +297,7 @@ public partial class Home
             Type = typeof(Error),
             Name = "Error",
             Parameters = { 
-                [nameof(Error.BadCommand)] = Command,
+                [nameof(Error.ErrorMessage)] = ErrorManager.GenerateBadCommandErrorMessage(Command, CurrentSelectedLanguage),
                 [nameof(Error.CurrentSelectedLanguage)] = CurrentSelectedLanguage
             }
         };
@@ -372,7 +371,7 @@ public partial class Home
         try
         {
             //Cv = await Http.GetFromJsonAsync<CvModel>($"cv-data/c-{CurrentSelectedLanguage}.json");
-            Cv = await FileManager.LoadDataFromJson<CvModel>(Http, $"cv-data/cv-{CurrentSelectedLanguage}.json");
+            Cv = await FileManager.LoadDataFromJson<CvModel>(Http, $"cv-data/c-{CurrentSelectedLanguage}.json");
         }
         catch (Exception)
         {
@@ -381,7 +380,7 @@ public partial class Home
                 Type = typeof(Error),
                 Name = "Error",
                 Parameters = {
-                [nameof(Error.ErrorMessage)] = "Sorry, failed to load cv data!",
+                [nameof(Error.ErrorMessage)] = ErrorManager.FailedToLoadCvMessage,
                 [nameof(Error.CurrentSelectedLanguage)] = CurrentSelectedLanguage
             }
             };
@@ -406,7 +405,7 @@ public partial class Home
                 Type = typeof(Error),
                 Name = "Error",
                 Parameters = {
-                [nameof(Error.ErrorMessage)] = "Sorry, failed to load command description data!",
+                [nameof(Error.ErrorMessage)] = ErrorManager.GenerateBadCommandErrorMessage,
                 [nameof(Error.CurrentSelectedLanguage)] = CurrentSelectedLanguage
             }
             };
@@ -431,7 +430,7 @@ public partial class Home
                 Type = typeof(Error),
                 Name = "Error",
                 Parameters = {
-                [nameof(Error.ErrorMessage)] = "Sorry, failed to load ascii art from file!",
+                [nameof(Error.ErrorMessage)] = ErrorManager.FailedToLoadAsciiArtMessage,
                 [nameof(Error.CurrentSelectedLanguage)] = CurrentSelectedLanguage
             }
             };
