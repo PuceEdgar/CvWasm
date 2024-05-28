@@ -5,5 +5,5 @@ namespace CvWasm.Pages;
 public partial class Error
 {
     [Parameter]
-    public string? ErrorMessage { get; init; }
+    public string ErrorMessage { get; set; } = default!;
 }
