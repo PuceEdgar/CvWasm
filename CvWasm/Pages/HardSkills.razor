@@ -5,32 +5,22 @@
         <tr>            
             <th>@HardSkillsDetails.Programming.Key</th>
             <td>
-                @foreach (string programming in HardSkillsDetails.Programming.Value)
-                {
-                    <p>@programming</p>
-                }
+                <TextArray TextCollection="HardSkillsDetails.Programming.Value" />
             </td>
         </tr>
         <TableHeaderAndDataRow TableHeader="@HardSkillsDetails.Tools.Key" TableData="@HardSkillsDetails.Tools.Value" />
         <tr>
             <th>@HardSkillsDetails.Other.Key</th>
             <td>
-                @foreach (string other in HardSkillsDetails.Other.Value)
-                {
-                    <p>@other</p>
-                }
+                <TextArray TextCollection="HardSkillsDetails.Other.Value" />
             </td>
         </tr>
         <TableHeaderAndDataRow TableHeader="@HardSkillsDetails.WayOfWorking.Key" TableData="@HardSkillsDetails.WayOfWorking.Value" />
         <tr>
             <th>@HardSkillsDetails.Languages.Key</th>
             <td>
-                @foreach (string language in HardSkillsDetails.Languages.Value)
-                {
-                    <p>@language</p>
-                }
+                <TextArray TextCollection="HardSkillsDetails.Languages.Value" />
             </td>
         </tr>
-
     </tbody>
 </table>

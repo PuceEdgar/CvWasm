@@ -19,10 +19,7 @@
             <tr> 
             <th>@ExperienceDetails.JobDescription.Key</th>
                 <td>
-                @foreach (string responsibility in ExperienceDetails!.JobDescription!.Value)
-                    {
-                        <p>@responsibility</p>
-                    }
+                <TextArray TextCollection="ExperienceDetails!.JobDescription!.Value" />
                 </td>
             </tr>
 
