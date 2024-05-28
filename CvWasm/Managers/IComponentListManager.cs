@@ -1,6 +1,6 @@
-﻿namespace CvWasm;
+﻿namespace CvWasm.Managers;
 
-public interface IComponentList
+public interface IComponentListManager
 {
     List<CommandAndData> LoadedComponents { get; }
     void AddNewComponent(CommandAndData commandAndData);

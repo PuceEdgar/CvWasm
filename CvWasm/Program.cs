@@ -11,6 +11,6 @@ builder.Services.AddSingleton(sp => new HttpClient { BaseAddress = new Uri(build
 builder.Services.AddSingleton<IFileManager, FileManager>();
 builder.Services.AddSingleton<IErrorManager, ErrorManager>();
 builder.Services.AddSingleton<IComponentManager, ComponentManager>();
-builder.Services.AddSingleton<IComponentList, ComponentList>();
+builder.Services.AddSingleton<IComponentListManager, ComponentListManager>();
 
 await builder.Build().RunAsync();

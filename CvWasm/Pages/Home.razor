@@ -4,7 +4,7 @@
 @inject IFileManager FileManager
 @inject IErrorManager ErrorManager
 @inject IComponentManager ComponentManager
-@inject IComponentList ComponentList
+@inject IComponentListManager ComponentListManager
 
 <PageTitle>Home</PageTitle>
 
@@ -24,9 +24,9 @@
     </div>
 }
 
-@if (ComponentList.LoadedComponents.Count > 0)
+@if (ComponentListManager.LoadedComponents.Count > 0)
 {
-    @foreach (var component in ComponentList.LoadedComponents)
+    @foreach (var component in ComponentListManager.LoadedComponents)
     {
         <p>Guest> @component.Command</p>
         <div class="myContent">
