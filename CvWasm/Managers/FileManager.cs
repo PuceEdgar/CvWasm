@@ -17,9 +17,9 @@ public class FileManager : IFileManager
         return Convert.ToBase64String(pdfAsByteArray);
     }
 
-    public async Task<T> LoadDataFromJson<T>(string pathToJson)
+    public async Task<T> LoadDataFromJson<T>(string pathToJson) where T : new()
     {
-        return await _httpClient.GetFromJsonAsync<T>(pathToJson);
+        return await _httpClient.GetFromJsonAsync<T>(pathToJson) ?? new T();
     }
 
     public async Task<string> LoadDataAsString(string pathToFile)
