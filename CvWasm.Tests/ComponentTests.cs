@@ -50,4 +50,23 @@ public class ComponentTests : TestContext
         th.MarkupMatches($"<th>{header}</th>");
         td.MarkupMatches($"<td>{data}</td>");
     }
+
+    [Fact]
+    public void TextArrayComponentDisplaysContent()
+    {
+        string[] content = ["a", "b", "c"];
+        var cut = RenderComponent<TextArray>(
+            parameters => parameters.Add(p => p.TextCollection, content));
+
+        var nodes = cut.Nodes;
+
+        Assert.Equal(content.Length, nodes.Length);
+        Assert.Multiple(() =>
+        {
+            for (int i = 0; i < content.Length; i++)
+            {
+                nodes.ElementAt(i).MarkupMatches($"<p>{content[i]}</P>");
+            }
+        });
+    }
 }
