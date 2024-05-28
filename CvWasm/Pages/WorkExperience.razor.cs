@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace CvWasm.Pages;
 
-public partial class WorkExperience : ComponentBase
+public partial class WorkExperience
 {
     [Parameter]
     public List<WorkExperiencePageData>? ListOfExperienceDetails { get; set; }

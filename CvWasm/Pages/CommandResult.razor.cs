@@ -5,5 +5,5 @@ namespace CvWasm.Pages;
 public partial class CommandResult
 {
     [Parameter]
-    public string? Result { get; set; }
+    public string Result { get; set; } = default!;
 }

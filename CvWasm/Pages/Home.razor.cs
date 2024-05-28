@@ -7,7 +7,7 @@ namespace CvWasm.Pages;
 
 public partial class Home
 {
-    private CvModel Cv = new();
+    private CvModel? Cv;
     private ElementReference TextInput;
     private string Command = string.Empty;
     private string? AsciiArt;
@@ -53,8 +53,8 @@ public partial class Home
 
     private async Task KeyboardButtonPressed(KeyboardEventArgs e)
     {
-        int componentCount = ComponentList.LoadedComponents.Count;
-        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && componentCount > 0 && ComponentList.LoadedComponents[componentCount - 1].MetaData!.Type == typeof(WorkExperience))
+        int componentCount = ComponentListManager.LoadedComponents.Count;
+        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && componentCount > 0 && ComponentListManager.LoadedComponents[componentCount - 1].MetaData!.Type == typeof(WorkExperience))
         {
             (ChildComponent?.Instance as WorkExperience)!.SelectCurrentWorkExperience(e.Code);
         }
@@ -164,7 +164,7 @@ public partial class Home
 
     private void ClearWindow()
     {
-        ComponentList.ClearList();
+        ComponentListManager.ClearList();
     }
 
     private async Task LoadCvDataFromJson()

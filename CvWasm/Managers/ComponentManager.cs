@@ -7,12 +7,12 @@ namespace CvWasm.Managers;
 
 public class ComponentManager : IComponentManager
 {
-    private readonly IComponentList _componentList;
+    private readonly IComponentListManager _componentList;
     private readonly EnglishHeaders EnglishHeaders = new();
     private readonly KoreanHeaders KoreanHeaders = new();
     private Dictionary<string, ComponentMetadata> Components { get; set; } = [];
 
-    public ComponentManager(IComponentList componentList)
+    public ComponentManager(IComponentListManager componentList)
     {
         _componentList = componentList;
     }

@@ -1,6 +1,6 @@
-﻿namespace CvWasm;
+﻿namespace CvWasm.Managers;
 
-public class ComponentList : IComponentList
+public class ComponentListManager : IComponentListManager
 {
     private readonly List<CommandAndData> _componentList = [];
 
