@@ -25,12 +25,12 @@ public partial class WorkExperience : ComponentBase
         {
             CurrentIndex--;
         }
-        ExperienceDetails = ListOfExperienceDetails[CurrentIndex];
+        ExperienceDetails = ListOfExperienceDetails![CurrentIndex];
     }
 
     protected override void OnParametersSet()
     {
-        TotalExperienceCount = ListOfExperienceDetails.Count;
+        TotalExperienceCount = ListOfExperienceDetails!.Count;
         ExperienceDetails = ListOfExperienceDetails[CurrentIndex];
     }
 }
