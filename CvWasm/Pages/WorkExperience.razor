@@ -12,7 +12,11 @@
 
     <table>
         <tbody>
-            <tr>
+        <TableHeaderAndDataRow TableHeader="@ExperienceDetails.TimePeriod.Key" TableData="@ExperienceDetails.TimePeriod.Value" />
+        <TableHeaderAndDataRow TableHeader="@ExperienceDetails.Company.Key" TableData="@ExperienceDetails.Company.Value" />
+        <TableHeaderAndDataRow TableHeader="@ExperienceDetails.Location.Key" TableData="@ExperienceDetails.Location.Value" />
+        <TableHeaderAndDataRow TableHeader="@ExperienceDetails.Position.Key" TableData="@ExperienceDetails.Position.Value" />
+           @*  <tr>
             <th>@ExperienceDetails.TimePeriod.Key</th>
             <td>@ExperienceDetails!.TimePeriod.Value</td>
             </tr>
@@ -27,8 +31,8 @@
             <tr>
             <th>@ExperienceDetails.Position.Key</th>
             <td>@ExperienceDetails!.Position.Value</td>
-            </tr>
-            <tr>
+        </tr>*@
+            <tr> 
             <th>@ExperienceDetails.JobDescription.Key</th>
                 <td>
                 @foreach (string responsibility in ExperienceDetails!.JobDescription!.Value)
