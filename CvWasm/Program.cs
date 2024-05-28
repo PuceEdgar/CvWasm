@@ -2,7 +2,6 @@ using CvWasm;
 using CvWasm.Managers;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using System.Collections.Generic;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -13,6 +12,5 @@ builder.Services.AddSingleton<IFileManager, FileManager>();
 builder.Services.AddSingleton<IErrorManager, ErrorManager>();
 builder.Services.AddSingleton<IComponentManager, ComponentManager>();
 builder.Services.AddSingleton<IComponentList, ComponentList>();
-
 
 await builder.Build().RunAsync();
