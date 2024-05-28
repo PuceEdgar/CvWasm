@@ -2,7 +2,12 @@
 
 <table>
     <tbody >
-        <tr>
+        <TableHeaderAndDataRow TableHeader="@AboutDetails.FullName.Key" TableData="@AboutDetails.FullName.Value" />
+        <TableHeaderAndDataRow TableHeader="@AboutDetails.DateOfBirth.Key" TableData="@AboutDetails.DateOfBirth.Value" />
+        <TableHeaderAndDataRow TableHeader="@AboutDetails.Nationality.Key" TableData="@AboutDetails.Nationality.Value" />
+        <TableHeaderAndDataRow TableHeader="@AboutDetails.Email.Key" TableData="@AboutDetails.Email.Value" />
+        
+        @* <tr>
             <th>@AboutDetails.FullName.Key</th>
             <td>@AboutDetails.FullName.Value</td>
         </tr>
@@ -17,7 +22,7 @@
         <tr>
             <th>@AboutDetails.Email.Key</th>
             <td>@AboutDetails.Email.Value</td>
-        </tr>
+        </tr> *@
         <tr>
             <th>@AboutDetails.GitHubLink.Key</th>
             <td><a href="@AboutDetails.GitHubLink.Value">GitHub Link</a></td>
@@ -26,9 +31,10 @@
             <th>@AboutDetails.LinkedInLink.Key</th>
             <td><a href="@AboutDetails.LinkedInLink.Value">LinkedIn Link</a></td>
         </tr>
-        <tr>
+        @* <tr>
             <th>@AboutDetails.PersonalStatement.Key</th>
             <td>@AboutDetails.PersonalStatement.Value</td>
-        </tr>
+        </tr> *@
+        <TableHeaderAndDataRow TableHeader="@AboutDetails.PersonalStatement.Key" TableData="@AboutDetails.PersonalStatement.Value" />
     </tbody>
 </table>
