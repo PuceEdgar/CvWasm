@@ -2,25 +2,20 @@
 using CvWasm.Headers;
 using CvWasm.Models;
 using CvWasm.Pages;
-using Microsoft.AspNetCore.Components;
 
 namespace CvWasm.Managers;
 
-public class ComponentManager : ComponentBase, IComponentManager
+public class ComponentManager : IComponentManager
 {
+    private readonly IComponentList _componentList;
     private readonly EnglishHeaders EnglishHeaders = new();
     private readonly KoreanHeaders KoreanHeaders = new();
-    private Dictionary<string, ComponentMetadata> Components {  get; set; }
-
-    //[CascadingParameter]
-    //List<CommandAndData> LoadedComponents { get; set; }
-    private readonly IComponentList _componentList;
+    private Dictionary<string, ComponentMetadata> Components { get; set; } = [];
 
     public ComponentManager(IComponentList componentList)
     {
         _componentList = componentList;
     }
-
 
     private readonly Dictionary<string, string> ValidComponentCommands = new(StringComparer.OrdinalIgnoreCase)
     {
@@ -31,12 +26,6 @@ public class ComponentManager : ComponentBase, IComponentManager
         [EducationCommand] = nameof(Education),
         [HelpCommand] = nameof(Help)
     };
-    //private readonly IErrorManager _errorManager;
-
-    //public ComponentManager(IErrorManager errorManager)
-    //{
-    //    _errorManager = errorManager;
-    //}
 
     public void AddErrorComponentWithMessage(string errorMessage, string? command)
     {
@@ -64,32 +53,32 @@ public class ComponentManager : ComponentBase, IComponentManager
             {
                 Type = typeof(About),
                 Name = "About",
-                Parameters = { [nameof(About.AboutDetails)] = GetAboutPageDataFromCv(cv, language) }
+                Parameters = { [nameof(About.AboutDetails)] = GetAboutPageDataFromCv(cv.About!, language) }
             },
             [nameof(HardSkills)] = new ComponentMetadata()
             {
                 Type = typeof(HardSkills),
                 Name = "Hard Skills",
-                Parameters = { [nameof(HardSkills.HardSkillsDetails)] = GetHardSkillsPageDataFromCv(cv, language) }
+                Parameters = { [nameof(HardSkills.HardSkillsDetails)] = GetHardSkillsPageDataFromCv(cv.Skills!.HardSkills!, language) }
             },
             [nameof(SoftSkills)] = new ComponentMetadata()
             {
                 Type = typeof(SoftSkills),
                 Name = "Soft Skills",
-                Parameters = { [nameof(SoftSkills.SoftSkillsDetails)] = cv.Skills.SoftSkills! }
+                Parameters = { [nameof(SoftSkills.SoftSkillsDetails)] = cv.Skills!.SoftSkills! }
             },
             [nameof(Education)] = new ComponentMetadata()
             {
                 Type = typeof(Education),
                 Name = "Education",
-                Parameters = { [nameof(Education.EducationDetails)] = GetEducationPageDataFromCv(cv, language) }
+                Parameters = { [nameof(Education.EducationDetails)] = GetEducationPageDataFromCv(cv.Education!, language) }
             },
             [nameof(WorkExperience)] = new ComponentMetadata()
             {
                 Type = typeof(WorkExperience),
                 Name = "Work Experience",
                 Parameters = {
-                [nameof(WorkExperience.ListOfExperienceDetails)] = GetWorkExperiencePageDataFromCv(cv, language),
+                [nameof(WorkExperience.ListOfExperienceDetails)] = GetWorkExperiencePageDataFromCv(cv.Experience!, language),
                 [nameof(WorkExperience.CurrentSelectedLanguage)] = language
             }
             },
@@ -129,94 +118,70 @@ public class ComponentManager : ComponentBase, IComponentManager
         });
     }
 
-    private AboutPageData GetAboutPageDataFromCv(CvModel cv, Languages language)
+    private AboutPageData GetAboutPageDataFromCv(AboutModel about, Languages language)
     {
         IHeaders headers = language == Languages.eng ? EnglishHeaders : KoreanHeaders;
         AboutPageData aboutPageData = new()
         {
-            FullName = new(headers.FullName, cv.About.FullName),
-            DateOfBirth = new(headers.DateOfBirth, cv.About.DateOfBirth),
-            Nationality = new(headers.Nationality, cv.About.Nationality),
-            Email = new(headers.Email, cv.About.Email),
-            GitHubLink = new(headers.GitHubLink, cv.About.GitHubLink),
-            LinkedInLink = new(headers.LinkedInLink, cv.About.LinkedInLink),
-            PersonalStatement = new(headers.PersonalStatement, cv.About.PersonalStatement),
+            FullName = new(headers.FullName, about!.FullName!),
+            DateOfBirth = new(headers.DateOfBirth, about.DateOfBirth!),
+            Nationality = new(headers.Nationality, about.Nationality!),
+            Email = new(headers.Email, about.Email!),
+            GitHubLink = new(headers.GitHubLink, about.GitHubLink!),
+            LinkedInLink = new(headers.LinkedInLink, about.LinkedInLink!),
+            PersonalStatement = new(headers.PersonalStatement, about.PersonalStatement!),
         };
 
         return aboutPageData;
     }
 
-    private EducationPageData GetEducationPageDataFromCv(CvModel cv, Languages language)
+    private EducationPageData GetEducationPageDataFromCv(EducationModel education, Languages language)
     {
         IHeaders headers = language == Languages.eng ? EnglishHeaders : KoreanHeaders;
         EducationPageData educationPageData = new()
         {
-            UniversityName = new(headers.UniversityName, cv.Education.UniversityName),
-            Location = new(headers.Location, cv.Education.Location),
-            PeriodAttended = new(headers.PeriodAttended, cv.Education.PeriodAttended),
-            Degree = new(headers.Degree, cv.Education.Degree),
+            UniversityName = new(headers.UniversityName, education.UniversityName),
+            Location = new(headers.Location, education.Location),
+            PeriodAttended = new(headers.PeriodAttended, education.PeriodAttended),
+            Degree = new(headers.Degree, education.Degree),
         };
 
         return educationPageData;
     }
 
-    private HardSkillsPageData GetHardSkillsPageDataFromCv(CvModel cv, Languages language)
+    private HardSkillsPageData GetHardSkillsPageDataFromCv(HardSkillsModel hardSkills, Languages language)
     {
         IHeaders headers = language == Languages.eng ? EnglishHeaders : KoreanHeaders;
         HardSkillsPageData hardSkillsPageData = new()
         {
-            Programming = new(headers.Programming, cv.Skills.HardSkills.Programming),
-            Tools = new(headers.Tools, cv.Skills.HardSkills.Tools),
-            Other = new(headers.Other, cv.Skills.HardSkills.Other),
-            WayOfWorking = new(headers.WayOfWorking, cv.Skills.HardSkills.WayOfWorking),
-            Languages = new(headers.Languages, cv.Skills.HardSkills.Languages)
+            Programming = new(headers.Programming, hardSkills.Programming!),
+            Tools = new(headers.Tools, hardSkills.Tools!),
+            Other = new(headers.Other, hardSkills.Other!),
+            WayOfWorking = new(headers.WayOfWorking, hardSkills.WayOfWorking!),
+            Languages = new(headers.Languages, hardSkills.Languages!)
         };
 
         return hardSkillsPageData;
     }
 
-    private List<WorkExperiencePageData> GetWorkExperiencePageDataFromCv(CvModel cv, Languages language)
+    private List<WorkExperiencePageData> GetWorkExperiencePageDataFromCv(WorkExperienceModel[] experiences, Languages language)
     {
         List<WorkExperiencePageData> listOfExperiencePageData = [];
         IHeaders headers = language == Languages.eng ? EnglishHeaders : KoreanHeaders;
-        //var selectedExperience = cv.Experience[experienceIndex];
 
-        foreach (var experience in cv.Experience)
+        foreach (var experience in experiences)
         {
             WorkExperiencePageData workExperiencePageData = new()
             {
-                TimePeriod = new(headers.TimePeriod, experience.TimePeriod),
-                Company = new(headers.Company, experience.Company),
-                Location = new(headers.Location, experience.Location),
-                Position = new(headers.Position, experience.Position),
-                JobDescription = new(headers.JobDescription, experience.JobDescription)
+                TimePeriod = new(headers.TimePeriod, experience.TimePeriod!),
+                Company = new(headers.Company, experience.Company!),
+                Location = new(headers.Location, experience.Location!),
+                Position = new(headers.Position, experience.Position!),
+                JobDescription = new(headers.JobDescription, experience.JobDescription!)
             };
             listOfExperiencePageData.Add(workExperiencePageData);
         }        
 
         return listOfExperiencePageData;
     }
-
-    
-
-    //private void LoadExperienceComponent()
-    //{
-    //    int currentExperienceIndex = 0;
-    //    var SelectedComponent = new ComponentMetadata()
-    //    {
-    //        Type = typeof(WorkExperience),
-    //        Name = "Work Experience",
-    //        Parameters = {
-    //            [nameof(WorkExperience.ExperienceDetails)] = GetWorkExperiencePageDataFromCv(currentExperienceIndex),
-    //            [nameof(WorkExperience.TotalExperienceCount)] = Cv.Experience.Length,
-    //            [nameof(WorkExperience.CurrentSelectedLanguage)] = CurrentSelectedLanguage
-    //        }
-    //    };
-
-    //    LoadedComponents.Add(new()
-    //    {
-    //        Command = "experience",
-    //        MetaData = SelectedComponent
-    //    });
-    //}
 }

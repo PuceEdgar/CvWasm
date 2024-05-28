@@ -1,6 +1,3 @@
-using CvWasm.DTO;
-using CvWasm.Headers;
-using CvWasm.Managers;
 using CvWasm.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -10,21 +7,12 @@ namespace CvWasm.Pages;
 
 public partial class Home
 {
-    private CvModel? Cv;
-    private Dictionary<string, ComponentMetadata>? Components;
-    //private ComponentMetadata? SelectedComponent;
+    private CvModel Cv = new();
     private ElementReference TextInput;
-    private string? Command;
+    private string Command = string.Empty;
     private string? AsciiArt;
-    //private int CurrentExperienceIndex = 0;    
     private Languages CurrentSelectedLanguage = Languages.eng;
-
-
-    //List<CommandAndData> LoadedComponents { get; set; }
-    //private readonly IComponentList? _componentList;
-
-    private DynamicComponent ChildComponent {  get; set; } = default!;
-
+    private DynamicComponent ChildComponent { get; set; } = default!;
 
     //TODO: add try catch in case file reading fails. unit tests/integration tests
     //move file names to constants
@@ -32,17 +20,16 @@ public partial class Home
     {
         await LoadDataFromStaticFiles();
 
-        if (Cv is not null) 
+        if (Cv is not null)
         {
-           ComponentManager.InitializeComponentsWithParameters(Cv, CurrentSelectedLanguage);
-        }        
+            ComponentManager.InitializeComponentsWithParameters(Cv, CurrentSelectedLanguage);
+        }
     }
 
     private async Task LoadDataFromStaticFiles()
     {
         await LoadCvDataFromJson();
         await LoadAsciiArtFromFile();
-        //await LoadCommandDescriptionFromJson();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -67,21 +54,18 @@ public partial class Home
     private async Task KeyboardButtonPressed(KeyboardEventArgs e)
     {
         int componentCount = ComponentList.LoadedComponents.Count;
-        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && componentCount > 0 && ComponentList.LoadedComponents[componentCount-1].MetaData!.Type == typeof(WorkExperience))
+        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && componentCount > 0 && ComponentList.LoadedComponents[componentCount - 1].MetaData!.Type == typeof(WorkExperience))
         {
-           (ChildComponent?.Instance as WorkExperience)!.SelectCurrentWorkExperience(e.Code);
+            (ChildComponent?.Instance as WorkExperience)!.SelectCurrentWorkExperience(e.Code);
         }
 
-        if (e.Code.Equals("Enter", StringComparison.InvariantCultureIgnoreCase)  
-            || e.Code.Equals("NumpadEnter", StringComparison.InvariantCultureIgnoreCase) 
+        if (e.Code.Equals("Enter", StringComparison.InvariantCultureIgnoreCase)
+            || e.Code.Equals("NumpadEnter", StringComparison.InvariantCultureIgnoreCase)
                 || e.Key.Equals("Enter", StringComparison.InvariantCultureIgnoreCase))
         {
             await ExecuteCommand();
         }
-
     }
-
-    
 
     private async Task ExecuteCommand()
     {
@@ -100,14 +84,11 @@ public partial class Home
             case HelpCommand:
                 ComponentManager.LoadComponent(Command);
                 break;
-            //case ExperienceCommand:
-            //    LoadExperienceComponent();
-                break;
             case OpenGitHubCommand:
-                await OpenLinkInNewTab(Cv.About.GitHubLink);
+                await OpenLinkInNewTab(Cv.About!.GitHubLink!);
                 break;
             case OpenLinkedInCommand:
-                await OpenLinkInNewTab(Cv.About.LinkedInLink);
+                await OpenLinkInNewTab(Cv.About!.LinkedInLink!);
                 break;
             case DownloadEngCvCommand:
                 await DownloadCv(Languages.eng);
@@ -122,14 +103,12 @@ public partial class Home
                 await LoadCv(Languages.kor);
                 break;
             default:
-               ComponentManager.AddErrorComponentWithMessage(ErrorManager.GenerateBadCommandErrorMessage(Command, CurrentSelectedLanguage), Command);
+                ComponentManager.AddErrorComponentWithMessage(ErrorManager.GenerateBadCommandErrorMessage(Command, CurrentSelectedLanguage), Command);
                 break;
         }
 
         Command = string.Empty;
     }
-
-    
 
     private async Task OpenLinkInNewTab(string url)
     {
@@ -171,7 +150,7 @@ public partial class Home
         {
             CurrentSelectedLanguage = language;
             await LoadCvDataFromJson();
-            ComponentManager.InitializeComponentsWithParameters(Cv!, CurrentSelectedLanguage);
+            ComponentManager.InitializeComponentsWithParameters(Cv, CurrentSelectedLanguage);
             commandResult += "Success";
 
         }
@@ -188,7 +167,6 @@ public partial class Home
         ComponentList.ClearList();
     }
 
-
     private async Task LoadCvDataFromJson()
     {
         try
@@ -199,9 +177,7 @@ public partial class Home
         {
             ComponentManager.AddErrorComponentWithMessage(ErrorManager.FailedToLoadCvMessage, "load cv");
         }
-    }    
-
-    
+    }
 
     private async Task LoadAsciiArtFromFile()
     {
@@ -212,9 +188,6 @@ public partial class Home
         catch (Exception)
         {
             ComponentManager.AddErrorComponentWithMessage(ErrorManager.FailedToLoadAsciiArtMessage, "load ascii art");
-            
         }
     }
-
-    
 }

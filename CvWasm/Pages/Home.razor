@@ -1,7 +1,6 @@
 ﻿@page "/"
 @using CvWasm.Managers
 @inject IJSRuntime JSRuntime
-@inject HttpClient Http
 @inject IFileManager FileManager
 @inject IErrorManager ErrorManager
 @inject IComponentManager ComponentManager
@@ -31,7 +30,7 @@
     {
         <p>Guest> @component.Command</p>
         <div class="myContent">
-                <DynamicComponent @ref="ChildComponent" Type="component.MetaData.Type" Parameters="component.MetaData.Parameters" />                
+                <DynamicComponent @ref="ChildComponent" Type="component.MetaData!.Type" Parameters="component.MetaData.Parameters" />                
         </div>
     }
 }

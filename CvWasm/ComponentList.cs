@@ -1,5 +1,4 @@
-﻿
-namespace CvWasm;
+﻿namespace CvWasm;
 
 public class ComponentList : IComponentList
 {
