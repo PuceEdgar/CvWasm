@@ -8,10 +8,6 @@
 @if (CommandDescriptions.Count > 0)
 {
     <div>
-        @foreach (string command in CommandDescriptions![CurrentSelectedLanguage!]!)
-        {
-            <p>@command</p>
-        }
-    </div>
-    
+        <TextArray TextCollection="CommandDescriptions![CurrentSelectedLanguage!]!" />
+    </div>    
 }
