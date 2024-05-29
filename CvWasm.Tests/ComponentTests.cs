@@ -1,6 +1,7 @@
 using Bunit;
 using CvWasm.Pages;
 using CvWasm.SharedComponents;
+using Microsoft.AspNetCore.Components;
 
 namespace CvWasm.Tests;
 

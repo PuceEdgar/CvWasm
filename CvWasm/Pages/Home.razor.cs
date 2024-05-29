@@ -1,7 +1,6 @@
 using CvWasm.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.JSInterop;
 
 namespace CvWasm.Pages;
 
@@ -39,7 +38,7 @@ public partial class Home
             await FocusElement();
         }
 
-        await JSRuntime.InvokeVoidAsync("scrollToInput");
+        await JsService.CallJsFunctionByName("scrollToInput");
     }
 
     private async Task FocusElement()
@@ -115,7 +114,7 @@ public partial class Home
         var commandResult = "Result: ";
         try
         {
-            await JSRuntime.InvokeVoidAsync("open", url, "_blank");
+            await JsService.CallJsFunctionToOpenUrl(url);
             commandResult += "Success";
         }
         catch (Exception)
@@ -132,7 +131,7 @@ public partial class Home
         try
         {
             var base64 = await FileManager.GetBase64FromPdfCv(language.ToString());
-            await JSRuntime.InvokeVoidAsync("downloadFile", $"cv_{language}.pdf", base64);
+            await JsService.CallJsFunctionToDownloadCv(language, base64);
             commandResult += "Success";
         }
         catch (Exception)
