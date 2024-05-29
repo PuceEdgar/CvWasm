@@ -6,14 +6,8 @@
         <TableHeaderAndDataRow TableHeader="@AboutDetails.DateOfBirth.Key" TableData="@AboutDetails.DateOfBirth.Value" />
         <TableHeaderAndDataRow TableHeader="@AboutDetails.Nationality.Key" TableData="@AboutDetails.Nationality.Value" />
         <TableHeaderAndDataRow TableHeader="@AboutDetails.Email.Key" TableData="@AboutDetails.Email.Value" />
-        <tr>
-            <th>@AboutDetails.GitHubLink.Key</th>
-            <td><a href="@AboutDetails.GitHubLink.Value">GitHub Link</a></td>
-        </tr>
-        <tr>
-            <th>@AboutDetails.LinkedInLink.Key</th>
-            <td><a href="@AboutDetails.LinkedInLink.Value">LinkedIn Link</a></td>
-        </tr>
+        <TableHeaderAndDataRow TableHeader="@AboutDetails.GitHubLink.Key" TableData="@($"""<a href="{@AboutDetails.GitHubLink.Value}">GitHub Link</a>""")" />
+        <TableHeaderAndDataRow TableHeader="@AboutDetails.LinkedInLink.Key" TableData="@($"""<a href="{@AboutDetails.LinkedInLink.Value}">LinkedIn Link</a>""")" />
         <TableHeaderAndDataRow TableHeader="@AboutDetails.PersonalStatement.Key" TableData="@AboutDetails.PersonalStatement.Value" />
     </tbody>
 </table>
