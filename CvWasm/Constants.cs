@@ -22,4 +22,7 @@ public static class Constants
     //public const string KoreanCvPdfPath = "cv-data/Edgars_Puce_kor.pdf";
     public const string CommandDescriptionPath = "file-data/CommandDescription.json";
     public const string AsciiArtPath = "file-data/ascii-welcome.txt";
+
+    public const string GithubLink = "https://github.com/PuceEdgar";
+    public const string LinkedInLink = "https://www.linkedin.com/in/edgars-puce/";
 }

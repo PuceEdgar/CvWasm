@@ -1,6 +1,8 @@
-﻿<h3>WorkExperience</h3>
+﻿@inject StateContainer StateContainer
 
-@if (CurrentSelectedLanguage == Languages.eng)
+<h3>WorkExperience</h3>
+
+@if (StateContainer.CurrentSelectedLanguage == Languages.eng)
 {
     <h5>Experience @(CurrentIndex + 1) out of @TotalExperienceCount</h5>
     <h5>Use arrow key left or right to see other work experience</h5>

@@ -5,7 +5,7 @@ namespace CvWasm.Managers;
 
 public class ComponentManager : IComponentManager
 {
-    private Dictionary<string, ComponentMetadata> Components { get; set; } = [];
+    private Dictionary<string, ComponentMetadata> Components = [];
     private readonly List<ComponentMetadata> _componentList = [];
 
     public List<ComponentMetadata> LoadedComponents => _componentList;
@@ -56,7 +56,7 @@ public class ComponentManager : IComponentManager
         };
     }
 
-    public ComponentMetadata CreateResultCommandAndData(string message, string command)
+    public ComponentMetadata CreateResultComponent(string message, string command)
     {
         return new ComponentMetadata()
         {
