@@ -16,10 +16,10 @@ public static class Constants
     public const string ShowEnglishCommand = "lang -eng";
     public const string ShowKoreanCommand = "lang -kor";
 
-    public const string EnglishCvJsonPath = "cv-data/cv-eng.json";
-    public const string KoreanCvJsonPath = "cv-data/cv-kor.json";
-    public const string EnglishCvPdfPath = "cv-data/Edgars_Puce_eng.pdf";
-    public const string KoreanCvPdfPath = "cv-data/Edgars_Puce_kor.pdf";
+    //public const string EnglishCvJsonPath = "cv-data/cv-eng.json";
+    //public const string KoreanCvJsonPath = "cv-data/cv-kor.json";
+    //public const string EnglishCvPdfPath = "cv-data/Edgars_Puce_eng.pdf";
+    //public const string KoreanCvPdfPath = "cv-data/Edgars_Puce_kor.pdf";
     public const string CommandDescriptionPath = "file-data/CommandDescription.json";
     public const string AsciiArtPath = "file-data/ascii-welcome.txt";
 }
