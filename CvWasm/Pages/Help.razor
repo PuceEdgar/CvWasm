@@ -7,7 +7,15 @@
 
 @if (CommandDescriptions.Count > 0)
 {
-    <div>
-        <TextArray TextCollection="CommandDescriptions![CurrentSelectedLanguage!]!" />
-    </div>    
+    <table>
+        <tbody>
+            @foreach (var command in CommandDescriptions![CurrentSelectedLanguage!]!)
+            {
+                @foreach(var key in command.Keys)
+                {
+                    <TableHeaderAndDataRow TableHeader="@key" SimpleData="@command[key]" />
+                }                
+            }            
+        </tbody>        
+    </table>    
 }

@@ -12,16 +12,10 @@
 
     <table>
         <tbody>
-        <TableHeaderAndDataRow TableHeader="@ExperienceDetails.TimePeriod.Key" TableData="@ExperienceDetails.TimePeriod.Value" />
-        <TableHeaderAndDataRow TableHeader="@ExperienceDetails.Company.Key" TableData="@ExperienceDetails.Company.Value" />
-        <TableHeaderAndDataRow TableHeader="@ExperienceDetails.Location.Key" TableData="@ExperienceDetails.Location.Value" />
-        <TableHeaderAndDataRow TableHeader="@ExperienceDetails.Position.Key" TableData="@ExperienceDetails.Position.Value" />
-            <tr> 
-            <th>@ExperienceDetails.JobDescription.Key</th>
-                <td>
-                <TextArray TextCollection="ExperienceDetails!.JobDescription!.Value" />
-                </td>
-            </tr>
-
+        <TableHeaderAndDataRow TableHeader="@ExperienceDetails.TimePeriod.Key" SimpleData="@ExperienceDetails.TimePeriod.Value" />
+        <TableHeaderAndDataRow TableHeader="@ExperienceDetails.Company.Key" SimpleData="@ExperienceDetails.Company.Value" />
+        <TableHeaderAndDataRow TableHeader="@ExperienceDetails.Location.Key" SimpleData="@ExperienceDetails.Location.Value" />
+        <TableHeaderAndDataRow TableHeader="@ExperienceDetails.Position.Key" SimpleData="@ExperienceDetails.Position.Value" />
+        <TableHeaderAndDataRow TableHeader="@ExperienceDetails.JobDescription.Key" CollectionData="@ExperienceDetails.JobDescription.Value" />
         </tbody>
     </table>

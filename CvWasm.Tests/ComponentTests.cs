@@ -37,7 +37,7 @@ public class ComponentTests : TestContext
         string header = "header";
         string data = "data";
         var cut = RenderComponent<TableHeaderAndDataRow>(
-            parameters => parameters.Add(p => p.TableHeader, header).Add(p => p.TableData, data)
+            parameters => parameters.Add(p => p.TableHeader, header).Add(p => p.SimpleData, data)
             );
 
         var tr = cut.Find("tr");

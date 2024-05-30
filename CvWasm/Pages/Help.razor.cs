@@ -7,7 +7,7 @@ public partial class Help
     [Parameter]
     public string? CurrentSelectedLanguage { get; set; }
 
-    private Dictionary<string, string[]> CommandDescriptions = [];
+    private Dictionary<string, Dictionary<string, string>[]> CommandDescriptions = [];
 
     protected override async Task OnInitializedAsync()
     {
@@ -20,7 +20,7 @@ public partial class Help
         {
             try
             {
-               CommandDescriptions = await FileManager.LoadDataFromJson<Dictionary<string, string[]>>(CommandDescriptionPath);
+                CommandDescriptions = await FileManager.LoadDataFromJson<Dictionary<string, Dictionary<string, string>[]>>(CommandDescriptionPath);
             }
             catch (Exception)
             {
