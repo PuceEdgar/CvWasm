@@ -2,13 +2,13 @@
 
 public class ComponentListManager : IComponentListManager
 {
-    private readonly List<CommandAndData> _componentList = [];
+    private readonly List<ComponentMetadata> _componentList = [];
 
-    public List<CommandAndData> LoadedComponents => _componentList;
+    public List<ComponentMetadata> LoadedComponents => _componentList;
 
-    public void AddNewComponent(CommandAndData commandAndData)
+    public void AddNewComponent(ComponentMetadata componentMetadata)
     {
-        _componentList.Add(commandAndData);
+        _componentList.Add(componentMetadata);
     }
 
     public void ClearList()

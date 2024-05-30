@@ -2,7 +2,7 @@
 
 public interface IComponentListManager
 {
-    List<CommandAndData> LoadedComponents { get; }
-    void AddNewComponent(CommandAndData commandAndData);
+    List<ComponentMetadata> LoadedComponents { get; }
+    void AddNewComponent(ComponentMetadata componentMetadata);
     void ClearList();
 }

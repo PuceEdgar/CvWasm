@@ -55,7 +55,7 @@ public partial class Home
     private async Task KeyboardButtonPressed(KeyboardEventArgs e)
     {
         int componentCount = ComponentManager.GetLoadedComponents().Count;
-        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && componentCount > 0 && ComponentManager.GetLoadedComponents()[componentCount - 1].MetaData!.Type == typeof(WorkExperience))
+        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && componentCount > 0 && ComponentManager.GetLoadedComponents()[componentCount - 1].Type == typeof(WorkExperience))
         {
             (ChildComponent?.Instance as WorkExperience)!.SelectCurrentWorkExperience(e.Code);
         }
@@ -113,7 +113,7 @@ public partial class Home
 
     private void AddNewComponentForCommand(string command)
     {
-        var result = ComponentManager.CreateCommandAndDataFromExistingComponent(command);
+        var result = ComponentManager.GetExistingComponent(command);
         ComponentManager.AddComponentToLoadedComponentList(result);
     }
 
