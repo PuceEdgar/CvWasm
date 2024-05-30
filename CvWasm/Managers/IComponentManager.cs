@@ -5,8 +5,9 @@ namespace CvWasm.Managers;
 public interface IComponentManager
 {
     void InitializeComponentsWithParameters(CvModel cv, Languages language, Dictionary<string, string>[] commandDescriptions);
-    //void AddErrorComponentWithMessage(string errorMessage, string action);
-    void LoadComponent(string command);
-    void LoadCommandResultComponent(string message, string command);
-
+    void AddComponentToLoadedComponentList(CommandAndData component);
+    CommandAndData CreateResultCommandAndData(string message, string command);
+    CommandAndData CreateCommandAndDataFromExistingComponent(string command);
+    List<CommandAndData> GetLoadedComponents();
+    void ClearWindow();
 }

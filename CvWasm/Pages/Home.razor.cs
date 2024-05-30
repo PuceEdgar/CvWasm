@@ -54,8 +54,8 @@ public partial class Home
 
     private async Task KeyboardButtonPressed(KeyboardEventArgs e)
     {
-        int componentCount = ComponentListManager.LoadedComponents.Count;
-        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && componentCount > 0 && ComponentListManager.LoadedComponents[componentCount - 1].MetaData!.Type == typeof(WorkExperience))
+        int componentCount = ComponentManager.GetLoadedComponents().Count;
+        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && componentCount > 0 && ComponentManager.GetLoadedComponents()[componentCount - 1].MetaData!.Type == typeof(WorkExperience))
         {
             (ChildComponent?.Instance as WorkExperience)!.SelectCurrentWorkExperience(e.Code);
         }
@@ -75,7 +75,7 @@ public partial class Home
         switch (lowerCaseCommand)
         {
             case ClearCommand:
-                ClearWindow();
+                ComponentManager.ClearWindow();
                 break;
             case AboutCommand:
             case EducationCommand:
@@ -83,7 +83,7 @@ public partial class Home
             case SoftSkillsCommand:
             case ExperienceCommand:
             case HelpCommand:
-                ComponentManager.LoadComponent(Command);
+                AddNewComponentForCommand(Command);
                 break;
             case OpenGitHubCommand:
                 await OpenLinkInNewTab(LoadedCvs[CurrentSelectedLanguage].About!.GitHubLink!);
@@ -104,11 +104,23 @@ public partial class Home
                 await LoadCv(Languages.kor);
                 break;
             default:
-                ComponentManager.LoadCommandResultComponent(ErrorManager.GenerateBadCommandErrorMessage(Command, CurrentSelectedLanguage), Command);
+                LoadResultComponentForError();
                 break;
         }
 
         Command = string.Empty;
+    }
+
+    private void AddNewComponentForCommand(string command)
+    {
+        var result = ComponentManager.CreateCommandAndDataFromExistingComponent(command);
+        ComponentManager.AddComponentToLoadedComponentList(result);
+    }
+
+    private void LoadResultComponentForError()
+    {
+        var result = ComponentManager.CreateResultCommandAndData(ErrorManager.GenerateBadCommandErrorMessage(Command, CurrentSelectedLanguage), Command);
+        ComponentManager.AddComponentToLoadedComponentList(result);
     }
 
     private async Task OpenLinkInNewTab(string url)
@@ -124,7 +136,8 @@ public partial class Home
             commandResult += "Failed";
         }
 
-        ComponentManager.LoadCommandResultComponent(commandResult, Command);
+        var result = ComponentManager.CreateResultCommandAndData(commandResult, Command);
+        ComponentManager.AddComponentToLoadedComponentList(result);
     }
 
     private async Task DownloadCv(Languages language)
@@ -141,7 +154,8 @@ public partial class Home
             commandResult += "Failed";
         }
 
-        ComponentManager.LoadCommandResultComponent(commandResult, Command);
+        var result = ComponentManager.CreateResultCommandAndData(commandResult, Command);
+        ComponentManager.AddComponentToLoadedComponentList(result);
     }
 
     private async Task LoadCv(Languages language)
@@ -160,12 +174,8 @@ public partial class Home
             commandResult += "Failed";
         }
 
-        ComponentManager.LoadCommandResultComponent(commandResult, Command);
-    }
-
-    private void ClearWindow()
-    {
-        ComponentListManager.ClearList();
+        var result = ComponentManager.CreateResultCommandAndData(commandResult, Command);
+        ComponentManager.AddComponentToLoadedComponentList(result);
     }
 
     private async Task LoadCvDataFromJson()
@@ -179,7 +189,8 @@ public partial class Home
         }
         catch (Exception)
         {
-            ComponentManager.LoadCommandResultComponent(ErrorManager.FailedToLoadCvMessage, "load cv");
+            var result = ComponentManager.CreateResultCommandAndData(ErrorManager.FailedToLoadCvMessage, "load cv");
+            ComponentManager.AddComponentToLoadedComponentList(result);
         }
     }
 
@@ -191,7 +202,8 @@ public partial class Home
         }
         catch (Exception)
         {
-            ComponentManager.LoadCommandResultComponent(ErrorManager.FailedToLoadAsciiArtMessage, "load ascii art");
+            var result = ComponentManager.CreateResultCommandAndData(ErrorManager.FailedToLoadAsciiArtMessage, "load ascii art");
+            ComponentManager.AddComponentToLoadedComponentList(result);
         }
     }
 
@@ -203,7 +215,8 @@ public partial class Home
         }
         catch (Exception)
         {
-            ComponentManager.LoadCommandResultComponent(ErrorManager.FailedToLoadCommandDescriptionMessage, "load command descriptions");
+            var result = ComponentManager.CreateResultCommandAndData(ErrorManager.FailedToLoadCommandDescriptionMessage, "load command descriptions");
+            ComponentManager.AddComponentToLoadedComponentList(result);
         }
     }
 }

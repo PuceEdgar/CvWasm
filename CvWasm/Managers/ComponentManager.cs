@@ -59,28 +59,44 @@ public class ComponentManager : IComponentManager
         };
     }
 
-    public void LoadComponent(string command)
+    public CommandAndData CreateResultCommandAndData(string message, string command)
     {
-        var selectedComponent = Components![command];
-        _componentList.AddNewComponent(new()
-        {
-            Command = command,
-            MetaData = selectedComponent
-        });
-    }
-
-    public void LoadCommandResultComponent(string message, string command)
-    {
-       var selectedComponent = new ComponentMetadata()
+        var componentMetadata = new ComponentMetadata()
         {
             Type = typeof(CommandResult),
             Name = "Command Result",
             Parameters = { [nameof(CommandResult.Result)] = message }
         };
-        _componentList.AddNewComponent(new()
+
+        return new()
         {
             Command = command,
-            MetaData = selectedComponent
-        });
+            MetaData = componentMetadata
+        };
+    }
+
+    public void AddComponentToLoadedComponentList(CommandAndData component)
+    {       
+        _componentList.AddNewComponent(component);
+    }
+
+    public CommandAndData CreateCommandAndDataFromExistingComponent(string command)
+    {
+        var componentMetadata = Components![command];
+        return new()
+        {
+            Command = command,
+            MetaData = componentMetadata
+        };
+    }
+
+    public List<CommandAndData> GetLoadedComponents()
+    {
+        return _componentList.LoadedComponents;
+    }
+
+    public void ClearWindow()
+    {
+        _componentList.ClearList();
     }
 }

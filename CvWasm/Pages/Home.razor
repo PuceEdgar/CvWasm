@@ -4,7 +4,7 @@
 @inject IFileManager FileManager
 @inject IErrorManager ErrorManager
 @inject IComponentManager ComponentManager
-@inject IComponentListManager ComponentListManager
+@* @inject IComponentListManager ComponentListManager *@
 
 <PageTitle>Home</PageTitle>
 
@@ -24,15 +24,23 @@
     </div>
 }
 
-@if (ComponentListManager.LoadedComponents.Count > 0)
+@* @if (ComponentManager.GetLoadedComponents().Count > 0)
 {
-    @foreach (var component in ComponentListManager.LoadedComponents)
+    @foreach (var component in ComponentManager.GetLoadedComponents())
     {
         <p>Guest> @component.Command</p>
         <div class="myContent">
                 <DynamicComponent @ref="ChildComponent" Type="component.MetaData!.Type" Parameters="component.MetaData.Parameters" />                
         </div>
     }
+} *@
+
+@foreach (var component in ComponentManager.GetLoadedComponents())
+{
+    <p>Guest> @component.Command</p>
+    <div class="myContent">
+        <DynamicComponent @ref="ChildComponent" Type="component.MetaData!.Type" Parameters="component.MetaData.Parameters" />
+    </div>
 }
 
 <div id="inputDiv">
