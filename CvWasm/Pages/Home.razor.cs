@@ -6,8 +6,9 @@ namespace CvWasm.Pages;
 
 public partial class Home
 {
-    private CvModel? Cv;
+    //private CvModel? Cv;
     private Dictionary<Languages, CvModel> LoadedCvs = [];
+    private Dictionary<Languages, Dictionary<string, string>[]>? CommandDescriptions = [];
     private ElementReference TextInput;
     private string Command = string.Empty;
     private string? AsciiArt;
@@ -22,7 +23,7 @@ public partial class Home
 
         if (LoadedCvs[CurrentSelectedLanguage] is not null)
         {
-            ComponentManager.InitializeComponentsWithParameters(LoadedCvs[CurrentSelectedLanguage], CurrentSelectedLanguage);
+            ComponentManager.InitializeComponentsWithParameters(LoadedCvs[CurrentSelectedLanguage], CurrentSelectedLanguage, CommandDescriptions[CurrentSelectedLanguage]);
         }
     }
 
@@ -30,6 +31,7 @@ public partial class Home
     {
         await LoadCvDataFromJson();
         await LoadAsciiArtFromFile();
+        await LoadCommandDescriptionFromJson();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -85,10 +87,10 @@ public partial class Home
                 ComponentManager.LoadComponent(Command);
                 break;
             case OpenGitHubCommand:
-                await OpenLinkInNewTab(Cv.About!.GitHubLink!);
+                await OpenLinkInNewTab(LoadedCvs[CurrentSelectedLanguage].About!.GitHubLink!);
                 break;
             case OpenLinkedInCommand:
-                await OpenLinkInNewTab(Cv.About!.LinkedInLink!);
+                await OpenLinkInNewTab(LoadedCvs[CurrentSelectedLanguage].About!.LinkedInLink!);
                 break;
             case DownloadEngCvCommand:
                 await DownloadCv(Languages.eng);
@@ -150,7 +152,7 @@ public partial class Home
         {
             CurrentSelectedLanguage = language;
             await LoadCvDataFromJson();
-            ComponentManager.InitializeComponentsWithParameters(LoadedCvs[CurrentSelectedLanguage], CurrentSelectedLanguage);
+            ComponentManager.InitializeComponentsWithParameters(LoadedCvs[CurrentSelectedLanguage], CurrentSelectedLanguage, CommandDescriptions[CurrentSelectedLanguage]);
             commandResult += "Success";
 
         }
@@ -191,6 +193,18 @@ public partial class Home
         catch (Exception)
         {
             ComponentManager.AddErrorComponentWithMessage(ErrorManager.FailedToLoadAsciiArtMessage, "load ascii art");
+        }
+    }
+
+    private async Task LoadCommandDescriptionFromJson()
+    {
+        try
+        {
+            CommandDescriptions = await FileManager.LoadDataFromJson<Dictionary<Languages, Dictionary<string, string>[]>>(CommandDescriptionPath);
+        }
+        catch (Exception)
+        {
+            ComponentManager.AddErrorComponentWithMessage(ErrorManager.FailedToLoadCommandDescriptionMessage, "load command descriptions");
         }
     }
 }

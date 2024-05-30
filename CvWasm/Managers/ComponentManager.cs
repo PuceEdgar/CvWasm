@@ -1,6 +1,4 @@
-﻿using CvWasm.DTO;
-using CvWasm.Headers;
-using CvWasm.Models;
+﻿using CvWasm.Models;
 using CvWasm.Pages;
 
 namespace CvWasm.Managers;
@@ -8,24 +6,12 @@ namespace CvWasm.Managers;
 public class ComponentManager : IComponentManager
 {
     private readonly IComponentListManager _componentList;
-    private readonly EnglishHeaders EnglishHeaders = new();
-    private readonly KoreanHeaders KoreanHeaders = new();
     private Dictionary<string, ComponentMetadata> Components { get; set; } = [];
 
     public ComponentManager(IComponentListManager componentList)
     {
         _componentList = componentList;
     }
-
-    //private readonly Dictionary<string, string> ValidComponentCommands = new(StringComparer.OrdinalIgnoreCase)
-    //{
-    //    [AboutCommand] = nameof(About),
-    //    [ExperienceCommand] = nameof(WorkExperience),
-    //    [HardSkillsCommand] = nameof(HardSkills),
-    //    [SoftSkillsCommand] = nameof(SoftSkills),
-    //    [EducationCommand] = nameof(Education),
-    //    [HelpCommand] = nameof(Help)
-    //};
 
     public void AddErrorComponentWithMessage(string errorMessage, string? command)
     {
@@ -44,8 +30,8 @@ public class ComponentManager : IComponentManager
             MetaData = component
         });
     }
-
-    public void InitializeComponentsWithParameters(CvModel cv, Languages language)
+   
+    public void InitializeComponentsWithParameters(CvModel cv, Languages language, Dictionary<string, string>[] commandDescriptions)
     {
         Components = new(StringComparer.OrdinalIgnoreCase)
         {
@@ -53,13 +39,13 @@ public class ComponentManager : IComponentManager
             {
                 Type = typeof(About),
                 Name = "About",
-                Parameters = { [nameof(About.AboutDetails)] = GetAboutPageDataFromCv(cv.About!, language) }
+                Parameters = { [nameof(About.AboutDetails)] = PageDataLoader.GetAboutPageDataFromCv(cv.About!, language) }
             },
             [HardSkillsCommand] = new ComponentMetadata()
             {
                 Type = typeof(HardSkills),
                 Name = "Hard Skills",
-                Parameters = { [nameof(HardSkills.HardSkillsDetails)] = GetHardSkillsPageDataFromCv(cv.Skills!.HardSkills!, language) }
+                Parameters = { [nameof(HardSkills.HardSkillsDetails)] = PageDataLoader.GetHardSkillsPageDataFromCv(cv.Skills!.HardSkills!, language) }
             },
             [SoftSkillsCommand] = new ComponentMetadata()
             {
@@ -71,14 +57,14 @@ public class ComponentManager : IComponentManager
             {
                 Type = typeof(Education),
                 Name = "Education",
-                Parameters = { [nameof(Education.EducationDetails)] = GetEducationPageDataFromCv(cv.Education!, language) }
+                Parameters = { [nameof(Education.EducationDetails)] = PageDataLoader.GetEducationPageDataFromCv(cv.Education!, language) }
             },
             [ExperienceCommand] = new ComponentMetadata()
             {
                 Type = typeof(WorkExperience),
                 Name = "Work Experience",
                 Parameters = {
-                [nameof(WorkExperience.ListOfExperienceDetails)] = GetWorkExperiencePageDataFromCv(cv.Experience!, language),
+                [nameof(WorkExperience.ListOfExperienceDetails)] = PageDataLoader.GetWorkExperiencePageDataFromCv(cv.Experience!, language),
                 [nameof(WorkExperience.CurrentSelectedLanguage)] = language
             }
             },
@@ -86,24 +72,13 @@ public class ComponentManager : IComponentManager
             {
                 Type = typeof(Help),
                 Name = "Help",
-                Parameters = { [nameof(Help.CurrentSelectedLanguage)] = language.ToString() }
+                Parameters = { [nameof(Help.CommandDescriptions)] = commandDescriptions }
             }
         };
-
     }
-
-    //public CommandAndData GetComponentFromList(string command)
-    //{
-    //    return new()
-    //    {
-    //        Command = command,
-    //        MetaData = Components![command]
-    //    };
-    //}
 
     public void LoadComponent(string command)
     {
-        //var componentName = ValidComponentCommands[command];
         var selectedComponent = Components![command];
         _componentList.AddNewComponent(new()
         {
@@ -125,72 +100,5 @@ public class ComponentManager : IComponentManager
             Command = command,
             MetaData = selectedComponent
         });
-    }
-
-    private AboutPageData GetAboutPageDataFromCv(AboutModel about, Languages language)
-    {
-        IHeaders headers = language == Languages.eng ? EnglishHeaders : KoreanHeaders;
-        AboutPageData aboutPageData = new()
-        {
-            FullName = new(headers.FullName, about!.FullName!),
-            DateOfBirth = new(headers.DateOfBirth, about.DateOfBirth!),
-            Nationality = new(headers.Nationality, about.Nationality!),
-            Email = new(headers.Email, about.Email!),
-            GitHubLink = new(headers.GitHubLink, about.GitHubLink!),
-            LinkedInLink = new(headers.LinkedInLink, about.LinkedInLink!),
-            PersonalStatement = new(headers.PersonalStatement, about.PersonalStatement!),
-        };
-
-        return aboutPageData;
-    }
-
-    private EducationPageData GetEducationPageDataFromCv(EducationModel education, Languages language)
-    {
-        IHeaders headers = language == Languages.eng ? EnglishHeaders : KoreanHeaders;
-        EducationPageData educationPageData = new()
-        {
-            UniversityName = new(headers.UniversityName, education.UniversityName),
-            Location = new(headers.Location, education.Location),
-            PeriodAttended = new(headers.PeriodAttended, education.PeriodAttended),
-            Degree = new(headers.Degree, education.Degree),
-        };
-
-        return educationPageData;
-    }
-
-    private HardSkillsPageData GetHardSkillsPageDataFromCv(HardSkillsModel hardSkills, Languages language)
-    {
-        IHeaders headers = language == Languages.eng ? EnglishHeaders : KoreanHeaders;
-        HardSkillsPageData hardSkillsPageData = new()
-        {
-            Programming = new(headers.Programming, hardSkills.Programming!),
-            Tools = new(headers.Tools, hardSkills.Tools!),
-            Other = new(headers.Other, hardSkills.Other!),
-            WayOfWorking = new(headers.WayOfWorking, hardSkills.WayOfWorking!),
-            Languages = new(headers.Languages, hardSkills.Languages!)
-        };
-
-        return hardSkillsPageData;
-    }
-
-    private List<WorkExperiencePageData> GetWorkExperiencePageDataFromCv(WorkExperienceModel[] experiences, Languages language)
-    {
-        List<WorkExperiencePageData> listOfExperiencePageData = [];
-        IHeaders headers = language == Languages.eng ? EnglishHeaders : KoreanHeaders;
-
-        foreach (var experience in experiences)
-        {
-            WorkExperiencePageData workExperiencePageData = new()
-            {
-                TimePeriod = new(headers.TimePeriod, experience.TimePeriod!),
-                Company = new(headers.Company, experience.Company!),
-                Location = new(headers.Location, experience.Location!),
-                Position = new(headers.Position, experience.Position!),
-                JobDescription = new(headers.JobDescription, experience.JobDescription!)
-            };
-            listOfExperiencePageData.Add(workExperiencePageData);
-        }        
-
-        return listOfExperiencePageData;
-    }
+    }    
 }

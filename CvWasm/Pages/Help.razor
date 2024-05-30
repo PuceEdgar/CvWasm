@@ -5,11 +5,11 @@
 
 <h3>Help</h3>
 
-@if (CommandDescriptions.Count > 0)
+@if (CommandDescriptions.Length > 0)
 {
     <table>
         <tbody>
-            @foreach (var command in CommandDescriptions![CurrentSelectedLanguage!]!)
+            @foreach (var command in CommandDescriptions!)
             {
                 @foreach(var key in command.Keys)
                 {
