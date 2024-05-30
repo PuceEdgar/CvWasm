@@ -5,13 +5,16 @@ namespace CvWasm.Managers;
 
 public class ComponentManager : IComponentManager
 {
-    private readonly IComponentListManager _componentList;
+    //private readonly IComponentListManager _componentList;
     private Dictionary<string, ComponentMetadata> Components { get; set; } = [];
+    private readonly List<ComponentMetadata> _componentList = [];
 
-    public ComponentManager(IComponentListManager componentList)
-    {
-        _componentList = componentList;
-    }
+    public List<ComponentMetadata> LoadedComponents => _componentList;
+
+    //public ComponentManager(IComponentListManager componentList)
+    //{
+    //    _componentList = componentList;
+    //}
 
     public void InitializeComponentsWithParameters(CvModel cv, Languages language, Dictionary<string, string>[] commandDescriptions)
     {
@@ -77,7 +80,7 @@ public class ComponentManager : IComponentManager
 
     public void AddComponentToLoadedComponentList(ComponentMetadata component)
     {       
-        _componentList.AddNewComponent(component);
+        _componentList.Add(component);
     }
 
     public ComponentMetadata GetExistingComponent(string command)
@@ -93,11 +96,11 @@ public class ComponentManager : IComponentManager
 
     public List<ComponentMetadata> GetLoadedComponents()
     {
-        return _componentList.LoadedComponents;
+        return LoadedComponents;
     }
 
     public void ClearWindow()
     {
-        _componentList.ClearList();
+        _componentList.Clear();
     }
 }
