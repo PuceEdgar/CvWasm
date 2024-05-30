@@ -7,6 +7,7 @@ namespace CvWasm.Pages;
 public partial class Home
 {
     private CvModel? Cv;
+    private Dictionary<Languages, CvModel> LoadedCvs = [];
     private ElementReference TextInput;
     private string Command = string.Empty;
     private string? AsciiArt;
@@ -19,9 +20,9 @@ public partial class Home
     {
         await LoadDataFromStaticFiles();
 
-        if (Cv is not null)
+        if (LoadedCvs[CurrentSelectedLanguage] is not null)
         {
-            ComponentManager.InitializeComponentsWithParameters(Cv, CurrentSelectedLanguage);
+            ComponentManager.InitializeComponentsWithParameters(LoadedCvs[CurrentSelectedLanguage], CurrentSelectedLanguage);
         }
     }
 
@@ -149,7 +150,7 @@ public partial class Home
         {
             CurrentSelectedLanguage = language;
             await LoadCvDataFromJson();
-            ComponentManager.InitializeComponentsWithParameters(Cv, CurrentSelectedLanguage);
+            ComponentManager.InitializeComponentsWithParameters(LoadedCvs[CurrentSelectedLanguage], CurrentSelectedLanguage);
             commandResult += "Success";
 
         }
@@ -170,7 +171,10 @@ public partial class Home
     {
         try
         {
-            Cv = await FileManager.LoadDataFromJson<CvModel>($"cv-data/cv-{CurrentSelectedLanguage}.json");
+            if (!LoadedCvs.ContainsKey(CurrentSelectedLanguage))
+            {
+                LoadedCvs[CurrentSelectedLanguage] = await FileManager.LoadDataFromJson<CvModel>($"cv-data/cv-{CurrentSelectedLanguage}.json");
+            }
         }
         catch (Exception)
         {
