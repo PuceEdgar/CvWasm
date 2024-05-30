@@ -1,6 +1,4 @@
-﻿using CvWasm.Models;
-
-namespace CvWasm.Managers;
+﻿namespace CvWasm.Managers;
 
 public class CommandService : ICommandService
 {
@@ -19,8 +17,6 @@ public class CommandService : ICommandService
 
     public async Task ExecuteCommand(string command)
     {
-        //TODO: refactor this. tolower creates new string. if using equals then no new string is created
-        //string lowerCaseCommand = command.ToLower();
         switch (command)
         {
             case ClearCommand:
@@ -114,7 +110,6 @@ public class CommandService : ICommandService
             await _fileManager.LoadCvDataFromJson();
             _componentManager.InitializeComponentsWithParameters(_stateContainer.LoadedCvs[language], language, _stateContainer.CommandDescriptions[language]);
             commandResult += "Success";
-
         }
         catch (Exception)
         {

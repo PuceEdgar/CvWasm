@@ -8,9 +8,6 @@ public partial class WorkExperience
     [Parameter]
     public List<WorkExperiencePageData>? ListOfExperienceDetails { get; set; }
 
-    [Parameter]
-    public Languages CurrentSelectedLanguage { get; set; }
-
     private WorkExperiencePageData? ExperienceDetails { get; set; }
     private int CurrentIndex { get; set; }
     private int TotalExperienceCount { get; set; }

@@ -43,9 +43,7 @@ public class ComponentManager : IComponentManager
                 Type = typeof(WorkExperience),
                 Command = ExperienceCommand,
                 Parameters = {
-                [nameof(WorkExperience.ListOfExperienceDetails)] = PageDataLoader.GetWorkExperiencePageDataFromCv(cv.Experience!, language),
-                [nameof(WorkExperience.CurrentSelectedLanguage)] = language
-            }
+                [nameof(WorkExperience.ListOfExperienceDetails)] = PageDataLoader.GetWorkExperiencePageDataFromCv(cv.Experience!, language) }
             },
             [HelpCommand] = new ComponentMetadata()
             {

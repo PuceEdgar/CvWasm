@@ -1,6 +1,4 @@
-﻿using CvWasm.Models;
-
-namespace CvWasm.Managers;
+﻿namespace CvWasm.Managers;
 
 public interface IFileManager
 {

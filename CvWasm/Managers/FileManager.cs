@@ -40,7 +40,6 @@ public class FileManager : IFileManager
             {
                 _stateContainer.LoadedCvs[_stateContainer.CurrentSelectedLanguage] = await LoadDataFromJson<CvModel>($"cv-data/cv-{_stateContainer.CurrentSelectedLanguage}.json");
             }
-            //return await LoadDataFromJson<CvModel>($"cv-data/cv-{language}.json");
         }
         catch (Exception)
         {
@@ -72,8 +71,7 @@ public class FileManager : IFileManager
         catch (Exception)
         {
             var result = _componentManager.CreateResultComponent(ErrorManager.FailedToLoadCommandDescriptionMessage, "load command descriptions");
-            _componentManager.AddComponentToLoadedComponentList(result);
-            
+            _componentManager.AddComponentToLoadedComponentList(result);            
         }
     }
 }
