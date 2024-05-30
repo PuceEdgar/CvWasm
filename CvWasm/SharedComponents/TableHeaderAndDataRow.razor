@@ -1,4 +1,16 @@
 ﻿<tr>
     <th>@TableHeader</th>
-    <td>@TableData</td>
+    @if (!string.IsNullOrWhiteSpace(SimpleData))
+    {
+        <td>@((MarkupString)SimpleData)</td>
+    }
+    else
+    {
+        <td>
+            @foreach (string text in CollectionData)
+            {
+                <p>@text</p>
+            }
+        </td>        
+    }
 </tr>

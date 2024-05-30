@@ -2,25 +2,10 @@
 
 <table>
     <tbody>
-        <tr>            
-            <th>@HardSkillsDetails.Programming.Key</th>
-            <td>
-                <TextArray TextCollection="HardSkillsDetails.Programming.Value" />
-            </td>
-        </tr>
-        <TableHeaderAndDataRow TableHeader="@HardSkillsDetails.Tools.Key" TableData="@HardSkillsDetails.Tools.Value" />
-        <tr>
-            <th>@HardSkillsDetails.Other.Key</th>
-            <td>
-                <TextArray TextCollection="HardSkillsDetails.Other.Value" />
-            </td>
-        </tr>
-        <TableHeaderAndDataRow TableHeader="@HardSkillsDetails.WayOfWorking.Key" TableData="@HardSkillsDetails.WayOfWorking.Value" />
-        <tr>
-            <th>@HardSkillsDetails.Languages.Key</th>
-            <td>
-                <TextArray TextCollection="HardSkillsDetails.Languages.Value" />
-            </td>
-        </tr>
+        <TableHeaderAndDataRow TableHeader="@HardSkillsDetails.Programming.Key" CollectionData="@HardSkillsDetails.Programming.Value" />
+        <TableHeaderAndDataRow TableHeader="@HardSkillsDetails.Tools.Key" SimpleData="@HardSkillsDetails.Tools.Value" />
+        <TableHeaderAndDataRow TableHeader="@HardSkillsDetails.Other.Key" CollectionData="@HardSkillsDetails.Other.Value" />
+        <TableHeaderAndDataRow TableHeader="@HardSkillsDetails.WayOfWorking.Key" SimpleData="@HardSkillsDetails.WayOfWorking.Value" />
+        <TableHeaderAndDataRow TableHeader="@HardSkillsDetails.Languages.Key" CollectionData="@HardSkillsDetails.Languages.Value" />
     </tbody>
 </table>

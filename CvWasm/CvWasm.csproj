@@ -32,6 +32,9 @@
     <Content Update="wwwroot\cv-data\Edgars_Puce_kor.pdf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="wwwroot\file-data\CommandDescription.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

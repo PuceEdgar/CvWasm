@@ -12,5 +12,6 @@ builder.Services.AddSingleton<IFileManager, FileManager>();
 builder.Services.AddSingleton<IErrorManager, ErrorManager>();
 builder.Services.AddSingleton<IComponentManager, ComponentManager>();
 builder.Services.AddSingleton<IComponentListManager, ComponentListManager>();
+builder.Services.AddScoped<IJsService, JsService>();
 
 await builder.Build().RunAsync();

@@ -7,5 +7,7 @@ public partial class TableHeaderAndDataRow
     [Parameter]
     public string TableHeader { get; set; }
     [Parameter]
-    public string TableData { get; set; }
+    public string SimpleData { get; set; }
+    [Parameter]
+    public string[] CollectionData { get; set; }
 }
