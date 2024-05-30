@@ -13,24 +13,6 @@ public class ComponentManager : IComponentManager
         _componentList = componentList;
     }
 
-    public void AddErrorComponentWithMessage(string errorMessage, string? command)
-    {
-        var component = new ComponentMetadata()
-        {
-            Type = typeof(Error),
-            Name = "Error",
-            Parameters = {
-                [nameof(Error.ErrorMessage)] = errorMessage,
-            }
-        };
-
-        _componentList.AddNewComponent(new()
-        {
-            Command = command,
-            MetaData = component
-        });
-    }
-   
     public void InitializeComponentsWithParameters(CvModel cv, Languages language, Dictionary<string, string>[] commandDescriptions)
     {
         Components = new(StringComparer.OrdinalIgnoreCase)
@@ -100,5 +82,5 @@ public class ComponentManager : IComponentManager
             Command = command,
             MetaData = selectedComponent
         });
-    }    
+    }
 }

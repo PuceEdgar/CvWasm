@@ -15,15 +15,14 @@ public partial class Home
     private Languages CurrentSelectedLanguage = Languages.eng;
     private DynamicComponent ChildComponent { get; set; } = default!;
 
-    //TODO: add try catch in case file reading fails. unit tests/integration tests
-    //move file names to constants
+    //TODO: unit tests/integration tests
     protected override async Task OnInitializedAsync()
     {
         await LoadDataFromStaticFiles();
 
-        if (LoadedCvs[CurrentSelectedLanguage] is not null)
+        if (LoadedCvs.TryGetValue(CurrentSelectedLanguage, out CvModel cv))
         {
-            ComponentManager.InitializeComponentsWithParameters(LoadedCvs[CurrentSelectedLanguage], CurrentSelectedLanguage, CommandDescriptions[CurrentSelectedLanguage]);
+            ComponentManager.InitializeComponentsWithParameters(cv, CurrentSelectedLanguage, CommandDescriptions[CurrentSelectedLanguage]);
         }
     }
 
@@ -105,7 +104,7 @@ public partial class Home
                 await LoadCv(Languages.kor);
                 break;
             default:
-                ComponentManager.AddErrorComponentWithMessage(ErrorManager.GenerateBadCommandErrorMessage(Command, CurrentSelectedLanguage), Command);
+                ComponentManager.LoadCommandResultComponent(ErrorManager.GenerateBadCommandErrorMessage(Command, CurrentSelectedLanguage), Command);
                 break;
         }
 
@@ -180,7 +179,7 @@ public partial class Home
         }
         catch (Exception)
         {
-            ComponentManager.AddErrorComponentWithMessage(ErrorManager.FailedToLoadCvMessage, "load cv");
+            ComponentManager.LoadCommandResultComponent(ErrorManager.FailedToLoadCvMessage, "load cv");
         }
     }
 
@@ -192,7 +191,7 @@ public partial class Home
         }
         catch (Exception)
         {
-            ComponentManager.AddErrorComponentWithMessage(ErrorManager.FailedToLoadAsciiArtMessage, "load ascii art");
+            ComponentManager.LoadCommandResultComponent(ErrorManager.FailedToLoadAsciiArtMessage, "load ascii art");
         }
     }
 
@@ -204,7 +203,7 @@ public partial class Home
         }
         catch (Exception)
         {
-            ComponentManager.AddErrorComponentWithMessage(ErrorManager.FailedToLoadCommandDescriptionMessage, "load command descriptions");
+            ComponentManager.LoadCommandResultComponent(ErrorManager.FailedToLoadCommandDescriptionMessage, "load command descriptions");
         }
     }
 }

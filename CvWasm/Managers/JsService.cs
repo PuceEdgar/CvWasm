@@ -19,7 +19,7 @@ public class JsService : IJsService
 
     public async Task CallJsFunctionToDownloadCv(Languages language, string base64)
     {
-        await _runtime.InvokeVoidAsync("downloadFile", $"cv_{language}.pdf", base64);
+        await _runtime.InvokeVoidAsync("downloadFile", $"Edgars_Puce_CV_{language}.pdf", base64);
     }
 
     public async Task CallJsFunctionToOpenUrl(string url)
