@@ -34,7 +34,7 @@
     }
 } *@
 
-@foreach (var component in ComponentManager.GetLoadedComponents())
+@foreach (var component in ComponentManager.LoadedComponents)
 {
     <p>Guest> @component.Command</p>
     <div class="myContent">
