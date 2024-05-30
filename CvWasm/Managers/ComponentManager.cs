@@ -17,15 +17,15 @@ public class ComponentManager : IComponentManager
         _componentList = componentList;
     }
 
-    private readonly Dictionary<string, string> ValidComponentCommands = new(StringComparer.OrdinalIgnoreCase)
-    {
-        [AboutCommand] = nameof(About),
-        [ExperienceCommand] = nameof(WorkExperience),
-        [HardSkillsCommand] = nameof(HardSkills),
-        [SoftSkillsCommand] = nameof(SoftSkills),
-        [EducationCommand] = nameof(Education),
-        [HelpCommand] = nameof(Help)
-    };
+    //private readonly Dictionary<string, string> ValidComponentCommands = new(StringComparer.OrdinalIgnoreCase)
+    //{
+    //    [AboutCommand] = nameof(About),
+    //    [ExperienceCommand] = nameof(WorkExperience),
+    //    [HardSkillsCommand] = nameof(HardSkills),
+    //    [SoftSkillsCommand] = nameof(SoftSkills),
+    //    [EducationCommand] = nameof(Education),
+    //    [HelpCommand] = nameof(Help)
+    //};
 
     public void AddErrorComponentWithMessage(string errorMessage, string? command)
     {
@@ -49,31 +49,31 @@ public class ComponentManager : IComponentManager
     {
         Components = new(StringComparer.OrdinalIgnoreCase)
         {
-            [nameof(About)] = new ComponentMetadata()
+            [AboutCommand] = new ComponentMetadata()
             {
                 Type = typeof(About),
                 Name = "About",
                 Parameters = { [nameof(About.AboutDetails)] = GetAboutPageDataFromCv(cv.About!, language) }
             },
-            [nameof(HardSkills)] = new ComponentMetadata()
+            [HardSkillsCommand] = new ComponentMetadata()
             {
                 Type = typeof(HardSkills),
                 Name = "Hard Skills",
                 Parameters = { [nameof(HardSkills.HardSkillsDetails)] = GetHardSkillsPageDataFromCv(cv.Skills!.HardSkills!, language) }
             },
-            [nameof(SoftSkills)] = new ComponentMetadata()
+            [SoftSkillsCommand] = new ComponentMetadata()
             {
                 Type = typeof(SoftSkills),
                 Name = "Soft Skills",
                 Parameters = { [nameof(SoftSkills.SoftSkillsDetails)] = cv.Skills!.SoftSkills! }
             },
-            [nameof(Education)] = new ComponentMetadata()
+            [EducationCommand] = new ComponentMetadata()
             {
                 Type = typeof(Education),
                 Name = "Education",
                 Parameters = { [nameof(Education.EducationDetails)] = GetEducationPageDataFromCv(cv.Education!, language) }
             },
-            [nameof(WorkExperience)] = new ComponentMetadata()
+            [ExperienceCommand] = new ComponentMetadata()
             {
                 Type = typeof(WorkExperience),
                 Name = "Work Experience",
@@ -82,7 +82,7 @@ public class ComponentManager : IComponentManager
                 [nameof(WorkExperience.CurrentSelectedLanguage)] = language
             }
             },
-            [nameof(Help)] = new ComponentMetadata()
+            [HelpCommand] = new ComponentMetadata()
             {
                 Type = typeof(Help),
                 Name = "Help",
@@ -92,10 +92,19 @@ public class ComponentManager : IComponentManager
 
     }
 
+    //public CommandAndData GetComponentFromList(string command)
+    //{
+    //    return new()
+    //    {
+    //        Command = command,
+    //        MetaData = Components![command]
+    //    };
+    //}
+
     public void LoadComponent(string command)
     {
-        var componentName = ValidComponentCommands[command];
-        var selectedComponent = Components![componentName];
+        //var componentName = ValidComponentCommands[command];
+        var selectedComponent = Components![command];
         _componentList.AddNewComponent(new()
         {
             Command = command,

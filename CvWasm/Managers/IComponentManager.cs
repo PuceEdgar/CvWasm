@@ -8,4 +8,5 @@ public interface IComponentManager
     void AddErrorComponentWithMessage(string errorMessage, string action);
     void LoadComponent(string command);
     void LoadCommandResultComponent(string message, string command);
+
 }
