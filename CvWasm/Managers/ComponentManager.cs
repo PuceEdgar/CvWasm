@@ -1,4 +1,5 @@
-﻿using CvWasm.Models;
+﻿using CvWasm.Factory;
+using CvWasm.Models;
 using CvWasm.Pages;
 
 namespace CvWasm.Managers;
@@ -10,49 +11,49 @@ public class ComponentManager : IComponentManager
 
     public List<ComponentMetadata> LoadedComponents => _componentList;
 
-    public void InitializeComponentsWithParameters(CvModel cv, Languages language, Dictionary<string, string>[] commandDescriptions)
-    {
-        Components = new(StringComparer.OrdinalIgnoreCase)
-        {
-            [AboutCommand] = new ComponentMetadata()
-            {
-                Type = typeof(About),
-                Command = AboutCommand,
-                Parameters = { [nameof(About.AboutDetails)] = PageDataLoader.GetAboutPageDataFromCv(cv.About!, language) }
-            },
-            [HardSkillsCommand] = new ComponentMetadata()
-            {
-                Type = typeof(HardSkills),
-                Command = HardSkillsCommand,
-                Parameters = { [nameof(HardSkills.HardSkillsDetails)] = PageDataLoader.GetHardSkillsPageDataFromCv(cv.Skills!.HardSkills!, language) }
-            },
-            [SoftSkillsCommand] = new ComponentMetadata()
-            {
-                Type = typeof(SoftSkills),
-                Command = SoftSkillsCommand,
-                Parameters = { [nameof(SoftSkills.SoftSkillsDetails)] = cv.Skills!.SoftSkills! }
-            },
-            [EducationCommand] = new ComponentMetadata()
-            {
-                Type = typeof(Education),
-                Command = EducationCommand,
-                Parameters = { [nameof(Education.EducationDetails)] = PageDataLoader.GetEducationPageDataFromCv(cv.Education!, language) }
-            },
-            [ExperienceCommand] = new ComponentMetadata()
-            {
-                Type = typeof(WorkExperience),
-                Command = ExperienceCommand,
-                Parameters = {
-                [nameof(WorkExperience.ListOfExperienceDetails)] = PageDataLoader.GetWorkExperiencePageDataFromCv(cv.Experience!, language) }
-            },
-            [HelpCommand] = new ComponentMetadata()
-            {
-                Type = typeof(Help),
-                Command = HelpCommand,
-                Parameters = { [nameof(Help.CommandDescriptions)] = commandDescriptions }
-            }
-        };
-    }
+    //public void InitializeComponentsWithParameters(CvModel cv, Languages language, Dictionary<string, string>[] commandDescriptions)
+    //{
+    //    Components = new(StringComparer.OrdinalIgnoreCase)
+    //    {
+    //        [AboutCommand] = new ComponentMetadata()
+    //        {
+    //            Type = typeof(About),
+    //            Command = AboutCommand,
+    //            Parameters = { [nameof(About.AboutDetails)] = PageDataLoader.GetAboutPageDataFromCv(cv.About!, language) }
+    //        },
+    //        [HardSkillsCommand] = new ComponentMetadata()
+    //        {
+    //            Type = typeof(HardSkills),
+    //            Command = HardSkillsCommand,
+    //            Parameters = { [nameof(HardSkills.HardSkillsDetails)] = PageDataLoader.GetHardSkillsPageDataFromCv(cv.Skills!.HardSkills!, language) }
+    //        },
+    //        [SoftSkillsCommand] = new ComponentMetadata()
+    //        {
+    //            Type = typeof(SoftSkills),
+    //            Command = SoftSkillsCommand,
+    //            Parameters = { [nameof(SoftSkills.SoftSkillsDetails)] = cv.Skills!.SoftSkills! }
+    //        },
+    //        [EducationCommand] = new ComponentMetadata()
+    //        {
+    //            Type = typeof(Education),
+    //            Command = EducationCommand,
+    //            Parameters = { [nameof(Education.EducationDetails)] = PageDataLoader.GetEducationPageDataFromCv(cv.Education!, language) }
+    //        },
+    //        [ExperienceCommand] = new ComponentMetadata()
+    //        {
+    //            Type = typeof(WorkExperience),
+    //            Command = ExperienceCommand,
+    //            Parameters = {
+    //            [nameof(WorkExperience.ListOfExperienceDetails)] = PageDataLoader.GetWorkExperiencePageDataFromCv(cv.Experience!, language) }
+    //        },
+    //        [HelpCommand] = new ComponentMetadata()
+    //        {
+    //            Type = typeof(Help),
+    //            Command = HelpCommand,
+    //            Parameters = { [nameof(Help.CommandDescriptions)] = commandDescriptions }
+    //        }
+    //    };
+    //}
 
     public ComponentMetadata CreateResultComponent(string message, string command)
     {
@@ -71,7 +72,8 @@ public class ComponentManager : IComponentManager
 
     public ComponentMetadata GetExistingComponent(string command)
     {
-        return Components![command];
+        var componentType = ComponentFactory.CreateComponent(command);
+        return componentType.CreateComponent();
     }
 
     public void ClearWindow()

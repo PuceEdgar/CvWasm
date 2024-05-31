@@ -16,10 +16,10 @@ public partial class Home
     {
         await LoadDataFromStaticFiles();
 
-        if (StateContainer.LoadedCvs.TryGetValue(StateContainer.CurrentSelectedLanguage, out CvModel cv))
-        {
-            ComponentManager.InitializeComponentsWithParameters(cv, StateContainer.CurrentSelectedLanguage, StateContainer.CommandDescriptions[StateContainer.CurrentSelectedLanguage]);
-        }
+        //if (StateContainer.LoadedCvs.TryGetValue(StateContainer.CurrentSelectedLanguage, out CvModel cv))
+        //{
+        //    ComponentManager.InitializeComponentsWithParameters(cv, StateContainer.CurrentSelectedLanguage, StateContainer.CommandDescriptions[StateContainer.CurrentSelectedLanguage]);
+        //}
     }
 
     private async Task LoadDataFromStaticFiles()

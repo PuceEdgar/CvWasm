@@ -7,13 +7,13 @@ public class FileManager : IFileManager
 {
     private readonly HttpClient _httpClient;
     private readonly IComponentManager _componentManager;
-    private readonly StateContainer _stateContainer;
+    //private readonly StateContainer StateContainer;
 
-    public FileManager(HttpClient httpClient, IComponentManager componentManager, StateContainer stateContainer)
+    public FileManager(HttpClient httpClient, IComponentManager componentManager)
     {
        _httpClient = httpClient;
         _componentManager = componentManager;
-        _stateContainer = stateContainer;
+        //_stateContainer = stateContainer;
     }
 
     public async Task<string> GetBase64FromPdfCv(string language)
@@ -22,24 +22,16 @@ public class FileManager : IFileManager
         return Convert.ToBase64String(pdfAsByteArray);
     }
 
-    public async Task<T> LoadDataFromJson<T>(string pathToJson) where T : new()
-    {
-        return await _httpClient.GetFromJsonAsync<T>(pathToJson) ?? new T();
-    }
-
-    public async Task<string> LoadDataAsString(string pathToFile)
-    {
-        return await _httpClient.GetStringAsync(pathToFile);
-    }
-
     public async Task LoadCvDataFromJson()
     {
         try
         {
-            if (!_stateContainer.LoadedCvs.ContainsKey(_stateContainer.CurrentSelectedLanguage))
-            {
-                _stateContainer.LoadedCvs[_stateContainer.CurrentSelectedLanguage] = await LoadDataFromJson<CvModel>($"cv-data/cv-{_stateContainer.CurrentSelectedLanguage}.json");
-            }
+            //if (!_stateContainer.LoadedCvs.ContainsKey(_stateContainer.CurrentSelectedLanguage))
+            //{
+            //    _stateContainer.LoadedCvs[_stateContainer.CurrentSelectedLanguage] = await LoadDataFromJson<CvModel>($"cv-data/cv-{_stateContainer.CurrentSelectedLanguage}.json");
+            //}
+            StateContainer.LoadedCvs[Languages.eng] = await LoadDataFromJson<CvModel>($"cv-data/cv-{Languages.eng}.json");
+            StateContainer.LoadedCvs[Languages.kor] = await LoadDataFromJson<CvModel>($"cv-data/cv-{Languages.kor}.json");
         }
         catch (Exception)
         {
@@ -66,12 +58,22 @@ public class FileManager : IFileManager
     {
         try
         {
-            _stateContainer.CommandDescriptions = await LoadDataFromJson<Dictionary<Languages, Dictionary<string, string>[]>>(CommandDescriptionPath);
+            StateContainer.CommandDescriptions = await LoadDataFromJson<Dictionary<Languages, Dictionary<string, string>[]>>(CommandDescriptionPath);
         }
         catch (Exception)
         {
             var result = _componentManager.CreateResultComponent(ErrorManager.FailedToLoadCommandDescriptionMessage, "load command descriptions");
             _componentManager.AddComponentToLoadedComponentList(result);            
         }
+    }
+
+    private async Task<T> LoadDataFromJson<T>(string pathToJson) where T : new()
+    {
+        return await _httpClient.GetFromJsonAsync<T>(pathToJson) ?? new T();
+    }
+
+    private async Task<string> LoadDataAsString(string pathToFile)
+    {
+        return await _httpClient.GetStringAsync(pathToFile);
     }
 }
