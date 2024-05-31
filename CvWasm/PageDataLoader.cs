@@ -6,12 +6,14 @@ namespace CvWasm;
 
 public static class PageDataLoader
 {
-    private readonly static EnglishHeaders EnglishHeaders = new();
-    private readonly static KoreanHeaders KoreanHeaders = new();
+    private static readonly EnglishHeaders EnglishHeaders = new();
+    private static readonly KoreanHeaders KoreanHeaders = new();
 
-    public static AboutPageData GetAboutPageDataFromCv(AboutModel about, Languages language)
+    public static AboutPageData GetAboutPageDataFromCv()
     {
-        IHeaders headers = language == Languages.eng ? EnglishHeaders : KoreanHeaders;
+        var selectedLanguage = StateContainer.CurrentSelectedLanguage;
+        var about = StateContainer.LoadedCvs[selectedLanguage].About;
+        IHeaders headers = selectedLanguage == Languages.eng ? EnglishHeaders : KoreanHeaders;
         AboutPageData aboutPageData = new()
         {
             FullName = new(headers.FullName, about!.FullName!),
@@ -26,9 +28,11 @@ public static class PageDataLoader
         return aboutPageData;
     }
 
-    public static EducationPageData GetEducationPageDataFromCv(EducationModel education, Languages language)
+    public static EducationPageData GetEducationPageDataFromCv()
     {
-        IHeaders headers = language == Languages.eng ? EnglishHeaders : KoreanHeaders;
+        var selectedLanguage = StateContainer.CurrentSelectedLanguage;
+        var education = StateContainer.LoadedCvs[selectedLanguage].Education;
+        IHeaders headers = selectedLanguage == Languages.eng ? EnglishHeaders : KoreanHeaders;
         EducationPageData educationPageData = new()
         {
             UniversityName = new(headers.UniversityName, education.UniversityName),
@@ -40,9 +44,11 @@ public static class PageDataLoader
         return educationPageData;
     }
 
-    public static HardSkillsPageData GetHardSkillsPageDataFromCv(HardSkillsModel hardSkills, Languages language)
+    public static HardSkillsPageData GetHardSkillsPageDataFromCv()
     {
-        IHeaders headers = language == Languages.eng ? EnglishHeaders : KoreanHeaders;
+        var selectedLanguage = StateContainer.CurrentSelectedLanguage;
+        var hardSkills = StateContainer.LoadedCvs[selectedLanguage].Skills.HardSkills;
+        IHeaders headers = selectedLanguage == Languages.eng ? EnglishHeaders : KoreanHeaders;
         HardSkillsPageData hardSkillsPageData = new()
         {
             Programming = new(headers.Programming, hardSkills.Programming!),
@@ -55,10 +61,12 @@ public static class PageDataLoader
         return hardSkillsPageData;
     }
 
-    public static List<WorkExperiencePageData> GetWorkExperiencePageDataFromCv(WorkExperienceModel[] experiences, Languages language)
+    public static List<WorkExperiencePageData> GetWorkExperiencePageDataFromCv()
     {
+        var selectedLanguage = StateContainer.CurrentSelectedLanguage;
+        var experiences = StateContainer.LoadedCvs[selectedLanguage].Experience;
         List<WorkExperiencePageData> listOfExperiencePageData = [];
-        IHeaders headers = language == Languages.eng ? EnglishHeaders : KoreanHeaders;
+        IHeaders headers = selectedLanguage == Languages.eng ? EnglishHeaders : KoreanHeaders;
 
         foreach (var experience in experiences)
         {

@@ -2,9 +2,9 @@
 
 namespace CvWasm;
 
-public class StateContainer
+public static class StateContainer
 {
-    public Languages CurrentSelectedLanguage { get; set; } = Languages.eng;
-    public Dictionary<Languages, CvModel> LoadedCvs { get; set; } = [];
-    public Dictionary<Languages, Dictionary<string, string>[]>? CommandDescriptions { get; set; } = [];
+    public static Languages CurrentSelectedLanguage { get; set; } = Languages.eng;
+    public static Dictionary<Languages, CvModel> LoadedCvs { get; set; } = [];
+    public static Dictionary<Languages, Dictionary<string, string>[]>? CommandDescriptions { get; set; } = [];
 }
