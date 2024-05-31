@@ -7,13 +7,11 @@ public class FileManager : IFileManager
 {
     private readonly HttpClient _httpClient;
     private readonly IComponentManager _componentManager;
-    //private readonly StateContainer StateContainer;
 
     public FileManager(HttpClient httpClient, IComponentManager componentManager)
     {
        _httpClient = httpClient;
         _componentManager = componentManager;
-        //_stateContainer = stateContainer;
     }
 
     public async Task<string> GetBase64FromPdfCv(string language)
@@ -26,10 +24,6 @@ public class FileManager : IFileManager
     {
         try
         {
-            //if (!_stateContainer.LoadedCvs.ContainsKey(_stateContainer.CurrentSelectedLanguage))
-            //{
-            //    _stateContainer.LoadedCvs[_stateContainer.CurrentSelectedLanguage] = await LoadDataFromJson<CvModel>($"cv-data/cv-{_stateContainer.CurrentSelectedLanguage}.json");
-            //}
             StateContainer.LoadedCvs[Languages.eng] = await LoadDataFromJson<CvModel>($"cv-data/cv-{Languages.eng}.json");
             StateContainer.LoadedCvs[Languages.kor] = await LoadDataFromJson<CvModel>($"cv-data/cv-{Languages.kor}.json");
         }

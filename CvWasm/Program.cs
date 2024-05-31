@@ -12,6 +12,5 @@ builder.Services.AddSingleton<IFileManager, FileManager>();
 builder.Services.AddSingleton<IComponentManager, ComponentManager>();
 builder.Services.AddSingleton<IJsService, JsService>();
 builder.Services.AddSingleton<ICommandService, CommandService>();
-//builder.Services.AddSingleton<StateContainer>();
 
 await builder.Build().RunAsync();

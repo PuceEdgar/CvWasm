@@ -1,4 +1,3 @@
-using CvWasm.Models;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
@@ -15,11 +14,6 @@ public partial class Home
     protected override async Task OnInitializedAsync()
     {
         await LoadDataFromStaticFiles();
-
-        //if (StateContainer.LoadedCvs.TryGetValue(StateContainer.CurrentSelectedLanguage, out CvModel cv))
-        //{
-        //    ComponentManager.InitializeComponentsWithParameters(cv, StateContainer.CurrentSelectedLanguage, StateContainer.CommandDescriptions[StateContainer.CurrentSelectedLanguage]);
-        //}
     }
 
     private async Task LoadDataFromStaticFiles()
