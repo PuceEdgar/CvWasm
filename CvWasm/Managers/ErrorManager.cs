@@ -1,18 +1,18 @@
 ﻿namespace CvWasm.Managers;
 
-public class ErrorManager : IErrorManager
+public static class ErrorManager
 {
-    private readonly string _cvLoadFailed = "Sorry, failed to load cv data!";
-    private readonly string _commandDescriptionLoadFailed = "Sorry, failed to load command description data!";
-    private readonly string _asciiArtLoadFailed = "Sorry, failed to load ascii art from file!";
+    private readonly static string _cvLoadFailed = "Sorry, failed to load cv data!";
+    private readonly static string _commandDescriptionLoadFailed = "Sorry, failed to load command description data!";
+    private readonly static string _asciiArtLoadFailed = "Sorry, failed to load ascii art from file!";
 
-    public string FailedToLoadCvMessage => _cvLoadFailed;
+    public static string FailedToLoadCvMessage => _cvLoadFailed;
 
-    public string FailedToLoadCommandDescriptionMessage => _commandDescriptionLoadFailed;
+    public static string FailedToLoadCommandDescriptionMessage => _commandDescriptionLoadFailed;
 
-    public string FailedToLoadAsciiArtMessage => _asciiArtLoadFailed;
+    public static string FailedToLoadAsciiArtMessage => _asciiArtLoadFailed;
 
-    public string GenerateBadCommandErrorMessage(string command, Languages currentLanguage)
+    public static string GenerateBadCommandErrorMessage(string command, Languages currentLanguage)
     {
         if (currentLanguage == Languages.eng)
         {

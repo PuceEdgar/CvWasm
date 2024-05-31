@@ -1,4 +1,4 @@
-﻿namespace CvWasm;
+﻿namespace CvWasm.Factory;
 
 public class ComponentMetadata
 {

@@ -2,14 +2,14 @@
 @using CvWasm.Managers
 @inject IJsService JsService
 @inject IFileManager FileManager
-@inject IErrorManager ErrorManager
 @inject IComponentManager ComponentManager
+@inject ICommandService CommandService
 
 <PageTitle>Home</PageTitle>
 
 <div class="ascii-art">@AsciiArt</div>
 
-@if (CurrentSelectedLanguage == Languages.eng)
+@if (StateContainer.CurrentSelectedLanguage == Languages.eng)
 {
     <div>
         <p>Hello and welcome to my CV website. This is a console type of website so you will need to use supported commands to navigate around.</p>
@@ -23,18 +23,7 @@
     </div>
 }
 
-@* @if (ComponentManager.GetLoadedComponents().Count > 0)
-{
-    @foreach (var component in ComponentManager.GetLoadedComponents())
-    {
-        <p>Guest> @component.Command</p>
-        <div class="myContent">
-                <DynamicComponent @ref="ChildComponent" Type="component.MetaData!.Type" Parameters="component.MetaData.Parameters" />                
-        </div>
-    }
-} *@
-
-@foreach (var component in ComponentManager.GetLoadedComponents())
+@foreach (var component in ComponentManager.LoadedComponents)
 {
     <p>Guest> @component.Command</p>
     <div class="myContent">
@@ -44,5 +33,5 @@
 
 <div id="inputDiv">
     <label>Guest> </label>
-    <input id="inputField" @ref="TextInput" @bind-value="@Command" @bind-value:event="oninput" @onkeydown="KeyboardButtonPressed" @onblur="FocusElement" />
+    <input id="inputField" @ref="TextInput" @bind-value="@Command" @bind-value:event="oninput" @onkeydown="KeyboardButtonPressed" @onblur="FocusElement" pattern="[a-z]"/>
 </div>
