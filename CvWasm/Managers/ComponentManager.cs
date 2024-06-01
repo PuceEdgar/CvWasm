@@ -1,34 +1,21 @@
 ﻿using CvWasm.Factory;
-using CvWasm.Pages;
 
 namespace CvWasm.Managers;
 
 public class ComponentManager : IComponentManager
 {
-    private Dictionary<string, ComponentMetadata> Components = [];
-    private readonly List<ComponentMetadata> _componentList = [];
+    private readonly List<BaseComponent> _componentList = [];
 
-    public List<ComponentMetadata> LoadedComponents => _componentList;
+    public List<BaseComponent> LoadedComponents => _componentList;
 
-    public ComponentMetadata CreateResultComponent(string message, string command)
-    {
-        return new ComponentMetadata()
-        {
-            Type = typeof(CommandResult),
-            Command = command,
-            Parameters = { [nameof(CommandResult.Result)] = message }
-        };
-    }
-
-    public void AddComponentToLoadedComponentList(ComponentMetadata component)
+    public void AddComponentToLoadedComponentList(BaseComponent component)
     {       
         _componentList.Add(component);
     }
 
-    public ComponentMetadata GetExistingComponent(string command)
+    public BaseComponent CreateNewComponent(string command)
     {
-        var componentType = ComponentFactory.CreateComponent(command);
-        return componentType.CreateComponent();
+        return ComponentFactory.CreateComponent(command);
     }
 
     public void ClearWindow()

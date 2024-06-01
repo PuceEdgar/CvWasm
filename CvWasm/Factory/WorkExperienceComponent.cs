@@ -2,16 +2,12 @@
 
 namespace CvWasm.Factory;
 
-public class WorkExperienceComponent : IComponent
+public class WorkExperienceComponent : BaseComponent
 {
-    public ComponentMetadata CreateComponent()
+    public WorkExperienceComponent()
     {
-        return new ComponentMetadata()
-        {
-            Type = typeof(WorkExperience),
-            Command = ExperienceCommand,
-            Parameters = {
-                [nameof(WorkExperience.ListOfExperienceDetails)] = PageDataLoader.GetWorkExperiencePageDataFromCv() }
-        };
+        Type = typeof(WorkExperience);
+        Command = ExperienceCommand;
+        Parameters = new() { [nameof(WorkExperience.ListOfExperienceDetails)] = PageDataLoader.GetWorkExperiencePageDataFromCv() };
     }
 }

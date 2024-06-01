@@ -5,14 +5,17 @@ namespace CvWasm;
 
 public static class PageDataLoader
 {
-    private static readonly EnglishHeaders EnglishHeaders = new();
-    private static readonly KoreanHeaders KoreanHeaders = new();
+    private static readonly Dictionary<Languages, IHeaders> AvailableHeaders = new() 
+    { 
+        [Languages.eng] = new EnglishHeaders(), 
+        [Languages.kor] = new KoreanHeaders()
+    };
 
     public static AboutPageData GetAboutPageDataFromCv()
     {
         var selectedLanguage = StateContainer.CurrentSelectedLanguage;
         var about = StateContainer.LoadedCvs[selectedLanguage].About;
-        IHeaders headers = selectedLanguage == Languages.eng ? EnglishHeaders : KoreanHeaders;
+        IHeaders headers = AvailableHeaders[selectedLanguage];
         AboutPageData aboutPageData = new()
         {
             FullName = new(headers.FullName, about!.FullName!),
@@ -31,7 +34,7 @@ public static class PageDataLoader
     {
         var selectedLanguage = StateContainer.CurrentSelectedLanguage;
         var education = StateContainer.LoadedCvs[selectedLanguage].Education;
-        IHeaders headers = selectedLanguage == Languages.eng ? EnglishHeaders : KoreanHeaders;
+        IHeaders headers = AvailableHeaders[selectedLanguage];
         EducationPageData educationPageData = new()
         {
             UniversityName = new(headers.UniversityName, education.UniversityName),
@@ -47,7 +50,7 @@ public static class PageDataLoader
     {
         var selectedLanguage = StateContainer.CurrentSelectedLanguage;
         var hardSkills = StateContainer.LoadedCvs[selectedLanguage].Skills.HardSkills;
-        IHeaders headers = selectedLanguage == Languages.eng ? EnglishHeaders : KoreanHeaders;
+        IHeaders headers = AvailableHeaders[selectedLanguage];
         HardSkillsPageData hardSkillsPageData = new()
         {
             Programming = new(headers.Programming, hardSkills.Programming!),
@@ -65,7 +68,7 @@ public static class PageDataLoader
         var selectedLanguage = StateContainer.CurrentSelectedLanguage;
         var experiences = StateContainer.LoadedCvs[selectedLanguage].Experience;
         List<WorkExperiencePageData> listOfExperiencePageData = [];
-        IHeaders headers = selectedLanguage == Languages.eng ? EnglishHeaders : KoreanHeaders;
+        IHeaders headers = AvailableHeaders[selectedLanguage];
 
         foreach (var experience in experiences)
         {

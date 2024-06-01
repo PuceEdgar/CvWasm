@@ -2,15 +2,12 @@
 
 namespace CvWasm.Factory;
 
-public class AboutComponent : IComponent
+public class AboutComponent : BaseComponent
 {
-    public ComponentMetadata CreateComponent()
+    public AboutComponent()
     {
-        return new ComponentMetadata()
-        {
-            Type = typeof(About),
-            Command = AboutCommand,
-            Parameters = { [nameof(About.AboutDetails)] = PageDataLoader.GetAboutPageDataFromCv() }
-        };
+        Type = typeof(About);
+        Command = AboutCommand;
+        Parameters = new() { [nameof(About.AboutDetails)] = PageDataLoader.GetAboutPageDataFromCv() };
     }
 }

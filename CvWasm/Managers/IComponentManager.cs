@@ -4,9 +4,8 @@ namespace CvWasm.Managers;
 
 public interface IComponentManager
 {
-    List<ComponentMetadata> LoadedComponents { get; }
-    void AddComponentToLoadedComponentList(ComponentMetadata componentMetadata);
-    ComponentMetadata CreateResultComponent(string message, string command);
-    ComponentMetadata GetExistingComponent(string command);
+    List<BaseComponent> LoadedComponents { get; }
+    void AddComponentToLoadedComponentList(BaseComponent componentMetadata);
+    BaseComponent CreateNewComponent(string command);
     void ClearWindow();
 }

@@ -1,4 +1,5 @@
-﻿using CvWasm.Models;
+﻿using CvWasm.Factory;
+using CvWasm.Models;
 using System.Net.Http.Json;
 
 namespace CvWasm.Managers;
@@ -29,7 +30,7 @@ public class FileManager : IFileManager
         }
         catch (Exception)
         {
-            var result = _componentManager.CreateResultComponent(ErrorManager.FailedToLoadCvMessage, "load cv");
+            var result = ComponentFactory.CreateComponent("load cv", ErrorManager.FailedToLoadCvMessage);
             _componentManager.AddComponentToLoadedComponentList(result);
         }
     }
@@ -42,7 +43,7 @@ public class FileManager : IFileManager
         }
         catch (Exception)
         {
-            var result = _componentManager.CreateResultComponent(ErrorManager.FailedToLoadAsciiArtMessage, "load ascii art");
+            var result = ComponentFactory.CreateComponent("load ascii art", ErrorManager.FailedToLoadAsciiArtMessage);
             _componentManager.AddComponentToLoadedComponentList(result);
             return string.Empty;
         }
@@ -56,7 +57,7 @@ public class FileManager : IFileManager
         }
         catch (Exception)
         {
-            var result = _componentManager.CreateResultComponent(ErrorManager.FailedToLoadCommandDescriptionMessage, "load command descriptions");
+            var result = ComponentFactory.CreateComponent("load command descriptions", ErrorManager.FailedToLoadCommandDescriptionMessage);
             _componentManager.AddComponentToLoadedComponentList(result);            
         }
     }

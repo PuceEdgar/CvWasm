@@ -1,9 +1,13 @@
-﻿namespace CvWasm.Factory;
+﻿using CvWasm.Pages;
 
-public class ResultComponent : IComponent
+namespace CvWasm.Factory;
+
+public class ResultComponent : BaseComponent
 {
-    public ComponentMetadata CreateComponent()
+    public ResultComponent(string message, string command)
     {
-        throw new NotImplementedException();
+        Type = typeof(CommandResult);
+        Command = command;
+        Parameters =new () { [nameof(CommandResult.Result)] = message };
     }
 }

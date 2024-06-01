@@ -1,4 +1,6 @@
-﻿namespace CvWasm.Managers;
+﻿using CvWasm.Factory;
+
+namespace CvWasm.Managers;
 
 public class CommandService : ICommandService
 {
@@ -54,13 +56,13 @@ public class CommandService : ICommandService
 
     private void AddNewComponentForCommand(string command)
     {
-        var component = _componentManager.GetExistingComponent(command);
+        var component = _componentManager.CreateNewComponent(command);
         _componentManager.AddComponentToLoadedComponentList(component);
     }
 
     private void LoadResultComponentForError(string command)
     {
-        var component = _componentManager.CreateResultComponent(ErrorManager.GenerateBadCommandErrorMessage(command, StateContainer.CurrentSelectedLanguage), command);
+        var component = ComponentFactory.CreateComponent(command, ErrorManager.GenerateBadCommandErrorMessage(command, StateContainer.CurrentSelectedLanguage));
         _componentManager.AddComponentToLoadedComponentList(component);
     }
 
@@ -77,11 +79,11 @@ public class CommandService : ICommandService
             commandResult += "Failed";
         }
 
-        var component = _componentManager.CreateResultComponent(commandResult, command);
+        var component = ComponentFactory.CreateComponent(command, commandResult);
         _componentManager.AddComponentToLoadedComponentList(component);
     }
 
-    private async Task DownloadCv(Languages language, string downloadCvCommand)
+    private async Task DownloadCv(Languages language, string command)
     {
         var commandResult = "Result: ";
         try
@@ -95,14 +97,14 @@ public class CommandService : ICommandService
             commandResult += "Failed";
         }
 
-        var result = _componentManager.CreateResultComponent(commandResult, downloadCvCommand);
-        _componentManager.AddComponentToLoadedComponentList(result);
+        var component = ComponentFactory.CreateComponent(command, commandResult);
+        _componentManager.AddComponentToLoadedComponentList(component);
     }
 
     private void SetLanguageTo(Languages language, string command)
     {
         StateContainer.CurrentSelectedLanguage = language;
-        var result = _componentManager.CreateResultComponent("Result: Success", command);
-        _componentManager.AddComponentToLoadedComponentList(result);
+        var component = ComponentFactory.CreateComponent(command, "Result: Success");
+        _componentManager.AddComponentToLoadedComponentList(component);
     }
 }
