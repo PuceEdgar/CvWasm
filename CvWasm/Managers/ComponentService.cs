@@ -2,7 +2,7 @@
 
 namespace CvWasm.Managers;
 
-public class ComponentManager : IComponentManager
+public class ComponentService : IComponentService
 {
     private readonly List<BaseComponent> _componentList = [];
 
@@ -13,9 +13,9 @@ public class ComponentManager : IComponentManager
         _componentList.Add(component);
     }
 
-    public BaseComponent CreateNewComponent(string command)
+    public BaseComponent CreateNewComponent(string command, string? message = null)
     {
-        return ComponentFactory.CreateComponent(command);
+        return ComponentFactory.CreateComponent(command, message);
     }
 
     public void ClearWindow()

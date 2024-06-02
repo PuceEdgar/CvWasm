@@ -1,6 +1,6 @@
 ﻿namespace CvWasm.Managers;
 
-public static class ErrorManager
+public static class ErrorService
 {
     private readonly static string _cvLoadFailed = "Sorry, failed to load cv data!";
     private readonly static string _commandDescriptionLoadFailed = "Sorry, failed to load command description data!";

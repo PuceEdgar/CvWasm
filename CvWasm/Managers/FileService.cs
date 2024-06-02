@@ -1,15 +1,14 @@
-﻿using CvWasm.Factory;
-using CvWasm.Models;
+﻿using CvWasm.Models;
 using System.Net.Http.Json;
 
 namespace CvWasm.Managers;
 
-public class FileManager : IFileManager
+public class FileService : IFileService
 {
     private readonly HttpClient _httpClient;
-    private readonly IComponentManager _componentManager;
+    private readonly IComponentService _componentManager;
 
-    public FileManager(HttpClient httpClient, IComponentManager componentManager)
+    public FileService(HttpClient httpClient, IComponentService componentManager)
     {
        _httpClient = httpClient;
         _componentManager = componentManager;
@@ -30,8 +29,8 @@ public class FileManager : IFileManager
         }
         catch (Exception)
         {
-            var result = ComponentFactory.CreateComponent("load cv", ErrorManager.FailedToLoadCvMessage);
-            _componentManager.AddComponentToLoadedComponentList(result);
+            var component = _componentManager.CreateNewComponent("load cv", ErrorService.FailedToLoadCvMessage);
+            _componentManager.AddComponentToLoadedComponentList(component);
         }
     }
 
@@ -43,8 +42,8 @@ public class FileManager : IFileManager
         }
         catch (Exception)
         {
-            var result = ComponentFactory.CreateComponent("load ascii art", ErrorManager.FailedToLoadAsciiArtMessage);
-            _componentManager.AddComponentToLoadedComponentList(result);
+            var component = _componentManager.CreateNewComponent("load ascii art", ErrorService.FailedToLoadAsciiArtMessage);
+            _componentManager.AddComponentToLoadedComponentList(component);
             return string.Empty;
         }
     }
@@ -57,8 +56,8 @@ public class FileManager : IFileManager
         }
         catch (Exception)
         {
-            var result = ComponentFactory.CreateComponent("load command descriptions", ErrorManager.FailedToLoadCommandDescriptionMessage);
-            _componentManager.AddComponentToLoadedComponentList(result);            
+            var component = _componentManager.CreateNewComponent("load command descriptions", ErrorService.FailedToLoadCommandDescriptionMessage);
+            _componentManager.AddComponentToLoadedComponentList(component);            
         }
     }
 

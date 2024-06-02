@@ -1,14 +1,12 @@
-﻿using CvWasm.Factory;
-
-namespace CvWasm.Managers;
+﻿namespace CvWasm.Managers;
 
 public class CommandService : ICommandService
 {
-    private readonly IComponentManager _componentManager;
+    private readonly IComponentService _componentManager;
     private readonly IJsService _jsService;
-    private readonly IFileManager _fileManager;
+    private readonly IFileService _fileManager;
 
-    public CommandService(IComponentManager componentManager, IJsService jsService, IFileManager fileManager)
+    public CommandService(IComponentService componentManager, IJsService jsService, IFileService fileManager)
     {
         _componentManager = componentManager;
         _jsService = jsService;
@@ -62,7 +60,7 @@ public class CommandService : ICommandService
 
     private void LoadResultComponentForError(string command)
     {
-        var component = ComponentFactory.CreateComponent(command, ErrorManager.GenerateBadCommandErrorMessage(command, StateContainer.CurrentSelectedLanguage));
+        var component = _componentManager.CreateNewComponent(command, ErrorService.GenerateBadCommandErrorMessage(command, StateContainer.CurrentSelectedLanguage));
         _componentManager.AddComponentToLoadedComponentList(component);
     }
 
@@ -79,7 +77,7 @@ public class CommandService : ICommandService
             commandResult += "Failed";
         }
 
-        var component = ComponentFactory.CreateComponent(command, commandResult);
+        var component = _componentManager.CreateNewComponent(command, commandResult);
         _componentManager.AddComponentToLoadedComponentList(component);
     }
 
@@ -97,14 +95,14 @@ public class CommandService : ICommandService
             commandResult += "Failed";
         }
 
-        var component = ComponentFactory.CreateComponent(command, commandResult);
+        var component = _componentManager.CreateNewComponent(command, commandResult);
         _componentManager.AddComponentToLoadedComponentList(component);
     }
 
     private void SetLanguageTo(Languages language, string command)
     {
         StateContainer.CurrentSelectedLanguage = language;
-        var component = ComponentFactory.CreateComponent(command, "Result: Success");
+        var component = _componentManager.CreateNewComponent(command, "Result: Success");
         _componentManager.AddComponentToLoadedComponentList(component);
     }
 }

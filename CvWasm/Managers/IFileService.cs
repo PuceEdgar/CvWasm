@@ -1,6 +1,6 @@
 ﻿namespace CvWasm.Managers;
 
-public interface IFileManager
+public interface IFileService
 {
     Task<string> GetBase64FromPdfCv(string language);
     Task LoadCvDataFromJson();
