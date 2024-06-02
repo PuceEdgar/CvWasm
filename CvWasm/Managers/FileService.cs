@@ -6,12 +6,12 @@ namespace CvWasm.Managers;
 public class FileService : IFileService
 {
     private readonly HttpClient _httpClient;
-    private readonly IComponentService _componentManager;
+    private readonly IComponentService _componentService;
 
     public FileService(HttpClient httpClient, IComponentService componentManager)
     {
        _httpClient = httpClient;
-        _componentManager = componentManager;
+        _componentService = componentManager;
     }
 
     public async Task<string> GetBase64FromPdfCv(string language)
@@ -29,8 +29,7 @@ public class FileService : IFileService
         }
         catch (Exception)
         {
-            var component = _componentManager.CreateNewComponent("load cv", ErrorService.FailedToLoadCvMessage);
-            _componentManager.AddComponentToLoadedComponentList(component);
+            _componentService.CreateNewComponentAndAddToList("load cv", ErrorService.FailedToLoadCvMessage);
         }
     }
 
@@ -42,8 +41,7 @@ public class FileService : IFileService
         }
         catch (Exception)
         {
-            var component = _componentManager.CreateNewComponent("load ascii art", ErrorService.FailedToLoadAsciiArtMessage);
-            _componentManager.AddComponentToLoadedComponentList(component);
+            _componentService.CreateNewComponentAndAddToList("load ascii art", ErrorService.FailedToLoadAsciiArtMessage);
             return string.Empty;
         }
     }
@@ -56,8 +54,7 @@ public class FileService : IFileService
         }
         catch (Exception)
         {
-            var component = _componentManager.CreateNewComponent("load command descriptions", ErrorService.FailedToLoadCommandDescriptionMessage);
-            _componentManager.AddComponentToLoadedComponentList(component);            
+            _componentService.CreateNewComponentAndAddToList("load command descriptions", ErrorService.FailedToLoadCommandDescriptionMessage);       
         }
     }
 

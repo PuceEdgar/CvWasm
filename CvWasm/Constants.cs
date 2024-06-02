@@ -13,8 +13,8 @@ public static class Constants
     public const string OpenLinkedInCommand = "open -l";
     public const string DownloadEngCvCommand = "cv -d -eng";
     public const string DownloadKorCvCommand = "cv -d -kor";
-    public const string ShowEnglishCommand = "lang -eng";
-    public const string ShowKoreanCommand = "lang -kor";
+    public const string ChangeLanguageToEnglishCommand = "lang -eng";
+    public const string ChangeLanguageToKoreanCommand = "lang -kor";
 
     //public const string EnglishCvJsonPath = "cv-data/cv-eng.json";
     //public const string KoreanCvJsonPath = "cv-data/cv-kor.json";

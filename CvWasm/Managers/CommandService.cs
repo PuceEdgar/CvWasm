@@ -2,13 +2,13 @@
 
 public class CommandService : ICommandService
 {
-    private readonly IComponentService _componentManager;
+    private readonly IComponentService _componentService;
     private readonly IJsService _jsService;
     private readonly IFileService _fileManager;
 
     public CommandService(IComponentService componentManager, IJsService jsService, IFileService fileManager)
     {
-        _componentManager = componentManager;
+        _componentService = componentManager;
         _jsService = jsService;
         _fileManager = fileManager;
     }
@@ -18,7 +18,7 @@ public class CommandService : ICommandService
         switch (command)
         {
             case ClearCommand:
-                _componentManager.ClearWindow();
+                _componentService.ClearWindow();
                 break;
             case AboutCommand:
             case EducationCommand:
@@ -26,7 +26,7 @@ public class CommandService : ICommandService
             case SoftSkillsCommand:
             case ExperienceCommand:
             case HelpCommand:
-                AddNewComponentForCommand(command);
+                AddNewComponent(command);
                 break;
             case OpenGitHubCommand:
                 await OpenLinkInNewTab(GithubLink, command);
@@ -40,69 +40,64 @@ public class CommandService : ICommandService
             case DownloadKorCvCommand:
                 await DownloadCv(Languages.kor, command);
                 break;
-            case ShowEnglishCommand:
+            case ChangeLanguageToEnglishCommand:
                 SetLanguageTo(Languages.eng, command);
                 break;
-            case ShowKoreanCommand:
+            case ChangeLanguageToKoreanCommand:
                 SetLanguageTo(Languages.kor, command);
                 break;
             default:
-                LoadResultComponentForError(command);
+                AddNewComponent(command, true);
                 break;
         }
     }
 
-    private void AddNewComponentForCommand(string command)
+    private void AddNewComponent(string command, bool isError = false)
     {
-        var component = _componentManager.CreateNewComponent(command);
-        _componentManager.AddComponentToLoadedComponentList(component);
-    }
-
-    private void LoadResultComponentForError(string command)
-    {
-        var component = _componentManager.CreateNewComponent(command, ErrorService.GenerateBadCommandErrorMessage(command, StateContainer.CurrentSelectedLanguage));
-        _componentManager.AddComponentToLoadedComponentList(component);
+        if (isError)
+        {
+            _componentService.CreateNewComponentAndAddToList(command, ErrorService.GenerateBadCommandErrorMessage(command, StateContainer.CurrentSelectedLanguage));
+        }
+        else
+        {
+            _componentService.CreateNewComponentAndAddToList(command);
+        }
     }
 
     private async Task OpenLinkInNewTab(string url, string command)
     {
-        var commandResult = "Result: ";
+        bool isSuccess = true;
         try
         {
             await _jsService.CallJsFunctionToOpenUrl(url);
-            commandResult += "Success";
         }
         catch (Exception)
         {
-            commandResult += "Failed";
+            isSuccess = false;
         }
 
-        var component = _componentManager.CreateNewComponent(command, commandResult);
-        _componentManager.AddComponentToLoadedComponentList(component);
+        _componentService.CreateNewComponentAndAddToList(command, ErrorService.GetCommandResultMessage(isSuccess));
     }
 
     private async Task DownloadCv(Languages language, string command)
     {
-        var commandResult = "Result: ";
+        bool isSuccess = true;
         try
         {
             var base64 = await _fileManager.GetBase64FromPdfCv(language.ToString());
             await _jsService.CallJsFunctionToDownloadCv(language, base64);
-            commandResult += "Success";
         }
         catch (Exception)
         {
-            commandResult += "Failed";
+            isSuccess = false;
         }
 
-        var component = _componentManager.CreateNewComponent(command, commandResult);
-        _componentManager.AddComponentToLoadedComponentList(component);
+        _componentService.CreateNewComponentAndAddToList(command, ErrorService.GetCommandResultMessage(isSuccess));
     }
 
     private void SetLanguageTo(Languages language, string command)
     {
         StateContainer.CurrentSelectedLanguage = language;
-        var component = _componentManager.CreateNewComponent(command, "Result: Success");
-        _componentManager.AddComponentToLoadedComponentList(component);
+        _componentService.CreateNewComponentAndAddToList(command, ErrorService.GetCommandResultMessage(true));
     }
 }
