@@ -2,16 +2,12 @@
 
 namespace CvWasm.Factory;
 
-public class HelpComponent : IComponent
+public class HelpComponent : BaseComponent
 {
-    public ComponentMetadata CreateComponent()
+    public HelpComponent()
     {
-        var selectedLanguage = StateContainer.CurrentSelectedLanguage;
-        return new ComponentMetadata()
-        {
-            Type = typeof(Help),
-            Command = HelpCommand,
-            Parameters = { [nameof(Help.CommandDescriptions)] = StateContainer.CommandDescriptions[selectedLanguage] }
-        };
+        Type = typeof(Help);
+        Command = HelpCommand;
+        Parameters = new() { [nameof(Help.CommandDescriptions)] = StateContainer.CommandDescriptions[StateContainer.CurrentSelectedLanguage] };
     }
 }

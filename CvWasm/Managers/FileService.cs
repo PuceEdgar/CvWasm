@@ -3,15 +3,15 @@ using System.Net.Http.Json;
 
 namespace CvWasm.Managers;
 
-public class FileManager : IFileManager
+public class FileService : IFileService
 {
     private readonly HttpClient _httpClient;
-    private readonly IComponentManager _componentManager;
+    private readonly IComponentService _componentService;
 
-    public FileManager(HttpClient httpClient, IComponentManager componentManager)
+    public FileService(HttpClient httpClient, IComponentService componentManager)
     {
        _httpClient = httpClient;
-        _componentManager = componentManager;
+        _componentService = componentManager;
     }
 
     public async Task<string> GetBase64FromPdfCv(string language)
@@ -29,8 +29,7 @@ public class FileManager : IFileManager
         }
         catch (Exception)
         {
-            var result = _componentManager.CreateResultComponent(ErrorManager.FailedToLoadCvMessage, "load cv");
-            _componentManager.AddComponentToLoadedComponentList(result);
+            _componentService.CreateNewComponentAndAddToList("load cv", ErrorService.FailedToLoadCvMessage);
         }
     }
 
@@ -42,8 +41,7 @@ public class FileManager : IFileManager
         }
         catch (Exception)
         {
-            var result = _componentManager.CreateResultComponent(ErrorManager.FailedToLoadAsciiArtMessage, "load ascii art");
-            _componentManager.AddComponentToLoadedComponentList(result);
+            _componentService.CreateNewComponentAndAddToList("load ascii art", ErrorService.FailedToLoadAsciiArtMessage);
             return string.Empty;
         }
     }
@@ -56,8 +54,7 @@ public class FileManager : IFileManager
         }
         catch (Exception)
         {
-            var result = _componentManager.CreateResultComponent(ErrorManager.FailedToLoadCommandDescriptionMessage, "load command descriptions");
-            _componentManager.AddComponentToLoadedComponentList(result);            
+            _componentService.CreateNewComponentAndAddToList("load command descriptions", ErrorService.FailedToLoadCommandDescriptionMessage);       
         }
     }
 

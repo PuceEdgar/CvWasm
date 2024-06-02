@@ -2,15 +2,12 @@
 
 namespace CvWasm.Factory;
 
-public class HardSkillsComponent : IComponent
+public class HardSkillsComponent : BaseComponent
 {
-    public ComponentMetadata CreateComponent()
+    public HardSkillsComponent()
     {
-        return new ComponentMetadata()
-        {
-            Type = typeof(HardSkills),
-            Command = HardSkillsCommand,
-            Parameters = { [nameof(HardSkills.HardSkillsDetails)] = PageDataLoader.GetHardSkillsPageDataFromCv() }
-        };
+        Type = typeof(HardSkills);
+        Command = HardSkillsCommand;
+        Parameters = new() { [nameof(HardSkills.HardSkillsDetails)] = PageDataLoader.GetHardSkillsPageDataFromCv() };
     }
 }

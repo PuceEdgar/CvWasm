@@ -2,7 +2,7 @@
 
 public static class ComponentFactory
 {
-    public static IComponent CreateComponent(string command)
+    public static BaseComponent CreateComponent(string command, string? message = null)
     {
         return command switch
         {
@@ -12,7 +12,7 @@ public static class ComponentFactory
             HardSkillsCommand => new HardSkillsComponent(),
             SoftSkillsCommand => new SoftSkillsComponent(),
             HelpCommand => new HelpComponent(),
-            _ => new ResultComponent(),
+            _ => new ResultComponent(message, command),
         };
     }
 }

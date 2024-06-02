@@ -2,15 +2,12 @@
 
 namespace CvWasm.Factory;
 
-public class EducationComponent : IComponent
+public class EducationComponent : BaseComponent
 {
-    public ComponentMetadata CreateComponent()
+    public EducationComponent()
     {
-        return new ComponentMetadata()
-        {
-            Type = typeof(Education),
-            Command = EducationCommand,
-            Parameters = { [nameof(Education.EducationDetails)] = PageDataLoader.GetEducationPageDataFromCv() }
-        };
+        Type = typeof(Education);
+        Command = EducationCommand;
+        Parameters = new() { [nameof(Education.EducationDetails)] = PageDataLoader.GetEducationPageDataFromCv() };
     }
 }

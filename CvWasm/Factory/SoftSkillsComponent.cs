@@ -2,16 +2,12 @@
 
 namespace CvWasm.Factory;
 
-public class SoftSkillsComponent : IComponent
+public class SoftSkillsComponent : BaseComponent
 {
-    public ComponentMetadata CreateComponent()
+    public SoftSkillsComponent()
     {
-        var selectedLanguage = StateContainer.CurrentSelectedLanguage;
-        return new ComponentMetadata()
-        {
-            Type = typeof(SoftSkills),
-            Command = SoftSkillsCommand,
-            Parameters = { [nameof(SoftSkills.SoftSkillsDetails)] = StateContainer.LoadedCvs[selectedLanguage].Skills!.SoftSkills! }
-        };
+        Type = typeof(SoftSkills);
+        Command = SoftSkillsCommand;
+        Parameters = new() { [nameof(SoftSkills.SoftSkillsDetails)] = StateContainer.LoadedCvs[StateContainer.CurrentSelectedLanguage].Skills!.SoftSkills! };
     }
 }
