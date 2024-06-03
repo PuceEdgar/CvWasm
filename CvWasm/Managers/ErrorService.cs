@@ -26,6 +26,6 @@ public static class ErrorService
 
     public static string GetCommandResultMessage(bool isSuccess)
     {
-        return isSuccess ? "Result: Success!" : "Result : Failed!";
+        return isSuccess ? ResultSuccess : ResultFailed;
     }
 }

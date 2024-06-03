@@ -25,4 +25,7 @@ public static class Constants
 
     public const string GithubLink = "https://github.com/PuceEdgar";
     public const string LinkedInLink = "https://www.linkedin.com/in/edgars-puce/";
+
+    public const string ResultSuccess = "Result: Success!";
+    public const string ResultFailed = "Result: Failed!";
 }
