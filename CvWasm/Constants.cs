@@ -28,4 +28,9 @@ public static class Constants
 
     public const string ResultSuccess = "Result: Success!";
     public const string ResultFailed = "Result: Failed!";
+
+    public const string CvLoadFailed = "Sorry, failed to load cv data!";
+    public const string CommandDescriptionLoadFailed = "Sorry, failed to load command description data!";
+    public const string AsciiArtLoadFailed = "Sorry, failed to load ascii art from file!";
+    public const string CvDownloadFailed = "Sorry, failed to download CV!";
 }
