@@ -16,8 +16,17 @@ public class FileService : IFileService
 
     public async Task<string> GetBase64FromPdfCv(string language)
     {
-        var pdfAsByteArray = await _httpClient.GetByteArrayAsync($"cv-data/Edgars_Puce_{language}.pdf");
-        return Convert.ToBase64String(pdfAsByteArray);
+        try
+        {
+            var pdfAsByteArray = await _httpClient.GetByteArrayAsync($"cv-data/Edgars_Puce_{language}.pdf");
+            return Convert.ToBase64String(pdfAsByteArray);
+        }
+        catch (Exception)
+        {
+            _componentService.CreateNewComponentAndAddToList("cv download", CvDownloadFailed);
+            return string.Empty;
+        }
+        
     }
 
     public async Task LoadCvDataFromJson()
@@ -29,7 +38,7 @@ public class FileService : IFileService
         }
         catch (Exception)
         {
-            _componentService.CreateNewComponentAndAddToList("load cv", ErrorService.FailedToLoadCvMessage);
+            _componentService.CreateNewComponentAndAddToList("load cv", CvLoadFailed);
         }
     }
 
@@ -41,7 +50,7 @@ public class FileService : IFileService
         }
         catch (Exception)
         {
-            _componentService.CreateNewComponentAndAddToList("load ascii art", ErrorService.FailedToLoadAsciiArtMessage);
+            _componentService.CreateNewComponentAndAddToList("load ascii art", AsciiArtLoadFailed);
             return string.Empty;
         }
     }
@@ -54,7 +63,7 @@ public class FileService : IFileService
         }
         catch (Exception)
         {
-            _componentService.CreateNewComponentAndAddToList("load command descriptions", ErrorService.FailedToLoadCommandDescriptionMessage);       
+            _componentService.CreateNewComponentAndAddToList("load command descriptions", CommandDescriptionLoadFailed);       
         }
     }
 

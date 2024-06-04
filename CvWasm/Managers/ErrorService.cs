@@ -2,16 +2,6 @@
 
 public static class ErrorService
 {
-    private readonly static string _cvLoadFailed = "Sorry, failed to load cv data!";
-    private readonly static string _commandDescriptionLoadFailed = "Sorry, failed to load command description data!";
-    private readonly static string _asciiArtLoadFailed = "Sorry, failed to load ascii art from file!";
-
-    public static string FailedToLoadCvMessage => _cvLoadFailed;
-
-    public static string FailedToLoadCommandDescriptionMessage => _commandDescriptionLoadFailed;
-
-    public static string FailedToLoadAsciiArtMessage => _asciiArtLoadFailed;
-
     public static string GenerateBadCommandErrorMessage(string command, Languages currentLanguage)
     {
         if (currentLanguage == Languages.eng)
@@ -26,6 +16,6 @@ public static class ErrorService
 
     public static string GetCommandResultMessage(bool isSuccess)
     {
-        return isSuccess ? "Result: Success!" : "Result : Failed!";
+        return isSuccess ? ResultSuccess : ResultFailed;
     }
 }
