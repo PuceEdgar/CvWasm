@@ -23,7 +23,8 @@ public class FileService : IFileService
         }
         catch (Exception)
         {
-            _componentRepository.CreateNewComponentAndAddToList("cv download", CvDownloadFailed);
+            var component = _componentRepository.CreateNewComponent("cv download", CvDownloadFailed);
+            _componentRepository.AddComponentToList(component);
             return string.Empty;
         }
         
@@ -38,7 +39,8 @@ public class FileService : IFileService
         }
         catch (Exception)
         {
-            _componentRepository.CreateNewComponentAndAddToList("load cv", CvLoadFailed);
+            var component = _componentRepository.CreateNewComponent("load cv", CvLoadFailed);
+            _componentRepository.AddComponentToList(component);
         }
     }
 
@@ -50,7 +52,8 @@ public class FileService : IFileService
         }
         catch (Exception)
         {
-            _componentRepository.CreateNewComponentAndAddToList("load ascii art", AsciiArtLoadFailed);
+            var component = _componentRepository.CreateNewComponent("load ascii art", AsciiArtLoadFailed);
+            _componentRepository.AddComponentToList(component);
             return string.Empty;
         }
     }
@@ -63,7 +66,8 @@ public class FileService : IFileService
         }
         catch (Exception)
         {
-            _componentRepository.CreateNewComponentAndAddToList("load command descriptions", CommandDescriptionLoadFailed);       
+            var component = _componentRepository.CreateNewComponent("load command descriptions", CommandDescriptionLoadFailed);
+            _componentRepository.AddComponentToList(component);
         }
     }
 

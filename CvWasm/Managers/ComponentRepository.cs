@@ -22,10 +22,4 @@ public class ComponentRepository : IComponentRepository
     {
         return ComponentFactory.CreateComponent(command, message);
     }
-
-    public void CreateNewComponentAndAddToList(string command, string? message = null)
-    {
-        var component = ComponentFactory.CreateComponent(command, message);
-        _componentList.Add(component);
-    }
 }

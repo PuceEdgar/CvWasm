@@ -3,10 +3,13 @@ using CvWasm.DTO;
 using CvWasm.Factory;
 using CvWasm.Managers;
 using CvWasm.Models;
+using Microsoft.AspNetCore.Components;
+using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using NSubstitute;
 using NSubstitute.ExceptionExtensions;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -46,11 +49,15 @@ public class CommandServiceTests
     [InlineData(Constants.HelpCommand)]
     public async Task ExecuteCommand_WhenComponentCommandPassed_ExecutesAddComponent(string command)
     {
+        //Arrange
+        var component = ComponentFactory.CreateComponent(command);
+        _componentRepository.CreateNewComponent(command).Returns(component);
         //Act
         await _sut.ExecuteCommand(command);
 
         //Assert
-        _componentRepository.Received().CreateNewComponentAndAddToList(command);
+        _componentRepository.Received().CreateNewComponent(command);
+        _componentRepository.Received().AddComponentToList(component);
     }
 
     [Theory]
@@ -62,12 +69,15 @@ public class CommandServiceTests
         var command = "abc";
         StateContainer.CurrentSelectedLanguage = language;
         var message = ErrorService.GenerateBadCommandErrorMessage(command, language);
+        var component = ComponentFactory.CreateComponent(command, message);
+        _componentRepository.CreateNewComponent(command, message).Returns(component);
 
         //Act
         await _sut.ExecuteCommand(command);
 
         //Assert
-        _componentRepository.Received().CreateNewComponentAndAddToList(command, message);
+        _componentRepository.Received().CreateNewComponent(command, message);
+        _componentRepository.Received().AddComponentToList(component);
     }
 
     [Theory]
@@ -75,12 +85,16 @@ public class CommandServiceTests
     [InlineData(Constants.OpenLinkedInCommand, Constants.LinkedInLink)]
     public async Task ExecuteCommand_WhenOpenUrlCommandPassed_ExecutesOpenLinkInNewTab(string command, string url)
     {
+        //Arrange
+        var component = ComponentFactory.CreateComponent(command, Constants.ResultSuccess);
+        _componentRepository.CreateNewComponent(command, Constants.ResultSuccess).Returns(component);
         //Act
         await _sut.ExecuteCommand(command);
 
         //Assert
         await _jsService.Received().CallJsFunctionToOpenUrl(url);
-        _componentRepository.Received().CreateNewComponentAndAddToList(command, Constants.ResultSuccess);
+        _componentRepository.Received().CreateNewComponent(command, Constants.ResultSuccess);
+        _componentRepository.Received().AddComponentToList(component);
     }
 
     [Theory]
@@ -89,6 +103,9 @@ public class CommandServiceTests
     public async Task ExecuteCommand_WhenOpenUrlCommandCalled_JsFailsAndResultComponentShowsResultFailed(string command, string url)
     {
         //Arrange
+        //Arrange
+        var component = ComponentFactory.CreateComponent(command, Constants.ResultFailed);
+        _componentRepository.CreateNewComponent(command, Constants.ResultFailed).Returns(component);
         _jsService.CallJsFunctionToOpenUrl(url).ThrowsAsync<Exception>();
 
         //Act
@@ -96,7 +113,8 @@ public class CommandServiceTests
 
         //Assert
         await _jsService.Received().CallJsFunctionToOpenUrl(url);
-        _componentRepository.Received().CreateNewComponentAndAddToList(command, Constants.ResultFailed);
+        _componentRepository.Received().CreateNewComponent(command, Constants.ResultFailed);
+        _componentRepository.Received().AddComponentToList(component);
 
     }
 
@@ -108,6 +126,8 @@ public class CommandServiceTests
         //Arrange
         var base64 = "some string";
         _fileManager.GetBase64FromPdfCv(language.ToString()).Returns(base64);
+        var component = ComponentFactory.CreateComponent(command, Constants.ResultSuccess);
+        _componentRepository.CreateNewComponent(command, Constants.ResultSuccess).Returns(component);
 
         //Act
         await _sut.ExecuteCommand(command);
@@ -115,7 +135,8 @@ public class CommandServiceTests
         //Assert
         await _fileManager.Received().GetBase64FromPdfCv(language.ToString());
         await _jsService.Received().CallJsFunctionToDownloadCv(language, base64);
-        _componentRepository.Received().CreateNewComponentAndAddToList(command, Constants.ResultSuccess);
+        _componentRepository.Received().CreateNewComponent(command, Constants.ResultSuccess);
+        _componentRepository.Received().AddComponentToList(component);
     }
 
     [Theory]
@@ -127,6 +148,8 @@ public class CommandServiceTests
         var base64 = "some string";
         _fileManager.GetBase64FromPdfCv(language.ToString()).Returns(base64);
         _jsService.CallJsFunctionToDownloadCv(language, base64).ThrowsAsync<Exception>();
+        var component = ComponentFactory.CreateComponent(command, Constants.ResultFailed);
+        _componentRepository.CreateNewComponent(command, Constants.ResultFailed).Returns(component);
 
         //Act
         await _sut.ExecuteCommand(command);
@@ -134,7 +157,8 @@ public class CommandServiceTests
         //Assert
         await _fileManager.Received().GetBase64FromPdfCv(language.ToString());
         await _jsService.Received().CallJsFunctionToDownloadCv(language, base64);
-        _componentRepository.Received().CreateNewComponentAndAddToList(command, Constants.ResultFailed);
+        _componentRepository.Received().CreateNewComponent(command, Constants.ResultFailed);
+        _componentRepository.Received().AddComponentToList(component);
     }
 
     [Theory]
@@ -145,6 +169,8 @@ public class CommandServiceTests
         //Arrange
         var base64 = string.Empty;
        _fileManager.GetBase64FromPdfCv(language.ToString()).Returns(base64);
+        var component = ComponentFactory.CreateComponent(command, Constants.ResultFailed);
+        _componentRepository.CreateNewComponent(command, Constants.ResultFailed).Returns(component);
 
         //Act
         await _sut.ExecuteCommand(command);
@@ -152,7 +178,8 @@ public class CommandServiceTests
         //Assert
         await _fileManager.Received().GetBase64FromPdfCv(language.ToString());
         await _jsService.DidNotReceive().CallJsFunctionToDownloadCv(language, base64);
-        _componentRepository.Received().CreateNewComponentAndAddToList(command, Constants.ResultFailed);
+        _componentRepository.Received().CreateNewComponent(command, Constants.ResultFailed);
+        _componentRepository.Received().AddComponentToList(component);
     }
 
     [Theory]
@@ -160,11 +187,16 @@ public class CommandServiceTests
     [InlineData(Constants.ChangeLanguageToKoreanCommand, Languages.kor)]
     public async Task ExecuteCommand_WhenChangeLanguageCommandPassed_ExecutesChangeLanguage(string command, Languages language)
     {
+        //Asert
+        var component = ComponentFactory.CreateComponent(command, Constants.ResultSuccess);
+        _componentRepository.CreateNewComponent(command, Constants.ResultSuccess).Returns(component);
+
         //Act
         await _sut.ExecuteCommand(command);
 
         //Assert
         Assert.Equal(StateContainer.CurrentSelectedLanguage, language);
-        _componentRepository.Received().CreateNewComponentAndAddToList(command, Constants.ResultSuccess);
+        _componentRepository.Received().CreateNewComponent(command, Constants.ResultSuccess);
+        _componentRepository.Received().AddComponentToList(component);
     }    
 }
