@@ -11,16 +11,19 @@ public class ComponentTests : TestContext
     [InlineData("error")]
     public void CommandResultComponentDisplaysResult(string message)
     {
+        //Arrange
         var cut = RenderComponent<CommandResult>(
             parameters => parameters.Add(p => p.Result, message)
             );
 
+        //Assert
         cut.Find("p").MarkupMatches($"<p>{message}</p>");
     }
 
     [Fact]
     public void TableHeaderAndDataRowComponentDisplaysHeaderAndData()
     {
+        //Arrange
         string header = "header";
         string data = "data";
         var cut = RenderComponent<TableHeaderAndDataRow>(
@@ -31,6 +34,7 @@ public class ComponentTests : TestContext
         var th = cut.Find("th");
         var td = cut.Find("td");
 
+        //Assert
         Assert.Equal(2, tr.Children.Length);
         Assert.Equal(th, tr.Children[0]);
         Assert.Equal(td, tr.Children[1]);
@@ -42,12 +46,14 @@ public class ComponentTests : TestContext
     [Fact]
     public void TextArrayComponentDisplaysContent()
     {
+        //Arrange
         string[] content = ["a", "b", "c"];
         var cut = RenderComponent<TextArray>(
             parameters => parameters.Add(p => p.TextCollection, content));
 
         var nodes = cut.Nodes;
 
+        //Assert
         Assert.Equal(content.Length, nodes.Length);
         Assert.Multiple(() =>
         {

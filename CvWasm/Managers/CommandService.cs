@@ -2,13 +2,13 @@
 
 public class CommandService : ICommandService
 {
-    private readonly IComponentService _componentService;
+    private readonly IComponentRepository _componentRepository;
     private readonly IJsService _jsService;
     private readonly IFileService _fileManager;
 
-    public CommandService(IComponentService componentManager, IJsService jsService, IFileService fileManager)
+    public CommandService(IComponentRepository componentManager, IJsService jsService, IFileService fileManager)
     {
-        _componentService = componentManager;
+        _componentRepository = componentManager;
         _jsService = jsService;
         _fileManager = fileManager;
     }
@@ -18,7 +18,7 @@ public class CommandService : ICommandService
         switch (command)
         {
             case ClearCommand:
-                _componentService.ClearWindow();
+                _componentRepository.ClearWindow();
                 break;
             case AboutCommand:
             case EducationCommand:
@@ -56,11 +56,11 @@ public class CommandService : ICommandService
     {
         if (isError)
         {
-            _componentService.CreateNewComponentAndAddToList(command, ErrorService.GenerateBadCommandErrorMessage(command, StateContainer.CurrentSelectedLanguage));
+            _componentRepository.CreateNewComponentAndAddToList(command, ErrorService.GenerateBadCommandErrorMessage(command, StateContainer.CurrentSelectedLanguage));
         }
         else
         {
-            _componentService.CreateNewComponentAndAddToList(command);
+            _componentRepository.CreateNewComponentAndAddToList(command);
         }
     }
 
@@ -76,7 +76,7 @@ public class CommandService : ICommandService
             isSuccess = false;
         }
 
-        _componentService.CreateNewComponentAndAddToList(command, ErrorService.GetCommandResultMessage(isSuccess));
+        _componentRepository.CreateNewComponentAndAddToList(command, ErrorService.GetCommandResultMessage(isSuccess));
     }
 
     private async Task DownloadCv(Languages language, string command)
@@ -86,22 +86,27 @@ public class CommandService : ICommandService
         {
             var base64 = await _fileManager.GetBase64FromPdfCv(language.ToString());
             if (string.IsNullOrWhiteSpace(base64)) 
-            {  
-                return; 
+            {
+                isSuccess = false;
+                
+            } 
+            else
+            {
+                await _jsService.CallJsFunctionToDownloadCv(language, base64);
             }
-            await _jsService.CallJsFunctionToDownloadCv(language, base64);
+            
         }
         catch (Exception)
         {
             isSuccess = false;
         }
 
-        _componentService.CreateNewComponentAndAddToList(command, ErrorService.GetCommandResultMessage(isSuccess));
+        _componentRepository.CreateNewComponentAndAddToList(command, ErrorService.GetCommandResultMessage(isSuccess));
     }
 
     private void SetLanguageTo(Languages language, string command)
     {
         StateContainer.CurrentSelectedLanguage = language;
-        _componentService.CreateNewComponentAndAddToList(command, ErrorService.GetCommandResultMessage(true));
+        _componentRepository.CreateNewComponentAndAddToList(command, ErrorService.GetCommandResultMessage(true));
     }
 }

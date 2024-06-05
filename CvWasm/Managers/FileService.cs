@@ -6,12 +6,12 @@ namespace CvWasm.Managers;
 public class FileService : IFileService
 {
     private readonly HttpClient _httpClient;
-    private readonly IComponentService _componentService;
+    private readonly IComponentRepository _componentRepository;
 
-    public FileService(HttpClient httpClient, IComponentService componentManager)
+    public FileService(HttpClient httpClient, IComponentRepository componentManager)
     {
        _httpClient = httpClient;
-        _componentService = componentManager;
+        _componentRepository = componentManager;
     }
 
     public async Task<string> GetBase64FromPdfCv(string language)
@@ -23,7 +23,7 @@ public class FileService : IFileService
         }
         catch (Exception)
         {
-            _componentService.CreateNewComponentAndAddToList("cv download", CvDownloadFailed);
+            _componentRepository.CreateNewComponentAndAddToList("cv download", CvDownloadFailed);
             return string.Empty;
         }
         
@@ -38,7 +38,7 @@ public class FileService : IFileService
         }
         catch (Exception)
         {
-            _componentService.CreateNewComponentAndAddToList("load cv", CvLoadFailed);
+            _componentRepository.CreateNewComponentAndAddToList("load cv", CvLoadFailed);
         }
     }
 
@@ -50,7 +50,7 @@ public class FileService : IFileService
         }
         catch (Exception)
         {
-            _componentService.CreateNewComponentAndAddToList("load ascii art", AsciiArtLoadFailed);
+            _componentRepository.CreateNewComponentAndAddToList("load ascii art", AsciiArtLoadFailed);
             return string.Empty;
         }
     }
@@ -63,7 +63,7 @@ public class FileService : IFileService
         }
         catch (Exception)
         {
-            _componentService.CreateNewComponentAndAddToList("load command descriptions", CommandDescriptionLoadFailed);       
+            _componentRepository.CreateNewComponentAndAddToList("load command descriptions", CommandDescriptionLoadFailed);       
         }
     }
 

@@ -2,7 +2,7 @@
 @using CvWasm.Managers
 @inject IJsService JsService
 @inject IFileService FileManager
-@inject IComponentService ComponentManager
+@inject IComponentRepository ComponentRepository
 @inject ICommandService CommandService
 
 <PageTitle>Home</PageTitle>
@@ -23,7 +23,7 @@
     </div>
 }
 
-@foreach (var component in ComponentManager.LoadedComponents)
+@foreach (var component in ComponentRepository.LoadedComponents)
 {
     <p>Guest> @component.Command</p>
     <div class="myContent">

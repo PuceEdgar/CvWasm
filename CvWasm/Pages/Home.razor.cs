@@ -40,18 +40,29 @@ public partial class Home
 
     private async Task KeyboardButtonPressed(KeyboardEventArgs e)
     {
-        int componentCount = ComponentManager.LoadedComponents.Count;
-        if ((e.Code == "ArrowLeft" || e.Code == "ArrowRight") && componentCount > 0 && ComponentManager.LoadedComponents[componentCount - 1].Type == typeof(WorkExperience))
+        
+        if (IsArrowCodeAndLastItemIsWorkExperience(e))
         {
             (ChildComponent?.Instance as WorkExperience)!.SelectCurrentWorkExperience(e.Code);
         }
 
-        if (e.Code.Equals("Enter", StringComparison.InvariantCultureIgnoreCase)
-            || e.Code.Equals("NumpadEnter", StringComparison.InvariantCultureIgnoreCase)
-                || e.Key.Equals("Enter", StringComparison.InvariantCultureIgnoreCase))
+        if (IsEnterCode(e))
         {
             await CommandService.ExecuteCommand(Command);
             Command = string.Empty;
         }
+    }
+
+    private bool IsArrowCodeAndLastItemIsWorkExperience(KeyboardEventArgs e)
+    {
+        int componentCount = ComponentRepository.LoadedComponents.Count;
+        return (e.Code == "ArrowLeft" || e.Code == "ArrowRight") && componentCount > 0 && ComponentRepository.LoadedComponents[componentCount - 1].Type == typeof(WorkExperience);
+    }
+
+    private static bool IsEnterCode(KeyboardEventArgs e)
+    {
+        return e.Code.Equals("Enter", StringComparison.InvariantCultureIgnoreCase)
+                    || e.Code.Equals("NumpadEnter", StringComparison.InvariantCultureIgnoreCase)
+                        || e.Key.Equals("Enter", StringComparison.InvariantCultureIgnoreCase);
     }
 }
