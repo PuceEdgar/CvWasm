@@ -6,12 +6,12 @@ namespace CvWasm.Managers;
 public class FileService : IFileService
 {
     private readonly HttpClient _httpClient;
-    private readonly IComponentService _componentService;
+    private readonly IComponentRepository _componentRepository;
 
-    public FileService(HttpClient httpClient, IComponentService componentManager)
+    public FileService(HttpClient httpClient, IComponentRepository componentManager)
     {
        _httpClient = httpClient;
-        _componentService = componentManager;
+        _componentRepository = componentManager;
     }
 
     public async Task<string> GetBase64FromPdfCv(string language)
@@ -23,7 +23,8 @@ public class FileService : IFileService
         }
         catch (Exception)
         {
-            _componentService.CreateNewComponentAndAddToList("cv download", CvDownloadFailed);
+            var component = _componentRepository.CreateNewComponent("cv download", CvDownloadFailed);
+            _componentRepository.AddComponentToList(component);
             return string.Empty;
         }
         
@@ -38,7 +39,8 @@ public class FileService : IFileService
         }
         catch (Exception)
         {
-            _componentService.CreateNewComponentAndAddToList("load cv", CvLoadFailed);
+            var component = _componentRepository.CreateNewComponent("load cv", CvLoadFailed);
+            _componentRepository.AddComponentToList(component);
         }
     }
 
@@ -50,7 +52,8 @@ public class FileService : IFileService
         }
         catch (Exception)
         {
-            _componentService.CreateNewComponentAndAddToList("load ascii art", AsciiArtLoadFailed);
+            var component = _componentRepository.CreateNewComponent("load ascii art", AsciiArtLoadFailed);
+            _componentRepository.AddComponentToList(component);
             return string.Empty;
         }
     }
@@ -63,7 +66,8 @@ public class FileService : IFileService
         }
         catch (Exception)
         {
-            _componentService.CreateNewComponentAndAddToList("load command descriptions", CommandDescriptionLoadFailed);       
+            var component = _componentRepository.CreateNewComponent("load command descriptions", CommandDescriptionLoadFailed);
+            _componentRepository.AddComponentToList(component);
         }
     }
 
