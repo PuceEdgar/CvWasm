@@ -18,12 +18,12 @@ public class ComponentFactoryTests
     }
 
     [Theory]
-    [InlineData(Constants.AboutCommand, typeof(AboutComponent))]
-    [InlineData(Constants.EducationCommand, typeof(EducationComponent))]
-    [InlineData(Constants.HardSkillsCommand, typeof(HardSkillsComponent))]
-    [InlineData(Constants.SoftSkillsCommand, typeof(SoftSkillsComponent))]
-    [InlineData(Constants.ExperienceCommand, typeof(WorkExperienceComponent))]
-    [InlineData(Constants.HelpCommand, typeof(HelpComponent))]
+    [InlineData(AboutCommand, typeof(AboutComponent))]
+    [InlineData(EducationCommand, typeof(EducationComponent))]
+    [InlineData(HardSkillsCommand, typeof(HardSkillsComponent))]
+    [InlineData(SoftSkillsCommand, typeof(SoftSkillsComponent))]
+    [InlineData(ExperienceCommand, typeof(WorkExperienceComponent))]
+    [InlineData(HelpCommand, typeof(HelpComponent))]
     [InlineData("abc", typeof(ResultComponent))]
     public void CreateComponent_CreatesCorrectComponentType(string command, Type componentType)
     {
@@ -36,10 +36,10 @@ public class ComponentFactoryTests
     }
 
     [Theory]
-    [InlineData(Constants.CvLoadFailed)]
-    [InlineData(Constants.AsciiArtLoadFailed)]
-    [InlineData(Constants.CommandDescriptionLoadFailed)]
-    [InlineData(Constants.CvDownloadFailed)]
+    [InlineData(CvLoadFailed)]
+    [InlineData(AsciiArtLoadFailed)]
+    [InlineData(CommandDescriptionLoadFailed)]
+    [InlineData(CvDownloadFailed)]
     public void CreateComponent_WhenErrorMessagePassed_DisplaysThatMessageInResultComponent(string errorMessage)
     {
         //Act

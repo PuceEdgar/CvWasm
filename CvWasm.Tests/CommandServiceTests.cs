@@ -13,12 +13,14 @@ public class CommandServiceTests
     private readonly IFileService _fileManager = Substitute.For<IFileService>();
     private readonly Fixture _fixture = new();
     private readonly CommandService _sut;
+    private readonly SharedMethods _sharedMethods;
 
     public CommandServiceTests()
     {
         _sut = new CommandService(_componentRepository, _jsService, _fileManager);
         StateContainer.LoadedCvs[Languages.eng] = _fixture.Create<CvModel>();
         StateContainer.LoadedCvs[Languages.kor] = _fixture.Create<CvModel>();
+        _sharedMethods = new(_componentRepository);
     }
 
     [Fact]
@@ -41,7 +43,7 @@ public class CommandServiceTests
     public async Task ExecuteCommand_WhenComponentCommandPassed_ExecutesAddComponent(string command)
     {
         //Arrange
-        var component = MockComponentCreation(command);
+        var component = _sharedMethods.MockComponentCreation(command);
 
         //Act
         await _sut.ExecuteCommand(command);
@@ -59,7 +61,7 @@ public class CommandServiceTests
         var command = "abc";
         StateContainer.CurrentSelectedLanguage = language;
         var message = ErrorService.GenerateBadCommandErrorMessage(command, language);
-        var component = MockComponentCreation(command, message);
+        var component = _sharedMethods.MockComponentCreation(command, message);
 
         //Act
         await _sut.ExecuteCommand(command);
@@ -74,7 +76,7 @@ public class CommandServiceTests
     public async Task ExecuteCommand_WhenOpenUrlCommandPassed_ExecutesOpenLinkInNewTab(string command, string url, string message)
     {
         //Arrange
-        var component = MockComponentCreation(command, message);
+        var component = _sharedMethods.MockComponentCreation(command, message);
 
         //Act
         await _sut.ExecuteCommand(command);
@@ -90,7 +92,7 @@ public class CommandServiceTests
     public async Task ExecuteCommand_WhenOpenUrlCommandCalled_JsFailsAndResultComponentShowsResultFailed(string command, string url, string message)
     {
         //Arrange
-        var component = MockComponentCreation(command, message);
+        var component = _sharedMethods.MockComponentCreation(command, message);
         _jsService.CallJsFunctionToOpenUrl(url).ThrowsAsync<Exception>();
 
         //Act
@@ -108,14 +110,14 @@ public class CommandServiceTests
     {
         //Arrange
         var base64 = "some string";
-        _fileManager.GetBase64FromPdfCv(language.ToString()).Returns(base64);
-        var component = MockComponentCreation(command, message);
+        _fileManager.GetBase64FromPdfCv(language).Returns(base64);
+        var component = _sharedMethods.MockComponentCreation(command, message);
 
         //Act
         await _sut.ExecuteCommand(command);
 
         //Assert
-        await _fileManager.Received().GetBase64FromPdfCv(language.ToString());
+        await _fileManager.Received().GetBase64FromPdfCv(language);
         await _jsService.Received().CallJsFunctionToDownloadCv(language, base64);
         AssertCreateComponentAndAddComponentToListWereCalled(command, component, message);
     }
@@ -127,15 +129,15 @@ public class CommandServiceTests
     {
         //Arrange
         var base64 = "some string";
-        _fileManager.GetBase64FromPdfCv(language.ToString()).Returns(base64);
+        _fileManager.GetBase64FromPdfCv(language).Returns(base64);
         _jsService.CallJsFunctionToDownloadCv(language, base64).ThrowsAsync<Exception>();
-        var component = MockComponentCreation(command, message);
+        var component = _sharedMethods.MockComponentCreation(command, message);
 
         //Act
         await _sut.ExecuteCommand(command);
 
         //Assert
-        await _fileManager.Received().GetBase64FromPdfCv(language.ToString());
+        await _fileManager.Received().GetBase64FromPdfCv(language);
         await _jsService.Received().CallJsFunctionToDownloadCv(language, base64);
         AssertCreateComponentAndAddComponentToListWereCalled(command, component, message);
     }
@@ -147,14 +149,14 @@ public class CommandServiceTests
     {
         //Arrange
         var base64 = string.Empty;
-       _fileManager.GetBase64FromPdfCv(language.ToString()).Returns(base64);
-        var component = MockComponentCreation(command, message);
+       _fileManager.GetBase64FromPdfCv(language).Returns(base64);
+        var component = _sharedMethods.MockComponentCreation(command, message);
 
         //Act
         await _sut.ExecuteCommand(command);
 
         //Assert
-        await _fileManager.Received().GetBase64FromPdfCv(language.ToString());
+        await _fileManager.Received().GetBase64FromPdfCv(language);
         await _jsService.DidNotReceive().CallJsFunctionToDownloadCv(language, base64);
         AssertCreateComponentAndAddComponentToListWereCalled(command, component, message);
     }
@@ -165,7 +167,7 @@ public class CommandServiceTests
     public async Task ExecuteCommand_WhenChangeLanguageCommandPassed_ExecutesChangeLanguage(string command, Languages language, string message)
     {
         //Asert
-        var component = MockComponentCreation(command, message);
+        var component = _sharedMethods.MockComponentCreation(command, message);
 
         //Act
         await _sut.ExecuteCommand(command);
@@ -181,10 +183,5 @@ public class CommandServiceTests
         _componentRepository.Received().AddComponentToList(component);
     }
 
-    private BaseComponent MockComponentCreation(string command, string? message = null)
-    {
-        var component = ComponentFactory.CreateComponent(command, message);
-        _componentRepository.CreateNewComponent(command, message).Returns(component);
-        return component;
-    }
+    
 }

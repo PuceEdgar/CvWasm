@@ -6,14 +6,14 @@ public class CommandService : ICommandService
 {
     private readonly IComponentRepository _componentRepository;
     private readonly IJsService _jsService;
-    private readonly IFileService _fileManager;
+    private readonly IFileService _fileService;
     private readonly string[] _componentCommands = [AboutCommand, EducationCommand, HardSkillsCommand, SoftSkillsCommand, ExperienceCommand, HelpCommand];
 
     public CommandService(IComponentRepository componentManager, IJsService jsService, IFileService fileManager)
     {
         _componentRepository = componentManager;
         _jsService = jsService;
-        _fileManager = fileManager;
+        _fileService = fileManager;
     }
 
     public async Task ExecuteCommand(string command)
@@ -31,8 +31,8 @@ public class CommandService : ICommandService
             OpenLinkedInCommand => await OpenLinkInNewTab(LinkedInLink, command),
             DownloadEngCvCommand => await DownloadCv(Languages.eng, command),
             DownloadKorCvCommand => await DownloadCv(Languages.kor, command),
-            ChangeLanguageToEnglishCommand => SetLanguageTo(Languages.eng, command),
-            ChangeLanguageToKoreanCommand => SetLanguageTo(Languages.kor, command),
+            ChangeLanguageToEnglishCommand => await LoadCvForSelectedLanguage(Languages.eng, command),
+            ChangeLanguageToKoreanCommand => await LoadCvForSelectedLanguage(Languages.kor, command),
             _ => AddNewComponent(command, true),
         };
 
@@ -65,7 +65,7 @@ public class CommandService : ICommandService
         bool isSuccess = true;
         try
         {
-            var base64 = await _fileManager.GetBase64FromPdfCv(language.ToString());
+            var base64 = await _fileService.GetBase64FromPdfCv(language);
             if (string.IsNullOrWhiteSpace(base64))
             {
                 isSuccess = false;
@@ -83,9 +83,10 @@ public class CommandService : ICommandService
         return _componentRepository.CreateNewComponent(command, ErrorService.GetCommandResultMessage(isSuccess));
     }
 
-    private BaseComponent SetLanguageTo(Languages language, string command)
+    private async Task<BaseComponent> LoadCvForSelectedLanguage(Languages language, string command)
     {
         StateContainer.CurrentSelectedLanguage = language;
+        await _fileService.LoadCvDataFromJson();
         return _componentRepository.CreateNewComponent(command, ErrorService.GetCommandResultMessage(true));
     }
 }
