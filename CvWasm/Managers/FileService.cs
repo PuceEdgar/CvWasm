@@ -14,7 +14,7 @@ public class FileService : IFileService
         _componentRepository = componentManager;
     }
 
-    public async Task<string> GetBase64FromPdfCv(string language)
+    public async Task<string> GetBase64FromPdfCv(Languages language)
     {
         try
         {
@@ -34,8 +34,11 @@ public class FileService : IFileService
     {
         try
         {
-            StateContainer.LoadedCvs[Languages.eng] = await LoadDataFromJson<CvModel>($"cv-data/cv-{Languages.eng}.json");
-            StateContainer.LoadedCvs[Languages.kor] = await LoadDataFromJson<CvModel>($"cv-data/cv-{Languages.kor}.json");
+            var language = StateContainer.CurrentSelectedLanguage;
+            if (!StateContainer.LoadedCvs.ContainsKey(language))
+            {
+                StateContainer.LoadedCvs[language] = await LoadDataFromJson<CvModel>($"cv-data/cv-{language}.json");
+            }            
         }
         catch (Exception)
         {
@@ -48,7 +51,7 @@ public class FileService : IFileService
     {
         try
         {
-            return await LoadDataAsString(AsciiArtPath);
+            return await _httpClient.GetStringAsync(AsciiArtPath);
         }
         catch (Exception)
         {
@@ -74,10 +77,5 @@ public class FileService : IFileService
     private async Task<T> LoadDataFromJson<T>(string pathToJson) where T : new()
     {
         return await _httpClient.GetFromJsonAsync<T>(pathToJson) ?? new T();
-    }
-
-    private async Task<string> LoadDataAsString(string pathToFile)
-    {
-        return await _httpClient.GetStringAsync(pathToFile);
     }
 }
