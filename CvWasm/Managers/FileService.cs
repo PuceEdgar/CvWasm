@@ -16,18 +16,8 @@ public class FileService : IFileService
 
     public async Task<string> GetBase64FromPdfCv(Languages language)
     {
-        try
-        {
-            var pdfAsByteArray = await _httpClient.GetByteArrayAsync($"cv-data/Edgars_Puce_{language}.pdf");
-            return Convert.ToBase64String(pdfAsByteArray);
-        }
-        catch (Exception)
-        {
-            var component = _componentRepository.CreateNewComponent("cv download", CvDownloadFailed);
-            _componentRepository.AddComponentToList(component);
-            return string.Empty;
-        }
-        
+        var pdfAsByteArray = await _httpClient.GetByteArrayAsync($"cv-data/Edgars_Puce_{language}.pdf");
+        return Convert.ToBase64String(pdfAsByteArray);        
     }
 
     public async Task LoadCvDataFromJson()

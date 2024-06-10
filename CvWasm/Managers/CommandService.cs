@@ -66,14 +66,7 @@ public class CommandService : ICommandService
         try
         {
             var base64 = await _fileService.GetBase64FromPdfCv(language);
-            if (string.IsNullOrWhiteSpace(base64))
-            {
-                isSuccess = false;
-            }
-            else
-            {
-                await _jsService.CallJsFunctionToDownloadCv(language, base64);
-            }
+            await _jsService.CallJsFunctionToDownloadCv(language, base64);
         }
         catch (Exception)
         {
