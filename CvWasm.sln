@@ -5,7 +5,7 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CvWasm", "CvWasm\CvWasm.csproj", "{22AEBCF5-4B90-4020-8DCC-72A114D39C58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CvWasm.Tests", "CvWasm.Tests\CvWasm.Tests.csproj", "{8EDDAFE3-A046-4B5E-BD36-12A9623220E6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CvWasm.Tests", "CvWasm.Tests\CvWasm.Tests.csproj", "{8EDDAFE3-A046-4B5E-BD36-12A9623220E6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

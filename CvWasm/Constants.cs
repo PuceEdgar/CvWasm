@@ -7,6 +7,7 @@ public static class Constants
     public const string HardSkillsCommand = "skills -h";
     public const string SoftSkillsCommand = "skills -s";
     public const string EducationCommand = "education";
+    public const string PortfolioCommand = "portfolio";
     public const string HelpCommand = "help";
     public const string ClearCommand = "clear";
     public const string OpenGitHubCommand = "open -g";

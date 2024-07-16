@@ -7,7 +7,7 @@ public class CommandService : ICommandService
     private readonly IComponentRepository _componentRepository;
     private readonly IJsService _jsService;
     private readonly IFileService _fileService;
-    private readonly string[] _componentCommands = [AboutCommand, EducationCommand, HardSkillsCommand, SoftSkillsCommand, ExperienceCommand, HelpCommand];
+    private readonly string[] _componentCommands = [AboutCommand, EducationCommand, HardSkillsCommand, SoftSkillsCommand, ExperienceCommand, HelpCommand, PortfolioCommand];
 
     public CommandService(IComponentRepository componentManager, IJsService jsService, IFileService fileManager)
     {
@@ -33,16 +33,20 @@ public class CommandService : ICommandService
             DownloadKorCvCommand => await DownloadCv(Languages.kor, command),
             ChangeLanguageToEnglishCommand => await LoadCvForSelectedLanguage(Languages.eng, command),
             ChangeLanguageToKoreanCommand => await LoadCvForSelectedLanguage(Languages.kor, command),
-            _ => AddNewComponent(command, true),
+            _ => AddNewErrorComponent(command),
         };
 
         _componentRepository.AddComponentToList(component);
     }
 
-    private BaseComponent AddNewComponent(string command, bool isError = false)
+    private BaseComponent AddNewComponent(string command)
     {
-        return isError ? _componentRepository.CreateNewComponent(command, ErrorService.GenerateBadCommandErrorMessage(command, StateContainer.CurrentSelectedLanguage))
-            : _componentRepository.CreateNewComponent(command);
+        return _componentRepository.CreateNewComponent(command);
+    }
+
+    private BaseComponent AddNewErrorComponent(string command)
+    {
+        return _componentRepository.CreateNewComponent(command, ErrorService.GenerateBadCommandErrorMessage(command, StateContainer.CurrentSelectedLanguage));
     }
 
     private async Task<BaseComponent> OpenLinkInNewTab(string url, string command)
@@ -66,14 +70,7 @@ public class CommandService : ICommandService
         try
         {
             var base64 = await _fileService.GetBase64FromPdfCv(language);
-            if (string.IsNullOrWhiteSpace(base64))
-            {
-                isSuccess = false;
-            }
-            else
-            {
-                await _jsService.CallJsFunctionToDownloadCv(language, base64);
-            }
+            await _jsService.CallJsFunctionToDownloadCv(language, base64);
         }
         catch (Exception)
         {

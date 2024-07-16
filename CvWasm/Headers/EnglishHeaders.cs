@@ -27,6 +27,11 @@ public class EnglishHeaders : IHeaders
     const string _position = "Position";
     const string _jobDescription = "Job Description";
 
+    const string _appName = "App Name";
+    const string _appUrl = "App Url";
+    const string _appDescription = "Description";
+    const string _appTechnologies = "Technologies";
+
     public string FullName => _fullName;
 
     public string DateOfBirth => _dateOfBirth;
@@ -68,4 +73,12 @@ public class EnglishHeaders : IHeaders
     public string Position => _position;
 
     public string JobDescription => _jobDescription;
+
+    public string AppName => _appName;
+
+    public string AppUrl => _appUrl;
+
+    public string AppDescription => _appDescription;
+
+    public string AppTechnologies => _appTechnologies;
 }
