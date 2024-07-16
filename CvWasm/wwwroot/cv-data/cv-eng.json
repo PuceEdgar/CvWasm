@@ -121,5 +121,25 @@
     "location": "Latvia",
     "periodAttended": "2006 - 2010",
     "degree": "Bachelor degree in Telecommunications"
-  }
+  },
+  "portfolio": [
+    {
+      "appName": "Price Monitoring App",
+      "appUrl": "https://drive.google.com/file/d/1TCnbmQPLiDSOi7SswxHtBC2wM_soGSUK/view?usp=drive_link",
+      "appDescription": "Android application to check product price and size availability on Hanstyle and Musinsa.",
+      "technologies": ".NET MAUI"
+    },
+    {
+      "appName": "Simple Picture Organizer",
+      "appUrl": "https://www.microsoft.com/store/apps/9P5W0XB4Z2NK",
+      "appDescription": "WPF application that helps to organize pictures by picture EXIF properties, also can find and move duplicate and blurry pictures",
+      "technologies": "WPF, OpenStreetMap API"
+    },
+    {
+      "appName": "Pokemon GO Trainer Finder",
+      "appUrl": "https://www.pogofriends.party/",
+      "appDescription": "A website where Pokemon GO players (trainers) can enter their 12 digit trainer code and see other trainers on the map who are using this website.",
+      "technologies": ".NET Blazor WebAssembly, OpenStreetMap API, Azure"
+    }
+  ]
 }

@@ -85,4 +85,27 @@ public static class PageDataLoader
 
         return listOfExperiencePageData;
     }
+
+    public static List<PortfolioPageData> GetPortfolioPageDataFromCv()
+    {
+        var selectedLanguage = StateContainer.CurrentSelectedLanguage;
+        var portfolio = StateContainer.LoadedCvs[selectedLanguage].Portfolio;
+        List<PortfolioPageData> listOfPortfolioPageData = [];
+        IHeaders headers = AvailableHeaders[selectedLanguage];
+
+        foreach (var project in portfolio)
+        {
+            PortfolioPageData portfolioPageData = new()
+            {
+                AppName = new(headers.AppName, project.AppName),
+                AppUrl = new(headers.AppUrl, project.AppUrl),
+                Description = new(headers.AppDescription, project.AppDescription),
+                Technologies = new(headers.AppTechnologies, project.Technologies),
+            };
+            listOfPortfolioPageData.Add(portfolioPageData);
+        }
+        
+
+        return listOfPortfolioPageData;
+    }
 }

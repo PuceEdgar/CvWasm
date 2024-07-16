@@ -31,4 +31,10 @@ public interface IHeaders
      string WorkLocation { get; }
      string Position { get; }
      string JobDescription { get; }
+
+    //Portfolio
+    string AppName { get; }
+    string AppUrl { get; }
+    string AppDescription { get; }
+    string AppTechnologies { get; }
 }

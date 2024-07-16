@@ -1,10 +1,11 @@
 {
   "eng": [
     { "about": "Shows about page" },
-    { "experience" : "Shows work experience page" },
-    { "skills -h" : "Shows hard skills page" },
-    { "skills -s" : "Shows soft skills page" },
-    { "education" : "Shows education page" },
+    { "experience": "Shows work experience page" },
+    { "skills -h": "Shows hard skills page" },
+    { "skills -s": "Shows soft skills page" },
+    { "education": "Shows education page" },
+    { "portfolio": "Shows portfolio page" },
     { "help": "Shows help page" },
     { "clear": "Clear window" },
     { "open -g": "Opens Github profile in new tab" },
@@ -15,18 +16,19 @@
     { "lang -kor": "View content in Korean" }
   ],
   "kor": [
-    {"about": "About"},
-    {"experience" : "경력사항"},
-    {"skills -h" : "Hard skills"},
-    {"skills -s" : "Soft skills"},
-    {"education" : "학력사항"},
-    {"help" : "도움말"},
-    {"clear" : "모두 지우기"},
-    {"open -g" : "Github 바로가기"},
-    {"open -l" : "LinkedIn 바로가기"},
-    {"cv -d -eng" : "영어 버전으로 보기"},
-    {"cv -d -kor" : "한국어 버전으로 보기"},
-    {"lang -eng" : "영어"},
-    {"lang -kor" : "한국어" }
+    { "about": "About" },
+    { "experience": "경력사항" },
+    { "skills -h": "Hard skills" },
+    { "skills -s": "Soft skills" },
+    { "education": "학력사항" },
+    { "portfolio": "포트폴리오" },
+    { "help": "도움말" },
+    { "clear": "모두 지우기" },
+    { "open -g": "Github 바로가기" },
+    { "open -l": "LinkedIn 바로가기" },
+    { "cv -d -eng": "영어 버전으로 보기" },
+    { "cv -d -kor": "한국어 버전으로 보기" },
+    { "lang -eng": "영어" },
+    { "lang -kor": "한국어" }
   ]
 }

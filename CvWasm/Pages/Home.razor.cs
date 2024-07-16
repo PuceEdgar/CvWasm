@@ -41,9 +41,14 @@ public partial class Home
             (ChildComponent?.Instance as WorkExperience)!.SelectCurrentWorkExperience(e.Code);
         }
 
+        if (IsArrowCodeAndLastItemIsPortfolio(e))
+        {
+            (ChildComponent?.Instance as Portfolio)!.SelectCurrentProject(e.Code);
+        }
+
         if (IsEnterCode(e))
         {
-            await CommandService.ExecuteCommand(Command);
+            await CommandService.ExecuteCommand(Command.ToLower());
             Command = string.Empty;
         }
     }
@@ -52,6 +57,12 @@ public partial class Home
     {
         int componentCount = ComponentRepository.LoadedComponents.Count;
         return (e.Code == "ArrowLeft" || e.Code == "ArrowRight") && componentCount > 0 && ComponentRepository.LoadedComponents[componentCount - 1].Type == typeof(WorkExperience);
+    }
+
+    private bool IsArrowCodeAndLastItemIsPortfolio(KeyboardEventArgs e)
+    {
+        int componentCount = ComponentRepository.LoadedComponents.Count;
+        return (e.Code == "ArrowLeft" || e.Code == "ArrowRight") && componentCount > 0 && ComponentRepository.LoadedComponents[componentCount - 1].Type == typeof(Portfolio);
     }
 
     private static bool IsEnterCode(KeyboardEventArgs e)

@@ -6,4 +6,5 @@ public record CvModel
     public WorkExperienceModel[]? Experience { get; set; }
     public SkillsModel? Skills { get; set; }
     public EducationModel? Education { get; set; }
+    public PortfolioModel[]? Portfolio { get; set; } 
 }

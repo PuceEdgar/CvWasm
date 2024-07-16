@@ -1,0 +1,22 @@
+﻿<h3>Portfolio</h3>
+
+@if (StateContainer.CurrentSelectedLanguage == Languages.eng)
+{
+    <h5>Project @(CurrentIndex + 1) out of @TotalProjectCount</h5>
+    <h5>Use arrow key left or right to see other projects</h5>
+}
+else
+{
+    <h5>@TotalProjectCount 가지 중 @(CurrentIndex + 1)번째 경력 </h5>
+    <h5>다른 프로젝트 보기 위해서는 왼쪽, 오른쪽 방향키를 사용해 주세요.</h5>
+}
+
+<table>
+    <tbody>
+        <TableHeaderAndDataRow TableHeader="@ProjectDetails.AppName.Key" SimpleData="@ProjectDetails.AppName.Value" />
+        <TableHeaderAndDataRow TableHeader="@ProjectDetails.AppUrl.Key" SimpleData="@($"""<a href="{@ProjectDetails.AppUrl.Value}">{ProjectDetails.AppName.Value}</a>""")" />
+        <TableHeaderAndDataRow TableHeader="@ProjectDetails.Description.Key" SimpleData="@ProjectDetails.Description.Value" />
+        <TableHeaderAndDataRow TableHeader="@ProjectDetails.Technologies.Key" SimpleData="@ProjectDetails.Technologies.Value" />
+    </tbody>
+</table>
+

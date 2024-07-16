@@ -11,6 +11,7 @@ public static class ComponentFactory
             ExperienceCommand => new WorkExperienceComponent(),
             HardSkillsCommand => new HardSkillsComponent(),
             SoftSkillsCommand => new SoftSkillsComponent(),
+            PortfolioCommand => new PortfolioComponent(),
             HelpCommand => new HelpComponent(),
             _ => new ResultComponent(message, command),
         };
