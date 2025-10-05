@@ -6,13 +6,26 @@
     "gitHubLink": "https://github.com/PuceEdgar",
     "linkedInLink": "https://www.linkedin.com/in/edgars-puce/",
     "nationality": "라트비아 (EU 국가)",
-    "personalStatement": "안녕하세요. 저는 5년차 개발자 입니다. 저는 코딩과 문제를 해결하는 것들을 좋아합니다. 무에서 유를 창조할 수 있고, 그 결과를 바로 볼 수 있다는 점에서 코딩은 매우 매력적입니다. 때때로 문제를 해결하기 위해 고군분투 해야하지만, 더 많이 시도하고 실패할수록 더 많이 배우고 성장할 수 있습니다. 그리고 마침내 성공하게 되면 매우 큰 보람을 느낍니다. 저는 한국에서 배우자비자(F6)로 거주 중 입니다. 언제든지 비자 문제 없이 취직이 가능합니다. 또한 한국에 정보통신업으로 사업자등록도 하였기 때문에 프리랜서 등으로 계약하여 일하는 데에도 문제가 전혀 없습니다."
+    "personalStatement": "안녕하세요. 저는 7+년차 개발자 입니다. 저는 코딩과 문제를 해결하는 것들을 좋아합니다. 무에서 유를 창조할 수 있고, 그 결과를 바로 볼 수 있다는 점에서 코딩은 매우 매력적입니다. 때때로 문제를 해결하기 위해 고군분투 해야하지만, 더 많이 시도하고 실패할수록 더 많이 배우고 성장할 수 있습니다. 그리고 마침내 성공하게 되면 매우 큰 보람을 느낍니다. 저는 한국에서 배우자비자(F6)로 거주 중 입니다. 언제든지 비자 문제 없이 취직이 가능합니다. 또한 한국에 정보통신업으로 사업자등록도 하였기 때문에 프리랜서 등으로 계약하여 일하는 데에도 문제가 전혀 없습니다."
   },
   "experience": [
     {
+      "timePeriod": "August 2024 ~ Still working",
+      "company": "Shinsung Ns Tech",
+      "location": "South Korea",
+      "position": "개발자(대리~과장 급)",
+      "jobDescription": [
+        "한강 버스 정보 시스템 어플리케이션 개발 (정류장 및 선박용 LCD 디스플레이) : WPF (MVVM), Rest API",
+        "시흥/과천/경주/양평시 버스 정보 시스템(BIS) 개발 (E-페이퍼/LCD/LED 디스플레이) : WPF (MVVM), MQTT, OPEN API (data.go.kr), TCP/IP",
+        "서울시 버스 노선 및 실시간 위치 표시 BIS 개발 : React, Node.js, OPEN API",
+        "BIS 어플리케이션 상태 모니터링 내부 도구 개발 : React, C# REST API (Linux + Nginx)",
+        "기존 어플리케이션 유지보수 및 개선"
+      ]
+    },
+    {
       "timePeriod": "July 2021 ~ October 2023",
       "company": "28Stone Consulting, Inc.",
-      "location": "Latvia (정직원) / Korea (프리랜서로 계약하여 라트비아 IT 팀 및 미국 현지 일본 은행 IT 팀과  원격근무) ",
+      "location": "Latvia (정직원) / Korea (프리랜서로 계약하여 라트비아 IT 팀 및 미국 현지 일본 은행 IT 팀과 원격근무) ",
       "position": "개발자(대리~과장 급)",
       "jobDescription": [
         "비디오 녹화 및 얼굴 인식 앱 개발 :  6개월 / Python, Electron 사용",
@@ -86,13 +99,13 @@
   "skills": {
     "hardSkills": {
       "programming": [
-        "C#, SQL",
-        "Some experience with: Java, JavaScript (React, AngularJs), Python"
+        "C#, JavaScript/Typescript (React, Nodejs, AngularJs), MongoDB, SQL",
+        "Some experience with: Java, Python"
       ],
       "tools": "VS 2022, VS Code, SSMS, GitHub, Git Bash, JIRA, Postman, Confluence, QlikView",
       "other": [
-        "JSON, XML, API, xUnit",
-        "Some experience with: AWS (Lambda, Cognito, DynamoDB)"
+        "JSON, XML, Rest API, TCP/IP, MQTT, WPF, xUnit",
+        "Some experience with: AWS (Lambda, Cognito, DynamoDB), Digital Ocean (Droplet, Serverless Function)"
       ],
       "wayOfWorking": "Agile, Scrum, Kanban, Program Increment (SAFe)",
       "languages": [
@@ -124,22 +137,16 @@
   },
   "portfolio": [
     {
-      "appName": "Price Monitoring App",
-      "appUrl": "https://drive.google.com/file/d/1TCnbmQPLiDSOi7SswxHtBC2wM_soGSUK/view?usp=drive_link",
-      "appDescription": "Android application to check product price and size availability on Hanstyle and Musinsa.",
-      "technologies": ".NET MAUI"
+      "appName": "iShareTime",
+      "appUrl": "https://www.isharetime.com/",
+      "appDescription": "Calendar application to manage booking.",
+      "technologies": "React (Vite PWA), Nodejs, MongoDB, Firebase Messaging, Nodemailer, Digital Ocean droplet, Digital ocean serverless functions"
     },
     {
       "appName": "Simple Picture Organizer",
       "appUrl": "https://www.microsoft.com/store/apps/9P5W0XB4Z2NK",
       "appDescription": "WPF application that helps to organize pictures by picture EXIF properties, also can find and move duplicate and blurry pictures",
       "technologies": "WPF, OpenStreetMap API"
-    },
-    {
-      "appName": "Pokemon GO Trainer Finder",
-      "appUrl": "https://www.pogofriends.party/",
-      "appDescription": "A website where Pokemon GO players (trainers) can enter their 12 digit trainer code and see other trainers on the map who are using this website.",
-      "technologies": ".NET Blazor WebAssembly, OpenStreetMap API, Azure"
-    }
+    }   
   ]
 }

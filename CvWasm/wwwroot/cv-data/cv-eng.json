@@ -6,9 +6,22 @@
     "gitHubLink": "https://github.com/PuceEdgar",
     "linkedInLink": "https://www.linkedin.com/in/edgars-puce/",
     "nationality": "Latvian",
-    "personalStatement": "I am a passionate developer with 5 years of experience, who loves to write code and solve problems. Coding is fun because you can create something new from nothing and see results very quickly. Sometimes I struggle to solve issues, but  the more I try and fail, the more I can learn. And when I succeed, I feel proud of myself."
+    "personalStatement": "I am a passionate developer with 7+ years of experience, who loves to write code and solve problems. Coding is fun because you can create something new from nothing and see results very quickly. Sometimes I struggle to solve issues, but  the more I try and fail, the more I can learn. And when I succeed, I feel proud of myself."
   },
   "experience": [
+    {
+      "timePeriod": "August 2024 ~ Present",
+      "company": "Shinsung Ns Tech",
+      "location": "South Korea",
+      "position": "Developer",
+      "jobDescription": [
+        "Created client side application for Hangang Bus information system for station and ship (LCD display). Technologies used: WPF (MVVM).",
+        "Created BIS (Bus Information System) for Siheung/Gwacheon/Gyeongju/Yangpyeong City (E-paper / LCD / LED displays). Technologies used: WPF (MVVM), MQTT, OPEN API (data.go.kr), TCP/IP",
+        "Created internal tool to monitor BIS application status. Technologies used: React, C# Rest Api running on Linux via Nginx",
+        "Created BIS for Seoul to display bus route and location real time. Technologies used: React, Nodejs, OPEN API",
+        "Maintenance of existing applications"
+      ]
+    },
     {
       "timePeriod": "July 2021 ~ October 2023",
       "company": "28Stone Consulting, Inc.",
@@ -89,13 +102,13 @@
   "skills": {
     "hardSkills": {
       "programming": [
-        "C#, SQL",
-        "Some experience with: Java, JavaScript (React, AngularJs), Python"
+        "C#, JavaScript/Typescript (React, Nodejs, AngularJs), MongoDB, SQL",
+        "Some experience with: Java, Python"
       ],
       "tools": "VS 2022, VS Code, SSMS, GitHub, Git Bash, JIRA, Postman, Confluence, QlikView",
       "other": [
-        "JSON, XML, API, xUnit",
-        "Some experience with: AWS (Lambda, Cognito, DynamoDB)"
+        "JSON, XML, Rest API, TCP/IP, MQTT, WPF, xUnit",
+        "Some experience with: AWS (Lambda, Cognito, DynamoDB), Digital Ocean (Droplet, Serverless Function)"
       ],
       "wayOfWorking": "Agile, Scrum, Kanban, Program Increment (SAFe)",
       "languages": [
@@ -124,22 +137,16 @@
   },
   "portfolio": [
     {
-      "appName": "Price Monitoring App",
-      "appUrl": "https://drive.google.com/file/d/1TCnbmQPLiDSOi7SswxHtBC2wM_soGSUK/view?usp=drive_link",
-      "appDescription": "Android application to check product price and size availability on Hanstyle and Musinsa.",
-      "technologies": ".NET MAUI"
+      "appName": "iShareTime",
+      "appUrl": "https://www.isharetime.com/",
+      "appDescription": "Calendar application to manage booking.",
+      "technologies": "React (Vite PWA), Nodejs, MongoDB, Firebase Messaging, Nodemailer, Digital Ocean droplet, Digital ocean serverless functions"
     },
     {
       "appName": "Simple Picture Organizer",
       "appUrl": "https://www.microsoft.com/store/apps/9P5W0XB4Z2NK",
       "appDescription": "WPF application that helps to organize pictures by picture EXIF properties, also can find and move duplicate and blurry pictures",
       "technologies": "WPF, OpenStreetMap API"
-    },
-    {
-      "appName": "Pokemon GO Trainer Finder",
-      "appUrl": "https://www.pogofriends.party/",
-      "appDescription": "A website where Pokemon GO players (trainers) can enter their 12 digit trainer code and see other trainers on the map who are using this website.",
-      "technologies": ".NET Blazor WebAssembly, OpenStreetMap API, Azure"
     }
   ]
 }
