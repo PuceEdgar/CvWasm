@@ -145,8 +145,14 @@
     {
       "appName": "Simple Picture Organizer",
       "appUrl": "https://www.microsoft.com/store/apps/9P5W0XB4Z2NK",
-      "appDescription": "WPF application that helps to organize pictures by picture EXIF properties, also can find and move duplicate and blurry pictures",
+      "appDescription": "WPF application that helps to organize pictures by picture EXIF properties, also can find and move duplicate and blurry pictures.",
       "technologies": "WPF, OpenStreetMap API"
+    },
+    {
+      "appName": "ImageBatch Studio",
+      "appUrl": "https://apps.microsoft.com/detail/9nz8166z2zb4",
+      "appDescription": "A WPF application that provides integrated features for image conversion, compression, resizing, metadata management, and watermark insertion.",
+      "technologies": "WPF"
     }
   ]
 }
