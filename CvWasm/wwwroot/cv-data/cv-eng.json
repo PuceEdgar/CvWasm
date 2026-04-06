@@ -17,7 +17,7 @@
       "jobDescription": [
         "Created client side application for Hangang Bus information system for station and ship (LCD display). Technologies used: WPF (MVVM).",
         "Created BIS (Bus Information System) for Siheung/Gwacheon/Gyeongju/Yangpyeong City (E-paper / LCD / LED displays). Technologies used: WPF (MVVM), MQTT, OPEN API (data.go.kr), TCP/IP",
-        "Created internal tool to monitor BIS application status. Technologies used: React, C# Rest Api running on Linux via Nginx",
+        "Created internal tool to monitor BIS application status. Technologies used: React, SignalR, Sqlite, C# Rest Api running on Linux via Nginx",
         "Created BIS for Seoul to display bus route and location real time. Technologies used: React, Nodejs, OPEN API",
         "Maintenance of existing applications"
       ]
@@ -105,7 +105,7 @@
         "C#, JavaScript/Typescript (React, Nodejs, AngularJs), MongoDB, SQL",
         "Some experience with: Java, Python"
       ],
-      "tools": "VS 2022, VS Code, SSMS, GitHub, Git Bash, JIRA, Postman, Confluence, QlikView",
+      "tools": "Chat GPT, Gemini cli, VS 2022, VS Code, SSMS, GitHub, Git Bash, JIRA, Postman, Confluence, QlikView",
       "other": [
         "JSON, XML, Rest API, TCP/IP, MQTT, WPF, xUnit",
         "Some experience with: AWS (Lambda, Cognito, DynamoDB), Digital Ocean (Droplet, Serverless Function)"
@@ -152,6 +152,12 @@
       "appName": "ImageBatch Studio",
       "appUrl": "https://apps.microsoft.com/detail/9nz8166z2zb4",
       "appDescription": "A WPF application that provides integrated features for image conversion, compression, resizing, metadata management, and watermark insertion.",
+      "technologies": "WPF"
+    },
+    {
+      "appName": "Batch Data Masker",
+      "appUrl": "https://apps.microsoft.com/detail/9n90js6jwdt1",
+      "appDescription": "A WPF application that masks data based on provided rules.",
       "technologies": "WPF"
     }
   ]

@@ -18,7 +18,7 @@
         "한강 버스 정보 시스템 어플리케이션 개발 (정류장 및 선박용 LCD 디스플레이) : WPF (MVVM), Rest API",
         "시흥/과천/경주/양평시 버스 정보 시스템(BIS) 개발 (E-페이퍼/LCD/LED 디스플레이) : WPF (MVVM), MQTT, OPEN API (data.go.kr), TCP/IP",
         "서울시 버스 노선 및 실시간 위치 표시 BIS 개발 : React, Node.js, OPEN API",
-        "BIS 어플리케이션 상태 모니터링 내부 도구 개발 : React, C# REST API (Linux + Nginx)",
+        "BIS 어플리케이션 상태 모니터링 내부 도구 개발 : React, SignalR, Sqlite, C# REST API (Linux + Nginx)",
         "기존 어플리케이션 유지보수 및 개선"
       ]
     },
@@ -102,7 +102,7 @@
         "C#, JavaScript/Typescript (React, Nodejs, AngularJs), MongoDB, SQL",
         "Some experience with: Java, Python"
       ],
-      "tools": "VS 2022, VS Code, SSMS, GitHub, Git Bash, JIRA, Postman, Confluence, QlikView",
+      "tools": "Chat GPT, Gemini cli, VS 2022, VS Code, SSMS, GitHub, Git Bash, JIRA, Postman, Confluence, QlikView",
       "other": [
         "JSON, XML, Rest API, TCP/IP, MQTT, WPF, xUnit",
         "Some experience with: AWS (Lambda, Cognito, DynamoDB), Digital Ocean (Droplet, Serverless Function)"
@@ -152,6 +152,12 @@
       "appName": "ImageBatch Studio",
       "appUrl": "https://apps.microsoft.com/detail/9nz8166z2zb4",
       "appDescription": "이미지 변환 및 압축, 크기 조정, 메타데이터 관리, 워터마크 삽입 기능을 통합 제공하는 WPF 애플리케이션.",
+      "technologies": "WPF"
+    },
+    {
+      "appName": "Batch Data Masker",
+      "appUrl": "https://apps.microsoft.com/detail/9n90js6jwdt1",
+      "appDescription": "제공된 규칙에 따라 데이터를 마스킹하는 WPF 애플리케이션입니다.",
       "technologies": "WPF"
     }
   ]
